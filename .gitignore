@@ -1,0 +1,24 @@
+### C#
+*.dll
+
+### Python
+# Byte-compiled / optimized / DLL files
+__pycache__/
+
+# Distribution / packaging
+*.egg/
+*.egg-info/
+
+# Unit test / coverage reports
+coverage*.xml
+.hypothesis/
+.pytest_cache/
+
+# Environments
+venv*/
+
+# mypy
+.mypy_cache/
+
+### IntelliJ
+.idea/
