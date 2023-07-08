@@ -1,0 +1,4 @@
+hypothesis>=6.80.1
+hypothesis-geometry>=8.0.0
+pytest>=7.4.0
+pythonnet>=3.0.1
