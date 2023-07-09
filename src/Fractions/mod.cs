@@ -45,7 +45,7 @@ namespace Fractions
 
         public static bool operator >(Fraction self, Fraction other) => self.CompareTo(other) > 0;
 
-        public bool Equals(Fraction other)
+        public bool Equals(Fraction? other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -54,7 +54,7 @@ namespace Fractions
             return numerator.Equals(other.numerator) && denominator.Equals(other.denominator);
         }
 
-        public override bool Equals(object other) => Equals(other as Fraction);
+        public override bool Equals(object? other) => Equals(other as Fraction);
 
         public override int GetHashCode()
         {
@@ -75,7 +75,7 @@ namespace Fractions
             return numerator < BigInteger.Zero ? -result : result;
         }
 
-        public int CompareTo(Fraction other)
+        public int CompareTo(Fraction? other)
         {
             return ReferenceEquals(other, null)
                 ? 1

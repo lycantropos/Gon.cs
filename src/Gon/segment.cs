@@ -24,7 +24,7 @@ namespace Gon
         public static bool operator !=(Segment<Scalar> self, Segment<Scalar> other) =>
             !(self == other);
 
-        public bool Equals(Segment<Scalar> other)
+        public bool Equals(Segment<Scalar>? other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -34,7 +34,7 @@ namespace Gon
                 || start.Equals(other.end) && end.Equals(other.start);
         }
 
-        public override bool Equals(object other) => Equals(other as Segment<Scalar>);
+        public override bool Equals(object? other) => Equals(other as Segment<Scalar>);
 
         public override int GetHashCode() => (start, end).GetHashCode();
     }

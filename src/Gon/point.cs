@@ -47,7 +47,7 @@ namespace Gon
 
         public static bool operator !=(Point<Scalar> self, Point<Scalar> other) => !(self == other);
 
-        public bool Equals(Point<Scalar> other)
+        public bool Equals(Point<Scalar>? other)
         {
             if (ReferenceEquals(other, null))
                 return false;
@@ -56,7 +56,7 @@ namespace Gon
             return x.Equals(other.x) && y.Equals(other.y);
         }
 
-        public override bool Equals(object other) => Equals(other as Point<Scalar>);
+        public override bool Equals(object? other) => Equals(other as Point<Scalar>);
 
         public override int GetHashCode() => (x, y).GetHashCode();
     }
