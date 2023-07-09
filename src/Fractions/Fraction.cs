@@ -31,11 +31,70 @@ namespace Fractions
                 self.denominator * other.denominator
             );
 
+        public static Fraction operator +(Fraction self, BigInteger other) =>
+            new Fraction(self.numerator + other * self.denominator, self.denominator);
+
+        public static Fraction operator *(Fraction self, Fraction other)
+        {
+            var (numerator, other_denominator) = normalizeComponentsModuli(
+                self.numerator,
+                other.denominator
+            );
+            var (other_numerator, denominator) = normalizeComponentsModuli(
+                other.numerator,
+                self.denominator
+            );
+            return new Fraction(
+                numerator * other_numerator,
+                denominator * other_denominator,
+                false
+            );
+        }
+
+        public static Fraction operator *(Fraction self, BigInteger other)
+        {
+            var (other_normalized, denominator) = normalizeComponentsModuli(
+                other,
+                self.denominator
+            );
+            return new Fraction(self.numerator * other_normalized, denominator, false);
+        }
+
+        public static Fraction operator /(Fraction self, Fraction other)
+        {
+            var (numerator, other_numerator) = normalizeComponentsModuli(
+                self.numerator,
+                other.numerator
+            );
+            var (denominator, other_denominator) = normalizeComponentsModuli(
+                self.denominator,
+                other.denominator
+            );
+            var (result_numerator, result_denominator) = normalizeComponentsSign(
+                numerator * other_denominator,
+                denominator * other_numerator
+            );
+            return new Fraction(result_numerator, result_denominator, false);
+        }
+
+        public static Fraction operator /(Fraction self, BigInteger other)
+        {
+            var (numerator, other_normalized) = normalizeComponentsModuli(self.numerator, other);
+            var (result_numerator, result_denominator) = normalizeComponentsSign(
+                numerator,
+                self.denominator * other_normalized
+            );
+            return new Fraction(result_numerator, result_denominator, false);
+        }
+
         public static Fraction operator -(Fraction self, Fraction other) =>
             new Fraction(
                 self.numerator * other.denominator - other.numerator * self.denominator,
                 self.denominator * other.denominator
             );
+
+        public static Fraction operator -(Fraction self, BigInteger other) =>
+            new Fraction(self.numerator - other * self.denominator, self.denominator);
 
         public static bool operator ==(Fraction? self, Fraction? other) =>
             ReferenceEquals(self, null) ? ReferenceEquals(other, null) : self.Equals(other);
@@ -97,17 +156,30 @@ namespace Fractions
                 throw new DivideByZeroException("Denominator should not be zero.");
             if (normalize)
             {
-                if (denominator < BigInteger.Zero)
-                {
-                    numerator = -numerator;
-                    denominator = -denominator;
-                }
-                var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
-                numerator /= gcd;
-                denominator /= gcd;
+                (numerator, denominator) = normalizeComponentsSign(numerator, denominator);
+                (numerator, denominator) = normalizeComponentsModuli(numerator, denominator);
             }
             this.numerator = numerator;
             this.denominator = denominator;
+        }
+
+        private static (BigInteger, BigInteger) normalizeComponentsModuli(
+            BigInteger numerator,
+            BigInteger denominator
+        )
+        {
+            var gcd = BigInteger.GreatestCommonDivisor(numerator, denominator);
+            return (numerator / gcd, denominator / gcd);
+        }
+
+        private static (BigInteger, BigInteger) normalizeComponentsSign(
+            BigInteger numerator,
+            BigInteger denominator
+        )
+        {
+            return denominator < BigInteger.Zero
+                ? (-numerator, -denominator)
+                : (numerator, denominator);
         }
     }
 }
