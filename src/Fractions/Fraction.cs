@@ -8,11 +8,17 @@ namespace Fractions
         public BigInteger numerator;
         public BigInteger denominator;
 
+        public Fraction()
+            : this(BigInteger.Zero, BigInteger.One, false) { }
+
         public Fraction(BigInteger value)
             : this(value, BigInteger.One, false) { }
 
         public Fraction(BigInteger numerator, BigInteger denominator)
             : this(numerator, denominator, true) { }
+
+        public Fraction(Fraction fraction)
+            : this(fraction.numerator, fraction.denominator, false) { }
 
         public static Fraction operator +(Fraction self) => self;
 
