@@ -1,5 +1,10 @@
 ### C#
+# Build results
+[Bb]in/
+[Oo]bj/
+*.deps.json
 *.dll
+*.pdb
 
 ### Python
 # Byte-compiled / optimized / DLL files
