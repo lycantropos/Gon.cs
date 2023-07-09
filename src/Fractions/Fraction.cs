@@ -8,6 +8,11 @@ namespace Fractions
         public BigInteger numerator;
         public BigInteger denominator;
 
+        public bool IsZero
+        {
+            get { return numerator.IsZero; }
+        }
+
         public Fraction()
             : this(BigInteger.Zero, BigInteger.One, false) { }
 
