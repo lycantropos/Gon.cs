@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 
-namespace fraction
+namespace Fractions
 {
     public class Fraction : IComparable<Fraction>, IEquatable<Fraction>
     {

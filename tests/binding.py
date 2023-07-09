@@ -8,15 +8,17 @@ import pythonnet
 import typing_extensions as te
 
 pythonnet.load()
-from System import Array, Nullable, Reflection
+from System import (Array,
+                    Reflection)
 from System.Numerics import BigInteger
 
 _dlls_directory = Path(__file__).parent
-Reflection.Assembly.LoadFile(str(_dlls_directory / 'gon.dll'))
-import gon
 
-Reflection.Assembly.LoadFile(str(_dlls_directory / 'fraction.dll'))
-import fraction
+Reflection.Assembly.LoadFile(str(_dlls_directory / 'Fractions.dll'))
+import Fractions
+
+Reflection.Assembly.LoadFile(str(_dlls_directory / 'Gon.dll'))
+import Gon
 
 _ScalarT = t.TypeVar('_ScalarT', Fraction, float, int)
 
@@ -30,11 +32,11 @@ class Point:
     def y(self) -> Fraction:
         return _fraction_from_raw(self._raw.y)
 
-    _raw: gon.Point[fraction.Fraction]
+    _raw: Gon.Point[Fractions.Fraction]
 
     def __new__(cls, x: _ScalarT, y: _ScalarT) -> te.Self:
         self = super().__new__(cls)
-        self._raw = gon.Point[fraction.Fraction](
+        self._raw = Gon.Point[Fractions.Fraction](
                 _fraction_to_raw(Fraction(x)), _fraction_to_raw(Fraction(y))
         )
         return self
@@ -68,11 +70,11 @@ class Segment:
     def start(self) -> Point:
         return _point_from_raw(self._raw.start)
 
-    _raw: gon.Segment[fraction.Fraction]
+    _raw: Gon.Segment[Fractions.Fraction]
 
     def __new__(cls, start: Point, end: Point) -> te.Self:
         self = super().__new__(cls)
-        self._raw = gon.Segment[fraction.Fraction](
+        self._raw = Gon.Segment[Fractions.Fraction](
                 _point_to_raw(start), _point_to_raw(end)
         )
         return self
@@ -89,12 +91,12 @@ class Contour:
     def vertices(self) -> t.Sequence[Point]:
         return [_point_from_raw(vertex) for vertex in self._raw.vertices]
 
-    _raw: gon.Contour[fraction.Fraction]
+    _raw: Gon.Contour[Fractions.Fraction]
 
     def __new__(cls, vertices: t.Sequence[Point]) -> te.Self:
         self = super().__new__(cls)
-        self._raw = gon.Contour[fraction.Fraction](
-                Array[gon.Point[fraction.Fraction]](
+        self._raw = Gon.Contour[Fractions.Fraction](
+                Array[Gon.Point[Fractions.Fraction]](
                         [_point_to_raw(vertex) for vertex in vertices]
                 )
         )
@@ -108,11 +110,11 @@ class Contour:
                 f'([{", ".join(map(str, self.vertices))}])')
 
 
-def _fraction_to_raw(value: Fraction) -> fraction.Fraction:
-    return fraction.Fraction(value.numerator, value.denominator)
+def _fraction_to_raw(value: Fraction) -> Fractions.Fraction:
+    return Fractions.Fraction(value.numerator, value.denominator)
 
 
-def _fraction_from_raw(value: fraction.Fraction) -> Fraction:
+def _fraction_from_raw(value: Fractions.Fraction) -> Fraction:
     return Fraction(_int_from_raw(value.numerator),
                     _int_from_raw(value.denominator))
 
@@ -126,10 +128,10 @@ def _int_from_raw2(value: BigInteger) -> int:
                           signed=True)
 
 
-def _point_to_raw(value: Point) -> gon.Point[fraction.Fraction]:
-    return gon.Point[fraction.Fraction](_fraction_to_raw(value.x),
-                                        _fraction_to_raw(value.y))
+def _point_to_raw(value: Point) -> Gon.Point[Fractions.Fraction]:
+    return Gon.Point[Fractions.Fraction](_fraction_to_raw(value.x),
+                                         _fraction_to_raw(value.y))
 
 
-def _point_from_raw(value: gon.Point[fraction.Fraction]) -> Point:
+def _point_from_raw(value: Gon.Point[Fractions.Fraction]) -> Point:
     return Point(_fraction_from_raw(value.x), _fraction_from_raw(value.y))

@@ -1,6 +1,6 @@
 using System;
 
-namespace gon
+namespace Gon
 {
     public class Point<Scalar> : IEquatable<Point<Scalar>>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>

@@ -1,6 +1,6 @@
 using System;
 
-namespace gon
+namespace Gon
 {
     public class Contour<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>

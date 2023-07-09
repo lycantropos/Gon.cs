@@ -1,6 +1,6 @@
 using System;
 
-namespace gon
+namespace Gon
 {
     public class Segment<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
