@@ -28,14 +28,11 @@ namespace Fractions
                 self.denominator * other.denominator
             );
 
-        public static bool operator ==(Fraction self, Fraction other)
-        {
-            if (ReferenceEquals(self, null))
-                return false;
-            return self.Equals(other);
-        }
+        public static bool operator ==(Fraction? self, Fraction? other) =>
+            ReferenceEquals(self, null) ? ReferenceEquals(other, null) : self.Equals(other);
 
-        public static bool operator !=(Fraction self, Fraction other) => !(self == other);
+        public static bool operator !=(Fraction? self, Fraction? other) =>
+            ReferenceEquals(self, null) ? !ReferenceEquals(other, null) : !self.Equals(other);
 
         public static bool operator <=(Fraction self, Fraction other) => self.CompareTo(other) <= 0;
 
