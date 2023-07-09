@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    public class Point<Scalar> : IEquatable<Point<Scalar>>
+    public class Point<Scalar> : IComparable<Point<Scalar>>, IEquatable<Point<Scalar>>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
         public Scalar x;
@@ -46,6 +46,14 @@ namespace Gon
         }
 
         public static bool operator !=(Point<Scalar> self, Point<Scalar> other) => !(self == other);
+
+        public int CompareTo(Point<Scalar>? other)
+        {
+            if (ReferenceEquals(other, null))
+                return 1;
+            var result = x.CompareTo(other.x);
+            return result == 0 ? y.CompareTo(other.y) : result;
+        }
 
         public bool Equals(Point<Scalar>? other)
         {
