@@ -106,6 +106,19 @@ class Point:
                 if isinstance(other, Point)
                 else NotImplemented)
 
+    @t.overload
+    def __ne__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __ne__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __ne__(self, other: t.Any) -> t.Any:
+        return (self._raw != other._raw
+                if isinstance(other, Point)
+                else NotImplemented)
+
     def __repr__(self) -> str:
         return f'{type(self).__qualname__}({self.x!r}, {self.y!r})'
 
