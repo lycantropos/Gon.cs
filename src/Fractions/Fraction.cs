@@ -124,6 +124,9 @@ namespace Fractions
             return numerator.Equals(other.numerator) && denominator.Equals(other.denominator);
         }
 
+        public static Fraction Abs(Fraction self) =>
+            new Fraction(BigInteger.Abs(self.numerator), self.denominator, false);
+
         public override bool Equals(object? other) => Equals(other as Fraction);
 
         public override int GetHashCode()
