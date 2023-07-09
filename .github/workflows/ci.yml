@@ -46,15 +46,19 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet_version }}
-      - name: 'Install C# linter'
+      - name: 'Install CSharpier'
         run: dotnet tool install csharpier -g
-      - name: 'Run C# linter'
+      - name: 'Run CSharpier'
         run: dotnet csharpier --check .
       - name: 'Setup Python'
         uses: actions/setup-python@v4
         with:
           python-version: ${{ matrix.python_version }}
           architecture: ${{ matrix.platform.python_architecture }}
+      - name: 'Install MyPy'
+        run: python -m pip install mypy
+      - name: 'Run MyPy'
+        run: mypy --ignore-missing-imports tests
       - name: 'Install tests dependencies'
         run: python -m pip install -r requirements-tests.txt
       - name: 'Publish project'
