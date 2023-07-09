@@ -14,43 +14,30 @@ namespace Gon
             this.y = y;
         }
 
-        public static bool operator ==(Point<Scalar> self, Point<Scalar> other)
-        {
-            if (ReferenceEquals(self, null))
-                return false;
-            return self.Equals(other);
-        }
+        public static bool operator ==(Point<Scalar>? self, Point<Scalar>? other) =>
+            ReferenceEquals(self, null) ? ReferenceEquals(other, null) : self.Equals(other);
 
-        public static bool operator <=(Point<Scalar> self, Point<Scalar> other)
-        {
-            if (ReferenceEquals(self, null))
-                return false;
-            if (ReferenceEquals(other, null))
-                return false;
-            if (ReferenceEquals(self, other))
-                return true;
-            return self.x.CompareTo(other.x) < 0
-                || self.x.Equals(other.x) && self.y.CompareTo(other.y) <= 0;
-        }
+        public static bool operator !=(Point<Scalar>? self, Point<Scalar>? other) =>
+            ReferenceEquals(self, null) ? !ReferenceEquals(other, null) : !self.Equals(other);
 
-        public static bool operator >=(Point<Scalar> self, Point<Scalar> other)
-        {
-            if (ReferenceEquals(self, null))
-                return false;
-            if (ReferenceEquals(other, null))
-                return false;
-            if (ReferenceEquals(self, other))
-                return true;
-            return self.x.CompareTo(other.x) > 0
-                || self.x.Equals(other.x) && self.y.CompareTo(other.y) >= 0;
-        }
+        public static bool operator >=(Point<Scalar>? self, Point<Scalar>? other) =>
+            !ReferenceEquals(self, null) && self.CompareTo(other) >= 0;
 
-        public static bool operator !=(Point<Scalar> self, Point<Scalar> other) => !(self == other);
+        public static bool operator >(Point<Scalar>? self, Point<Scalar>? other) =>
+            !ReferenceEquals(self, null) && self.CompareTo(other) > 0;
+
+        public static bool operator <=(Point<Scalar>? self, Point<Scalar>? other) =>
+            !ReferenceEquals(self, null) && self.CompareTo(other) <= 0;
+
+        public static bool operator <(Point<Scalar>? self, Point<Scalar>? other) =>
+            !ReferenceEquals(self, null) && self.CompareTo(other) < 0;
 
         public int CompareTo(Point<Scalar>? other)
         {
             if (ReferenceEquals(other, null))
                 return 1;
+            if (ReferenceEquals(this, other))
+                return 0;
             var result = x.CompareTo(other.x);
             return result == 0 ? y.CompareTo(other.y) : result;
         }
