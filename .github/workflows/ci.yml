@@ -19,8 +19,8 @@ jobs:
     runs-on: ${{ matrix.platform.os }}
     strategy:
       matrix:
-        dotnet_version: [ '3.8', '3.9', '3.10', '3.11' ]
-        python_version: [ '6.x', '7.x' ]
+        dotnet_version: [ '6.x', '7.x' ]
+        python_version: [ '3.8', '3.9', '3.10', '3.11' ]
         platform: [
           {
             os: 'macos-latest',
