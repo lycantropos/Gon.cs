@@ -14,15 +14,11 @@ namespace Gon
             this.end = end;
         }
 
-        public static bool operator ==(Segment<Scalar> self, Segment<Scalar> other)
-        {
-            if (ReferenceEquals(self, null))
-                return false;
-            return self.Equals(other);
-        }
+        public static bool operator ==(Segment<Scalar>? self, Segment<Scalar>? other) =>
+            ReferenceEquals(self, null) ? ReferenceEquals(other, null) : self.Equals(other);
 
         public static bool operator !=(Segment<Scalar> self, Segment<Scalar> other) =>
-            !(self == other);
+            ReferenceEquals(self, null) ? !ReferenceEquals(other, null) : !self.Equals(other);
 
         public bool Equals(Segment<Scalar>? other)
         {
