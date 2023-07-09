@@ -54,6 +54,58 @@ class Point:
                 if isinstance(other, Point)
                 else NotImplemented)
 
+    @t.overload
+    def __ge__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __ge__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __ge__(self, other: t.Any) -> t.Any:
+        return (self._raw >= other._raw
+                if isinstance(other, Point)
+                else NotImplemented)
+
+    @t.overload
+    def __gt__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __gt__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __gt__(self, other: t.Any) -> t.Any:
+        return (self._raw > other._raw
+                if isinstance(other, Point)
+                else NotImplemented)
+
+    @t.overload
+    def __le__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __le__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __le__(self, other: t.Any) -> t.Any:
+        return (self._raw <= other._raw
+                if isinstance(other, Point)
+                else NotImplemented)
+
+    @t.overload
+    def __lt__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __lt__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __lt__(self, other: t.Any) -> t.Any:
+        return (self._raw < other._raw
+                if isinstance(other, Point)
+                else NotImplemented)
+
     def __repr__(self) -> str:
         return f'{type(self).__qualname__}({self.x!r}, {self.y!r})'
 
