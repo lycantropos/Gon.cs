@@ -8,6 +8,9 @@ namespace Fractions
         public BigInteger numerator;
         public BigInteger denominator;
 
+        public Fraction(BigInteger value)
+            : this(value, BigInteger.One, false) { }
+
         public Fraction(BigInteger numerator, BigInteger denominator)
             : this(numerator, denominator, true) { }
 
@@ -84,6 +87,8 @@ namespace Fractions
 
         private Fraction(BigInteger numerator, BigInteger denominator, bool normalize)
         {
+            if (denominator.IsZero)
+                throw new DivideByZeroException("Denominator should not be zero.");
             if (normalize)
             {
                 if (denominator < BigInteger.Zero)
