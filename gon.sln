@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{F0A403A6-26DD-4A99-A97E-EA0A22C2E4E7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "gon", "src\gon\gon.csproj", "{CF4EE8B4-084E-4443-9FC8-5A880CE450A2}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "fraction", "src\fraction\fraction.csproj", "{4D1594E4-3EBE-4527-8EBB-5523768BB968}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{CF4EE8B4-084E-4443-9FC8-5A880CE450A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{CF4EE8B4-084E-4443-9FC8-5A880CE450A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{CF4EE8B4-084E-4443-9FC8-5A880CE450A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{CF4EE8B4-084E-4443-9FC8-5A880CE450A2}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4D1594E4-3EBE-4527-8EBB-5523768BB968}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4D1594E4-3EBE-4527-8EBB-5523768BB968}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4D1594E4-3EBE-4527-8EBB-5523768BB968}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4D1594E4-3EBE-4527-8EBB-5523768BB968}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CF4EE8B4-084E-4443-9FC8-5A880CE450A2} = {F0A403A6-26DD-4A99-A97E-EA0A22C2E4E7}
+		{4D1594E4-3EBE-4527-8EBB-5523768BB968} = {F0A403A6-26DD-4A99-A97E-EA0A22C2E4E7}
+	EndGlobalSection
+EndGlobal
