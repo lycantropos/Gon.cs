@@ -47,7 +47,7 @@ jobs:
         with:
           dotnet-version: ${{ matrix.dotnet_version }}
       - name: 'Install C# linter'
-        run: dotnet tool install csharpier
+        run: dotnet tool install csharpier -g
       - name: 'Run C# linter'
         run: dotnet csharpier --check .
       - name: 'Setup Python'
