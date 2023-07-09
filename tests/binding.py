@@ -20,7 +20,7 @@ import Fractions
 Reflection.Assembly.LoadFile(str(_dlls_directory / 'Gon.dll'))
 import Gon
 
-_ScalarT = t.TypeVar('_ScalarT', Fraction, float, int)
+_Scalar = t.Union[Fraction, float, int]
 
 
 class Point:
@@ -34,7 +34,7 @@ class Point:
 
     _raw: Gon.Point[Fractions.Fraction]
 
-    def __new__(cls, x: _ScalarT, y: _ScalarT) -> te.Self:
+    def __new__(cls, x: _Scalar, y: _Scalar) -> te.Self:
         self = super().__new__(cls)
         self._raw = Gon.Point[Fractions.Fraction](
                 _fraction_to_raw(Fraction(x)), _fraction_to_raw(Fraction(y))
@@ -42,7 +42,7 @@ class Point:
         return self
 
     @t.overload
-    def __eq__(self, other: Point) -> bool:
+    def __eq__(self, other: te.Self) -> bool:
         ...
 
     @t.overload
