@@ -7,7 +7,7 @@ from pathlib import Path
 import pythonnet
 import typing_extensions as te
 
-pythonnet.load()
+pythonnet.load('coreclr')
 import System
 from System.Numerics import BigInteger
 
