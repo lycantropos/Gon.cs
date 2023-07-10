@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Fractions
 {
-    public class Fraction : IComparable<Fraction>, IEquatable<Fraction>
+    public struct Fraction : IComparable<Fraction>, IEquatable<Fraction>
     {
         public BigInteger numerator;
         public BigInteger denominator;
@@ -101,11 +101,9 @@ namespace Fractions
         public static Fraction operator -(Fraction self, BigInteger other) =>
             new Fraction(self.numerator - other * self.denominator, self.denominator);
 
-        public static bool operator ==(Fraction? self, Fraction? other) =>
-            ReferenceEquals(self, null) ? ReferenceEquals(other, null) : self.Equals(other);
+        public static bool operator ==(Fraction self, Fraction other) => self.Equals(other);
 
-        public static bool operator !=(Fraction? self, Fraction? other) =>
-            ReferenceEquals(self, null) ? !ReferenceEquals(other, null) : !self.Equals(other);
+        public static bool operator !=(Fraction self, Fraction other) => !self.Equals(other);
 
         public static bool operator <=(Fraction self, Fraction other) => self.CompareTo(other) <= 0;
 
@@ -115,19 +113,14 @@ namespace Fractions
 
         public static bool operator >(Fraction self, Fraction other) => self.CompareTo(other) > 0;
 
-        public bool Equals(Fraction? other)
-        {
-            if (ReferenceEquals(other, null))
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            return numerator.Equals(other.numerator) && denominator.Equals(other.denominator);
-        }
+        public bool Equals(Fraction other) =>
+            numerator.Equals(other.numerator) && denominator.Equals(other.denominator);
 
         public static Fraction Abs(Fraction self) =>
             new Fraction(BigInteger.Abs(self.numerator), self.denominator, false);
 
-        public override bool Equals(object? other) => Equals(other as Fraction);
+        public override bool Equals(object? other) =>
+            (other is Fraction) && Equals((Fraction)other);
 
         public override int GetHashCode()
         {
@@ -148,12 +141,8 @@ namespace Fractions
             return numerator < BigInteger.Zero ? -result : result;
         }
 
-        public int CompareTo(Fraction? other)
-        {
-            return ReferenceEquals(other, null)
-                ? 1
-                : (numerator * other.denominator).CompareTo(denominator * other.numerator);
-        }
+        public int CompareTo(Fraction other) =>
+            (numerator * other.denominator).CompareTo(denominator * other.numerator);
 
         private static BigInteger HashModulus = 2147483647;
         private static int HashInf = 314159;
