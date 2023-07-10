@@ -17,9 +17,6 @@ namespace Fractions
             get { return numerator.IsZero; }
         }
 
-        public Fraction()
-            : this(BigInteger.Zero, BigInteger.One, false) { }
-
         public Fraction(BigInteger value)
             : this(value, BigInteger.One, false) { }
 
