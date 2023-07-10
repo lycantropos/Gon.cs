@@ -34,7 +34,7 @@ def test_properties(numerator: BigInteger, denominator: BigInteger) -> None:
     assert result.denominator > BigInteger.Zero
 
 
-@given(strategies.numerators, strategies.zero_integers)
+@given(strategies.numerators, strategies.zero_big_integers)
 def test_zero_denominator(numerator: BigInteger,
                           denominator: BigInteger) -> None:
     with pytest.raises(System.DivideByZeroException):

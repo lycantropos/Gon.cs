@@ -34,7 +34,7 @@ def test_left_absorbing_element(dividend: Fractions.Fraction,
     assert dividend / divisor == dividend
 
 
-@given(strategies.fractions, strategies.non_zero_integers)
+@given(strategies.fractions, strategies.non_zero_big_integers)
 def test_big_integer_argument(dividend: Fractions.Fraction,
                               divisor: BigInteger) -> None:
     result = dividend / divisor
