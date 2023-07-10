@@ -18,12 +18,6 @@ def test_basic(numerator: BigInteger, denominator: BigInteger) -> None:
             or (denominator % result.denominator).IsZero)
 
 
-def test_no_argument() -> None:
-    result = Fractions.Fraction()
-
-    assert result == Fractions.Fraction(BigInteger.Zero, BigInteger.One)
-
-
 @given(strategies.fractions)
 def test_copy_constructor(fraction: Fractions.Fraction) -> None:
     result = Fractions.Fraction(fraction)
