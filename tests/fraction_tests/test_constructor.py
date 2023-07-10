@@ -21,7 +21,7 @@ def test_basic(numerator: BigInteger, denominator: BigInteger) -> None:
 def test_no_argument() -> None:
     result = Fractions.Fraction()
 
-    assert result == Fractions.Fraction(0, 1)
+    assert result == Fractions.Fraction(BigInteger.Zero, BigInteger.One)
 
 
 @given(strategies.fractions)
@@ -32,7 +32,7 @@ def test_copy_constructor(fraction: Fractions.Fraction) -> None:
 
 
 @given(strategies.numerators, strategies.denominators)
-def test_properties(numerator: int, denominator: int) -> None:
+def test_properties(numerator: BigInteger, denominator: BigInteger) -> None:
     result = Fractions.Fraction(numerator, denominator)
 
     assert equivalence(numerator.IsZero, result.numerator.IsZero)
