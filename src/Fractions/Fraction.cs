@@ -3,7 +3,11 @@ using System.Numerics;
 
 namespace Fractions
 {
-    public struct Fraction : IComparable<Fraction>, IEquatable<Fraction>
+    public struct Fraction
+        : IComparable<BigInteger>,
+            IComparable<Fraction>,
+            IEquatable<BigInteger>,
+            IEquatable<Fraction>
     {
         public BigInteger numerator;
         public BigInteger denominator;
@@ -101,17 +105,33 @@ namespace Fractions
         public static Fraction operator -(Fraction self, BigInteger other) =>
             new Fraction(self.numerator - other * self.denominator, self.denominator);
 
+        public static bool operator ==(Fraction self, BigInteger other) => self.Equals(other);
+
         public static bool operator ==(Fraction self, Fraction other) => self.Equals(other);
+
+        public static bool operator !=(Fraction self, BigInteger other) => !self.Equals(other);
 
         public static bool operator !=(Fraction self, Fraction other) => !self.Equals(other);
 
+        public static bool operator <=(Fraction self, BigInteger other) =>
+            self.CompareTo(other) <= 0;
+
         public static bool operator <=(Fraction self, Fraction other) => self.CompareTo(other) <= 0;
+
+        public static bool operator >=(Fraction self, BigInteger other) =>
+            self.CompareTo(other) >= 0;
 
         public static bool operator >=(Fraction self, Fraction other) => self.CompareTo(other) >= 0;
 
+        public static bool operator <(Fraction self, BigInteger other) => self.CompareTo(other) < 0;
+
         public static bool operator <(Fraction self, Fraction other) => self.CompareTo(other) < 0;
 
+        public static bool operator >(Fraction self, BigInteger other) => self.CompareTo(other) > 0;
+
         public static bool operator >(Fraction self, Fraction other) => self.CompareTo(other) > 0;
+
+        public bool Equals(BigInteger other) => denominator.IsOne && numerator.Equals(other);
 
         public bool Equals(Fraction other) =>
             numerator.Equals(other.numerator) && denominator.Equals(other.denominator);
@@ -140,6 +160,8 @@ namespace Fractions
             }
             return numerator < BigInteger.Zero ? -result : result;
         }
+
+        public int CompareTo(BigInteger other) => numerator.CompareTo(denominator * other);
 
         public int CompareTo(Fraction other) =>
             (numerator * other.denominator).CompareTo(denominator * other.numerator);
