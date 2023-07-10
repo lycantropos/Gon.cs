@@ -20,7 +20,7 @@ jobs:
     strategy:
       matrix:
         dotnet_version: [ '5.x', '6.x', '7.x' ]
-        python_version: '3.8'
+        python_version: [ '3.8' ]
         platform: [
           {
             os: 'macos-latest',
