@@ -34,10 +34,6 @@ jobs:
             os: 'windows-latest',
             python_architecture: 'x64'
           },
-          {
-            os: 'windows-latest',
-            python_architecture: 'x86'
-          },
         ]
     steps:
       - name: 'Checkout'
