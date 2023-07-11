@@ -8,6 +8,19 @@ namespace Fractions
             IComparable<Fraction>,
             IEquatable<BigInteger>,
             IEquatable<Fraction>
+#if NET7_0
+            ,
+            IAdditionOperators<Fraction, BigInteger, Fraction>,
+            IAdditionOperators<Fraction, Fraction, Fraction>,
+            IDivisionOperators<Fraction, BigInteger, Fraction>,
+            IDivisionOperators<Fraction, Fraction, Fraction>,
+            IMultiplyOperators<Fraction, BigInteger, Fraction>,
+            IMultiplyOperators<Fraction, Fraction, Fraction>,
+            ISubtractionOperators<Fraction, BigInteger, Fraction>,
+            ISubtractionOperators<Fraction, Fraction, Fraction>,
+            IUnaryNegationOperators<Fraction, Fraction>,
+            IUnaryPlusOperators<Fraction, Fraction>
+#endif
     {
         public BigInteger numerator;
         public BigInteger denominator;
