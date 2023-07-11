@@ -3,7 +3,7 @@ using System.Numerics;
 
 namespace Fractions
 {
-    public struct Fraction
+    public readonly struct Fraction
         : IComparable<BigInteger>,
             IComparable<Fraction>,
             IEquatable<BigInteger>,
@@ -22,8 +22,8 @@ namespace Fractions
             IUnaryPlusOperators<Fraction, Fraction>
 #endif
     {
-        public BigInteger numerator;
-        public BigInteger denominator;
+        public readonly BigInteger numerator;
+        public readonly BigInteger denominator;
 
         public bool IsZero
         {
