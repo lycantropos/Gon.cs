@@ -200,6 +200,18 @@ class Contour:
                 f'([{", ".join(map(str, self.vertices))}])')
 
 
+def cross_multiply(first_start: Point,
+                   first_end: Point,
+                   second_start: Point,
+                   second_end: Point) -> Fraction:
+    return _fraction_from_raw(
+            Gon.CrossMultiplier[Fractions.Fraction].CrossMultiply(
+                    _point_to_raw(first_start), _point_to_raw(first_end),
+                    _point_to_raw(second_start), _point_to_raw(second_end)
+            )
+    )
+
+
 def _fraction_from_raw(value: Fractions.Fraction) -> Fraction:
     return Fraction(_int_from_raw(value.numerator),
                     _int_from_raw(value.denominator))
