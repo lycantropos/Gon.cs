@@ -5,24 +5,23 @@ namespace Gon
     class LeftEvent<Scalar> : Event<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public RightEvent<Scalar>? right;
-        public readonly bool interiorToLeft;
-        public readonly bool fromFirstOperand;
-        public LeftEvent<Scalar>? belowEventFromShapedResult = null;
-        public UInt64 contourId = UInt64.MaxValue;
-        public bool fromInToOut = false;
-        public bool fromResult = false;
-        public UInt64 id = UInt64.MaxValue;
-        public bool otherInteriorToLeft = false;
-        public OverlapKind overlap_kind = OverlapKind.None;
-        public UInt64 startId = UInt64.MaxValue;
+        public readonly bool InteriorToLeft;
+        public readonly bool FromFirstOperand;
+        public LeftEvent<Scalar>? BelowEventFromShapedResult = null;
+        public UInt64 ContourId = UInt64.MaxValue;
+        public bool FromInToOut = false;
+        public bool FromResult = false;
+        public UInt64 Id = UInt64.MaxValue;
+        public bool OtherInteriorToLeft = false;
+        public OverlapKind OverlapKind = OverlapKind.None;
+        public UInt64 StartId = UInt64.MaxValue;
 
-        public override Event<Scalar> opposite
+        public override Event<Scalar> Opposite
         {
-            get { return right!; }
+            get { return _right!; }
         }
 
-        public override bool isLeft { get; } = true;
+        public override bool IsLeft { get; } = true;
 
         static LeftEvent<Scalar> FromEndpoints(
             Point<Scalar> start,
@@ -37,7 +36,7 @@ namespace Gon
                 interiorToLeft = false;
             }
             var result = new LeftEvent<Scalar>(start, null, interiorToLeft, fromFirstOperand);
-            result.right = new RightEvent<Scalar>(end, result);
+            result._right = new RightEvent<Scalar>(end, result);
             return result;
         }
 
@@ -49,9 +48,11 @@ namespace Gon
         )
             : base(start)
         {
-            this.right = right;
-            this.interiorToLeft = interiorToLeft;
-            this.fromFirstOperand = fromFirstOperand;
+            _right = right;
+            InteriorToLeft = interiorToLeft;
+            FromFirstOperand = fromFirstOperand;
         }
+
+        private RightEvent<Scalar>? _right;
     }
 }

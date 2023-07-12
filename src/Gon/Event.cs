@@ -5,20 +5,20 @@ namespace Gon
     public abstract class Event<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public readonly Point<Scalar> start;
+        public readonly Point<Scalar> Start;
 
-        public Point<Scalar> end
+        public Point<Scalar> End
         {
-            get { return opposite.start; }
+            get { return Opposite.Start; }
         }
 
-        public abstract bool isLeft { get; }
+        public abstract bool IsLeft { get; }
 
-        public abstract Event<Scalar> opposite { get; }
+        public abstract Event<Scalar> Opposite { get; }
 
         protected Event(Point<Scalar> start)
         {
-            this.start = start;
+            Start = start;
         }
     }
 }
