@@ -5,13 +5,13 @@ namespace Gon
     public readonly struct Point<Scalar> : IComparable<Point<Scalar>>, IEquatable<Point<Scalar>>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public readonly Scalar x;
-        public readonly Scalar y;
+        public readonly Scalar X;
+        public readonly Scalar Y;
 
         public Point(Scalar x, Scalar y)
         {
-            this.x = x;
-            this.y = y;
+            X = x;
+            Y = y;
         }
 
         public static bool operator ==(Point<Scalar> self, Point<Scalar> other) =>
@@ -34,15 +34,15 @@ namespace Gon
 
         public int CompareTo(Point<Scalar> other)
         {
-            var result = x.CompareTo(other.x);
-            return result == 0 ? y.CompareTo(other.y) : result;
+            var result = X.CompareTo(other.X);
+            return result == 0 ? Y.CompareTo(other.Y) : result;
         }
 
-        public bool Equals(Point<Scalar> other) => x.Equals(other.x) && y.Equals(other.y);
+        public bool Equals(Point<Scalar> other) => X.Equals(other.X) && Y.Equals(other.Y);
 
         public override bool Equals(object? other) =>
             (other is Point<Scalar>) && Equals((Point<Scalar>)other);
 
-        public override int GetHashCode() => (x, y).GetHashCode();
+        public override int GetHashCode() => (X, Y).GetHashCode();
     }
 }
