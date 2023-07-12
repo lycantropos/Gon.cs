@@ -134,16 +134,14 @@ namespace Fractions
 
         public static bool operator <=(Fraction self, Fraction other) => self.CompareTo(other) <= 0;
 
-        public static bool operator <=(Fraction self, Int32 other) =>
-            self.CompareTo(other) <= 0;
+        public static bool operator <=(Fraction self, Int32 other) => self.CompareTo(other) <= 0;
 
         public static bool operator >=(Fraction self, BigInteger other) =>
             self.CompareTo(other) >= 0;
 
         public static bool operator >=(Fraction self, Fraction other) => self.CompareTo(other) >= 0;
 
-        public static bool operator >=(Fraction self, Int32 other) =>
-            self.CompareTo(other) >= 0;
+        public static bool operator >=(Fraction self, Int32 other) => self.CompareTo(other) >= 0;
 
         public static bool operator <(Fraction self, BigInteger other) => self.CompareTo(other) < 0;
 

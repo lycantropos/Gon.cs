@@ -4,7 +4,7 @@ namespace Gon
 {
     public static class Orienter<Scalar>
         where Scalar : IComparable<Scalar>,
-        IComparable<int>,
+            IComparable<int>,
             IEquatable<Scalar>
 #if NET7_0
             ,
@@ -18,13 +18,12 @@ namespace Gon
             Point<Scalar> second_ray_point
         )
         {
-            var comparisonResult = CrossMultiplier<Scalar>.CrossMultiply(
-                vertex,
-                first_ray_point,
-                vertex,
-                second_ray_point
-            ).CompareTo(0);
-            return comparisonResult == 0 ? Orientation.Collinear : (comparisonResult > 0 ? Orientation.Counterclockwise: Orientation.Clockwise);
+            var comparisonResult = CrossMultiplier<Scalar>
+                .CrossMultiply(vertex, first_ray_point, vertex, second_ray_point)
+                .CompareTo(0);
+            return comparisonResult == 0
+                ? Orientation.Collinear
+                : (comparisonResult > 0 ? Orientation.Counterclockwise : Orientation.Clockwise);
         }
     }
 }
