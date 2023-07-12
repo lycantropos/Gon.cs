@@ -1,5 +1,6 @@
 from __future__ import annotations
 
+import enum
 import typing as t
 from fractions import Fraction
 from pathlib import Path
@@ -20,6 +21,12 @@ System.Reflection.Assembly.LoadFile(str(_dlls_directory / 'Gon.dll'))
 import Gon
 
 _Scalar = t.Union[Fraction, float, int]
+
+
+class Orientation(enum.IntEnum):
+    CLOCKWISE = -1
+    COLLINEAR = 0
+    COUNTERCLOCKWISE = 1
 
 
 class Point:
@@ -212,6 +219,17 @@ def cross_multiply(first_start: Point,
     )
 
 
+def orient(vertex: Point,
+           first_ray_point: Point,
+           second_ray_point: Point) -> Orientation:
+    return _orientation_from_raw(
+            Gon.Orienter[Fractions.Fraction].Orient(
+                    _point_to_raw(vertex), _point_to_raw(first_ray_point),
+                    _point_to_raw(second_ray_point)
+            )
+    )
+
+
 def _fraction_from_raw(value: Fractions.Fraction) -> Fraction:
     return Fraction(_int_from_raw(value.numerator),
                     _int_from_raw(value.denominator))
@@ -224,6 +242,14 @@ def _fraction_to_raw(value: Fraction) -> Fractions.Fraction:
 def _int_from_raw(value: BigInteger) -> int:
     return int.from_bytes(value.ToByteArray(False, False), 'little',
                           signed=True)
+
+
+def _orientation_from_raw(value: Gon.Orientation) -> Orientation:
+    return (Orientation.CLOCKWISE
+            if value == Gon.Orientation.Clockwise
+            else (Orientation.COLLINEAR
+                  if value == Gon.Orientation.Collinear
+                  else Orientation.COUNTERCLOCKWISE))
 
 
 def _point_from_raw(value: Gon.Point[Fractions.Fraction]) -> Point:

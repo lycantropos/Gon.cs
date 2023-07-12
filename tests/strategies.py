@@ -1,3 +1,5 @@
+import sys as _sys
+
 from hypothesis import strategies as _st
 from hypothesis_geometry import planar as _planar
 
@@ -7,3 +9,4 @@ scalars = _st.integers() | _st.fractions() | _st.floats(allow_infinity=False,
                                                         allow_nan=False)
 points = _planar.points(scalars,
                         context=_context)
+indices = _st.integers(0, _sys.maxsize)
