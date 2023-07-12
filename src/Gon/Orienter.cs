@@ -14,12 +14,12 @@ namespace Gon
     {
         public static Orientation Orient(
             Point<Scalar> vertex,
-            Point<Scalar> first_ray_point,
-            Point<Scalar> second_ray_point
+            Point<Scalar> firstRayPoint,
+            Point<Scalar> secondRayPoint
         )
         {
             var comparisonResult = CrossMultiplier<Scalar>
-                .CrossMultiply(vertex, first_ray_point, vertex, second_ray_point)
+                .CrossMultiply(vertex, firstRayPoint, vertex, secondRayPoint)
                 .CompareTo(0);
             return comparisonResult == 0
                 ? Orientation.Collinear
