@@ -32,11 +32,11 @@ class Orientation(enum.IntEnum):
 class Point:
     @property
     def x(self) -> Fraction:
-        return _fraction_from_raw(self._raw.x)
+        return _fraction_from_raw(self._raw.X)
 
     @property
     def y(self) -> Fraction:
-        return _fraction_from_raw(self._raw.y)
+        return _fraction_from_raw(self._raw.Y)
 
     _raw: Gon.Point[Fractions.Fraction]
 
@@ -135,11 +135,11 @@ class Point:
 class Segment:
     @property
     def end(self) -> Point:
-        return _point_from_raw(self._raw.end)
+        return _point_from_raw(self._raw.End)
 
     @property
     def start(self) -> Point:
-        return _point_from_raw(self._raw.start)
+        return _point_from_raw(self._raw.Start)
 
     _raw: Gon.Segment[Fractions.Fraction]
 
@@ -186,7 +186,7 @@ class Segment:
 class Contour:
     @property
     def vertices(self) -> t.Sequence[Point]:
-        return [_point_from_raw(vertex) for vertex in self._raw.vertices]
+        return [_point_from_raw(vertex) for vertex in self._raw.Vertices]
 
     _raw: Gon.Contour[Fractions.Fraction]
 
@@ -253,7 +253,7 @@ def _orientation_from_raw(value: Gon.Orientation) -> Orientation:
 
 
 def _point_from_raw(value: Gon.Point[Fractions.Fraction]) -> Point:
-    return Point(_fraction_from_raw(value.x), _fraction_from_raw(value.y))
+    return Point(_fraction_from_raw(value.X), _fraction_from_raw(value.Y))
 
 
 def _point_to_raw(value: Point) -> Gon.Point[Fractions.Fraction]:
