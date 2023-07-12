@@ -12,27 +12,26 @@ namespace Gon
 #endif
     {
         public static Scalar CrossMultiply(
-            Point<Scalar> first_start,
-            Point<Scalar> first_end,
-            Point<Scalar> second_start,
-            Point<Scalar> second_end
+            Point<Scalar> firstStart,
+            Point<Scalar> firstEnd,
+            Point<Scalar> secondStart,
+            Point<Scalar> secondEnd
         )
         {
 #if NET7_0
-            Point<Scalar> cast_first_start = first_start;
-            Point<Scalar> cast_first_end = first_end;
-            Point<Scalar> cast_second_start = second_start;
-            Point<Scalar> cast_second_end = second_end;
+            Point<Scalar> castFirstStart = firstStart;
+            Point<Scalar> castFirstEnd = firstEnd;
+            Point<Scalar> castSecondStart = secondStart;
+            Point<Scalar> castSecondEnd = secondEnd;
 #else
-            dynamic cast_first_start = first_start;
-            dynamic cast_first_end = first_end;
-            dynamic cast_second_start = second_start;
-            dynamic cast_second_end = second_end;
+            dynamic castFirstStart = firstStart;
+            dynamic castFirstEnd = firstEnd;
+            dynamic castSecondStart = secondStart;
+            dynamic castSecondEnd = secondEnd;
 #endif
             return (Scalar)(
-                (cast_first_end.x - cast_first_start.x) * (cast_second_end.y - cast_second_start.y)
-                - (cast_first_end.y - cast_first_start.y)
-                    * (cast_second_end.x - cast_second_start.x)
+                (castFirstEnd.x - castFirstStart.x) * (castSecondEnd.y - castSecondStart.y)
+                - (castFirstEnd.y - castFirstStart.y) * (castSecondEnd.x - castSecondStart.x)
             );
         }
     }
