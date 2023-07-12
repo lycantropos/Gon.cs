@@ -12,11 +12,22 @@ namespace Gon
             get { return Opposite.Start; }
         }
 
-        public abstract bool IsFromFirstOperand { get; }
+        public int EndId
+        {
+            get { return Opposite.StartId; }
+        }
+
+        public abstract bool FromFirstOperand { get; }
+
+        public abstract bool FromResult { get; }
+
+        public abstract int Id { get; set; }
 
         public abstract bool IsLeft { get; }
 
-        public abstract Event<Scalar> Opposite { get; }
+        public abstract Event<Scalar> Opposite { get; set; }
+
+        public abstract int StartId { get; set; }
 
         protected Event(Point<Scalar> start)
         {

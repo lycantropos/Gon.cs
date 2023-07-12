@@ -12,14 +12,14 @@ namespace Gon
             System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
 #endif
     {
-        public EventsQueueKey(Event<Scalar> value)
+        public EventsQueueKey(Event<Scalar> event_)
         {
-            _value = value;
+            Event = event_;
         }
 
         public int CompareTo(EventsQueueKey<Scalar> other)
         {
-            var (start, otherStart) = (_value.Start, other._value.Start);
+            var (start, otherStart) = (Event.Start, other.Event.Start);
             if (start.X.CompareTo(otherStart.X) != 0)
             {
                 return start.X.CompareTo(otherStart.X);
@@ -28,32 +28,33 @@ namespace Gon
             {
                 return start.Y.CompareTo(otherStart.Y);
             }
-            else if (_value.IsLeft != other._value.IsLeft)
+            else if (Event.IsLeft != other.Event.IsLeft)
             {
-                return _value.IsLeft ? 1 : -1;
+                return !Event.IsLeft ? -1 : 1;
             }
             else
             {
                 Orientation otherEndOrientation = Orienteer<Scalar>.Orient(
                     start,
-                    _value.End,
-                    other._value.End
+                    Event.End,
+                    other.Event.End
                 );
                 if (otherEndOrientation == Orientation.Collinear)
                 {
-                    return other._value.IsFromFirstOperand ? -1 : 1;
+                    return other.Event.FromFirstOperand ? -1 : 1;
                 }
                 else
                 {
-                    return
+                    return (
                         otherEndOrientation
-                        == (_value.IsLeft ? Orientation.Counterclockwise : Orientation.Clockwise)
+                        == (Event.IsLeft ? Orientation.Counterclockwise : Orientation.Clockwise)
+                    )
                         ? -1
                         : 1;
                 }
             }
         }
 
-        private readonly Event<Scalar> _value;
+        private readonly Event<Scalar> Event;
     }
 }
