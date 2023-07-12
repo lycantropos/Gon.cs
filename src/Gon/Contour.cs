@@ -5,11 +5,11 @@ namespace Gon
     public readonly struct Contour<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public readonly Point<Scalar>[] vertices;
+        public readonly Point<Scalar>[] Vertices;
 
         public Contour(Point<Scalar>[] vertices)
         {
-            this.vertices = vertices;
+            Vertices = vertices;
         }
     }
 }
