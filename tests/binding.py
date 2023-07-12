@@ -223,7 +223,7 @@ def orient(vertex: Point,
            first_ray_point: Point,
            second_ray_point: Point) -> Orientation:
     return _orientation_from_raw(
-            Gon.Orienter[Fractions.Fraction].Orient(
+            Gon.Orienteer[Fractions.Fraction].Orient(
                     _point_to_raw(vertex), _point_to_raw(first_ray_point),
                     _point_to_raw(second_ray_point)
             )
