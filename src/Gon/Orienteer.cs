@@ -4,7 +4,7 @@ namespace Gon
 {
     public static class Orienteer<Scalar>
         where Scalar : IComparable<Scalar>,
-            IComparable<int>,
+            IComparable<Int32>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
             ,
