@@ -6,7 +6,6 @@ namespace Gon
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
         public readonly bool InteriorToLeft;
-        public readonly bool FromFirstOperand;
         public LeftEvent<Scalar>? BelowEventFromShapedResult = null;
         public UInt64 ContourId = UInt64.MaxValue;
         public bool FromInToOut = false;
@@ -19,6 +18,11 @@ namespace Gon
         public override Event<Scalar> Opposite
         {
             get { return _right!; }
+        }
+
+        public override bool IsFromFirstOperand
+        {
+            get { return _isFromFirstOperand; }
         }
 
         public override bool IsLeft { get; } = true;
@@ -44,15 +48,16 @@ namespace Gon
             Point<Scalar> start,
             RightEvent<Scalar>? right,
             bool interiorToLeft,
-            bool fromFirstOperand
+            bool isFromFirstOperand
         )
             : base(start)
         {
             _right = right;
             InteriorToLeft = interiorToLeft;
-            FromFirstOperand = fromFirstOperand;
+            _isFromFirstOperand = isFromFirstOperand;
         }
 
+        private readonly bool _isFromFirstOperand;
         private RightEvent<Scalar>? _right;
     }
 }

@@ -12,6 +12,8 @@ namespace Gon
             get { return Opposite.Start; }
         }
 
+        public abstract bool IsFromFirstOperand { get; }
+
         public abstract bool IsLeft { get; }
 
         public abstract Event<Scalar> Opposite { get; }

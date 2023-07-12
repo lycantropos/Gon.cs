@@ -13,6 +13,11 @@ namespace Gon
             get { return _left; }
         }
 
+        public override bool IsFromFirstOperand
+        {
+            get { return _left.IsFromFirstOperand; }
+        }
+
         public override bool IsLeft { get; } = false;
 
         public RightEvent(Point<Scalar> start, LeftEvent<Scalar> left)
