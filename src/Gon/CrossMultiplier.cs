@@ -30,8 +30,8 @@ namespace Gon
             dynamic castSecondEnd = secondEnd;
 #endif
             return (Scalar)(
-                (castFirstEnd.x - castFirstStart.x) * (castSecondEnd.y - castSecondStart.y)
-                - (castFirstEnd.y - castFirstStart.y) * (castSecondEnd.x - castSecondStart.x)
+                (castFirstEnd.X - castFirstStart.X) * (castSecondEnd.Y - castSecondStart.Y)
+                - (castFirstEnd.Y - castFirstStart.Y) * (castSecondEnd.X - castSecondStart.X)
             );
         }
     }
