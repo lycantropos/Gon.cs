@@ -5,7 +5,7 @@ namespace Gon
     public static class CrossMultiplier<Scalar>
         where Scalar : IComparable<Scalar>,
             IEquatable<Scalar>
-#if NET7_0
+#if NET7_0_OR_GREATER
             ,
             System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
             System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
@@ -18,7 +18,7 @@ namespace Gon
             Point<Scalar> secondEnd
         )
         {
-#if NET7_0
+#if NET7_0_OR_GREATER
             Point<Scalar> castFirstStart = firstStart;
             Point<Scalar> castFirstEnd = firstEnd;
             Point<Scalar> castSecondStart = secondStart;

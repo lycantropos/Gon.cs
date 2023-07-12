@@ -6,7 +6,7 @@ namespace Gon
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>
-#if NET7_0
+#if NET7_0_OR_GREATER
             ,
             System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
             System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>

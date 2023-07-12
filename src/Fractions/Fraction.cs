@@ -10,7 +10,7 @@ namespace Fractions
             IEquatable<BigInteger>,
             IEquatable<Fraction>,
             IEquatable<Int32>
-#if NET7_0
+#if NET7_0_OR_GREATER
             ,
             IAdditionOperators<Fraction, BigInteger, Fraction>,
             IAdditionOperators<Fraction, Fraction, Fraction>,
