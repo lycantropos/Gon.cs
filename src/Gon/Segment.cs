@@ -2,11 +2,11 @@ using System;
 
 namespace Gon
 {
-    public class Segment<Scalar>
+    public readonly struct Segment<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public Point<Scalar> start;
-        public Point<Scalar> end;
+        public readonly Point<Scalar> start;
+        public readonly Point<Scalar> end;
 
         public Segment(Point<Scalar> start, Point<Scalar> end)
         {
@@ -14,23 +14,18 @@ namespace Gon
             this.end = end;
         }
 
-        public static bool operator ==(Segment<Scalar>? self, Segment<Scalar>? other) =>
-            ReferenceEquals(self, null) ? ReferenceEquals(other, null) : self.Equals(other);
+        public static bool operator ==(Segment<Scalar> self, Segment<Scalar> other) =>
+            self.Equals(other);
 
         public static bool operator !=(Segment<Scalar> self, Segment<Scalar> other) =>
-            ReferenceEquals(self, null) ? !ReferenceEquals(other, null) : !self.Equals(other);
+            !self.Equals(other);
 
-        public bool Equals(Segment<Scalar>? other)
-        {
-            if (ReferenceEquals(other, null))
-                return false;
-            if (ReferenceEquals(this, other))
-                return true;
-            return start.Equals(other.start) && end.Equals(other.end)
-                || start.Equals(other.end) && end.Equals(other.start);
-        }
+        public bool Equals(Segment<Scalar> other) =>
+            start.Equals(other.start) && end.Equals(other.end)
+            || start.Equals(other.end) && end.Equals(other.start);
 
-        public override bool Equals(object? other) => Equals(other as Segment<Scalar>);
+        public override bool Equals(object? other) =>
+            (other is Segment<Scalar>) && Equals((Segment<Scalar>)other);
 
         public override int GetHashCode() => (start, end).GetHashCode();
     }
