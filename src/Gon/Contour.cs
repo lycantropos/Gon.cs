@@ -2,10 +2,10 @@ using System;
 
 namespace Gon
 {
-    public class Contour<Scalar>
+    public readonly struct Contour<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public Point<Scalar>[] vertices;
+        public readonly Point<Scalar>[] vertices;
 
         public Contour(Point<Scalar>[] vertices)
         {
