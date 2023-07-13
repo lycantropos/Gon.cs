@@ -89,6 +89,12 @@ namespace Gon
             get { return Vertices.Length; }
         }
 
+        public static bool operator ==(Contour<Scalar> self, Contour<Scalar> other) =>
+            self.Equals(other);
+
+        public static bool operator !=(Contour<Scalar> self, Contour<Scalar> other) =>
+            !self.Equals(other);
+
         public bool Equals(Contour<Scalar> other) => AreVerticesEqual(Vertices, other.Vertices);
 
         public override bool Equals(object? other) =>
