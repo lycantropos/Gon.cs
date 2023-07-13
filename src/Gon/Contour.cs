@@ -1,8 +1,9 @@
 using System;
+using System.Diagnostics;
 
 namespace Gon
 {
-    public readonly struct Contour<Scalar> : IBounded<Scalar>
+    public readonly struct Contour<Scalar> : IBounded<Scalar>, IEquatable<Contour<Scalar>>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>
@@ -64,14 +65,7 @@ namespace Gon
         {
             get
             {
-                int minVertexIndex = 0;
-                for (int index = 1; index < Vertices.Length; ++index)
-                {
-                    if (Vertices[minVertexIndex] < Vertices[index])
-                    {
-                        minVertexIndex = index;
-                    }
-                }
+                var minVertexIndex = MinVertexIndex;
                 return Orienteer<Scalar>.Orient(
                     Vertices[minVertexIndex == 0 ? Vertices.Length - 1 : minVertexIndex - 1],
                     Vertices[minVertexIndex],
@@ -93,6 +87,83 @@ namespace Gon
         public int VerticesCount
         {
             get { return Vertices.Length; }
+        }
+
+        public bool Equals(Contour<Scalar> other) => AreVerticesEqual(Vertices, other.Vertices);
+
+        public override bool Equals(object? other) =>
+            (other is Contour<Scalar>) && Equals((Contour<Scalar>)other);
+
+        public override int GetHashCode() => 0;
+
+        private int MinVertexIndex
+        {
+            get
+            {
+                int result = 0;
+                for (int index = 1; index < Vertices.Length; ++index)
+                {
+                    if (Vertices[result] < Vertices[index])
+                    {
+                        result = index;
+                    }
+                }
+                return result;
+            }
+        }
+
+        private static bool AreVerticesEqual(Point<Scalar>[] first, Point<Scalar>[] second)
+        {
+            if (first.Length != second.Length)
+            {
+                return false;
+            }
+            var secondOffset = Array.IndexOf(second, first[0]);
+            if (secondOffset < 0)
+            {
+                return false;
+            }
+            Debug.Assert(first[0] == second[secondOffset]);
+            if (first[1] == second[(secondOffset + 1) % second.Length])
+            {
+                for (int index = 2; index < second.Length - secondOffset; ++index)
+                {
+                    if (first[index] != second[secondOffset + index])
+                    {
+                        return false;
+                    }
+                }
+                for (int index = 0; index < secondOffset; ++index)
+                {
+                    if (first[first.Length - secondOffset + index] != second[index])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else if (first[1] == second[(second.Length + (secondOffset - 1)) % second.Length])
+            {
+                for (int index = 2; index < secondOffset; ++index)
+                {
+                    if (first[index] != second[secondOffset - index])
+                    {
+                        return false;
+                    }
+                }
+                for (int index = secondOffset + 1; index < second.Length; ++index)
+                {
+                    if (first[first.Length + secondOffset - index] != second[index])
+                    {
+                        return false;
+                    }
+                }
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
