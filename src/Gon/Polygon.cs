@@ -1,8 +1,9 @@
 using System;
+using System.Collections.Generic;
 
 namespace Gon
 {
-    public readonly struct Polygon<Scalar> : IBounded<Scalar>
+    public readonly struct Polygon<Scalar> : IBounded<Scalar>, IEquatable<Polygon<Scalar>>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>
@@ -54,6 +55,48 @@ namespace Gon
         public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Polygon<Scalar> other)
         {
             return (new Operation<Scalar>(self, other)).Intersect();
+        }
+
+        public static bool operator ==(Polygon<Scalar> self, Polygon<Scalar> other) =>
+            self.Equals(other);
+
+        public static bool operator !=(Polygon<Scalar> self, Polygon<Scalar> other) =>
+            !self.Equals(other);
+
+        public bool Equals(Polygon<Scalar> other)
+        {
+            if (Border != other.Border || Holes.Length != other.Holes.Length)
+            {
+                return false;
+            }
+            var holesSet = new HashSet<Contour<Scalar>>(Holes);
+            foreach (var otherHole in other.Holes)
+            {
+                if (!holesSet.Contains(otherHole))
+                {
+                    return false;
+                }
+            }
+            return true;
+        }
+
+        public override bool Equals(object? other) =>
+            (other is Polygon<Scalar>) && Equals((Polygon<Scalar>)other);
+
+        public override int GetHashCode()
+        {
+            var holesHash = (Int64)0;
+            foreach (var hole in Holes)
+            {
+                holesHash ^= shuffleBits(hole.GetHashCode());
+            }
+            return (Border, holesHash).GetHashCode();
+        }
+
+        private static Int64 shuffleBits(int value)
+        {
+            var casted = (Int64)value;
+            return ((casted ^ 89869747) ^ (casted << 16)) * 3644798167;
         }
     }
 }
