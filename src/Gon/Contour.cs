@@ -94,7 +94,52 @@ namespace Gon
         public override bool Equals(object? other) =>
             (other is Contour<Scalar>) && Equals((Contour<Scalar>)other);
 
-        public override int GetHashCode() => 0;
+        public override int GetHashCode()
+        {
+            var minVertexIndex = MinVertexIndex;
+            Orientation orientation = Orienteer<Scalar>.Orient(
+                Vertices[minVertexIndex == 0 ? Vertices.Length - 1 : minVertexIndex - 1],
+                Vertices[minVertexIndex],
+                Vertices[(minVertexIndex + 1) % Vertices.Length]
+            );
+            var multiplier = InitialHashMultiplier;
+            var result = 3430008;
+            var index = 0;
+            if (orientation == Orientation.Clockwise)
+            {
+                for (int position = 0; position <= minVertexIndex; ++position)
+                {
+                    ++index;
+                    result =
+                        (result ^ Vertices[minVertexIndex - position].GetHashCode()) * multiplier;
+                    multiplier += (MultiplierIncrement + index + index);
+                }
+                for (int position = 1; position < Vertices.Length - minVertexIndex; ++position)
+                {
+                    ++index;
+                    result =
+                        (result ^ Vertices[Vertices.Length - position].GetHashCode()) * multiplier;
+                    multiplier += (MultiplierIncrement + index + index);
+                }
+            }
+            else
+            {
+                for (int position = minVertexIndex; position < Vertices.Length; ++position)
+                {
+                    ++index;
+                    result = (result ^ Vertices[position].GetHashCode()) * multiplier;
+                    multiplier += (MultiplierIncrement + index + index);
+                }
+                for (int position = 0; position < minVertexIndex; ++position)
+                {
+                    ++index;
+                    result = (result ^ Vertices[position].GetHashCode()) * multiplier;
+                    multiplier += (MultiplierIncrement + index + index);
+                }
+            }
+            result += 97531;
+            return result;
+        }
 
         private int MinVertexIndex
         {
@@ -111,6 +156,9 @@ namespace Gon
                 return result;
             }
         }
+
+        private const int InitialHashMultiplier = 1000003;
+        private const int MultiplierIncrement = 82520;
 
         private static bool AreVerticesEqual(Point<Scalar>[] first, Point<Scalar>[] second)
         {
