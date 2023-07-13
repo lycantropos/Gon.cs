@@ -144,7 +144,7 @@ namespace Gon
             }
             else if (first[1] == second[(second.Length + (secondOffset - 1)) % second.Length])
             {
-                for (int index = 2; index < secondOffset; ++index)
+                for (int index = 2; index <= secondOffset; ++index)
                 {
                     if (first[index] != second[secondOffset - index])
                     {
