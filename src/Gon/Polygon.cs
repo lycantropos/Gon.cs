@@ -85,18 +85,7 @@ namespace Gon
 
         public override int GetHashCode()
         {
-            var holesHash = (Int64)0;
-            foreach (var hole in Holes)
-            {
-                holesHash ^= shuffleBits(hole.GetHashCode());
-            }
-            return (Border, holesHash).GetHashCode();
-        }
-
-        private static Int64 shuffleBits(int value)
-        {
-            var casted = (Int64)value;
-            return ((casted ^ 89869747) ^ (casted << 16)) * 3644798167;
+            return (Border, Hashing.HashUnorderedUniqueIterable(Holes)).GetHashCode();
         }
     }
 }
