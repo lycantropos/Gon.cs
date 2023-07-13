@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    public readonly struct Segment<Scalar> : IBounded<Scalar>
+    public readonly struct Segment<Scalar> : IBounded<Scalar>, IEquatable<Segment<Scalar>>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
         public Segment(Point<Scalar> start, Point<Scalar> end)
