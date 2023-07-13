@@ -240,7 +240,7 @@ class Polygon:
         return self
 
     @t.overload
-    def __and__(self, other: te.Self) -> t.Any:
+    def __and__(self, other: te.Self) -> t.List[Polygon]:
         ...
 
     @t.overload
