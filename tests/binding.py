@@ -86,6 +86,9 @@ class Point:
                 if isinstance(other, Point)
                 else NotImplemented)
 
+    def __hash__(self) -> int:
+        return hash((self.x, self.y))
+
     @t.overload
     def __le__(self, other: te.Self) -> bool:
         ...
@@ -185,6 +188,10 @@ class Segment:
 
 class Contour:
     @property
+    def segments(self) -> t.Sequence[Segment]:
+        return [_segment_from_raw(segment) for segment in self._raw.Segments]
+
+    @property
     def vertices(self) -> t.Sequence[Point]:
         return [_point_from_raw(vertex) for vertex in self._raw.Vertices]
 
@@ -207,6 +214,53 @@ class Contour:
                 f'([{", ".join(map(str, self.vertices))}])')
 
 
+class Polygon:
+    @property
+    def border(self) -> Contour:
+        return _contour_from_raw(self._raw.Border)
+
+    @property
+    def holes(self) -> t.Sequence[Contour]:
+        return [_contour_from_raw(hole) for hole in self._raw.Holes]
+
+    @property
+    def segments(self) -> t.Sequence[Segment]:
+        return [_segment_from_raw(segment) for segment in self._raw.Segments]
+
+    _raw: Gon.Polygon[Fractions.Fraction]
+
+    def __new__(cls, border: Contour, holes: t.Sequence[Contour]) -> te.Self:
+        self = super().__new__(cls)
+        self._raw = Gon.Polygon[Fractions.Fraction](
+                _contour_to_raw(border),
+                System.Array[Gon.Contour[Fractions.Fraction]](
+                        [_contour_to_raw(hole) for hole in holes]
+                )
+        )
+        return self
+
+    @t.overload
+    def __and__(self, other: te.Self) -> t.Any:
+        ...
+
+    @t.overload
+    def __and__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __and__(self, other: t.Any) -> t.Any:
+        return ([_polygon_from_raw(raw_polygon)
+                 for raw_polygon in self._raw & other._raw]
+                if isinstance(other, Polygon)
+                else NotImplemented)
+
+    def __repr__(self) -> str:
+        return f'{type(self).__qualname__}({self.border!r}, {self.holes!r})'
+
+    def __str__(self) -> str:
+        return (f'{type(self).__qualname__}({self.border}, '
+                f'[{", ".join(map(str, self.holes))}])')
+
+
 def cross_multiply(first_start: Point,
                    first_end: Point,
                    second_start: Point,
@@ -226,6 +280,23 @@ def orient(vertex: Point,
             Gon.Orienteer[Fractions.Fraction].Orient(
                     _point_to_raw(vertex), _point_to_raw(first_ray_point),
                     _point_to_raw(second_ray_point)
+            )
+    )
+
+
+def _polygon_from_raw(value: Gon.Polygon[Fractions.Fraction]) -> Polygon:
+    return Polygon(_contour_from_raw(value.Border),
+                   [_contour_from_raw(hole) for hole in value.Holes])
+
+
+def _contour_from_raw(value: Gon.Contour[Fractions.Fraction]) -> Contour:
+    return Contour([_point_from_raw(vertex) for vertex in value.Vertices])
+
+
+def _contour_to_raw(value: Contour) -> Gon.Contour[Fractions.Fraction]:
+    return Gon.Contour[Fractions.Fraction](
+            System.Array[Gon.Point[Fractions.Fraction]](
+                    [_point_to_raw(vertex) for vertex in value.vertices]
             )
     )
 
@@ -259,3 +330,7 @@ def _point_from_raw(value: Gon.Point[Fractions.Fraction]) -> Point:
 def _point_to_raw(value: Point) -> Gon.Point[Fractions.Fraction]:
     return Gon.Point[Fractions.Fraction](_fraction_to_raw(value.x),
                                          _fraction_to_raw(value.y))
+
+
+def _segment_from_raw(value: Gon.Segment[Fractions.Fraction]) -> Segment:
+    return Segment(_point_from_raw(value.Start), _point_from_raw(value.End))
