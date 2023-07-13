@@ -5,7 +5,7 @@ from hypothesis_geometry import planar as _planar
 
 from tests.utils import context as _context
 
-MAX_VALUE = 10 ** 50
+MAX_VALUE = 10 ** _sys.float_info.dig
 MIN_VALUE = -MAX_VALUE
 scalars = (_st.integers(MIN_VALUE, MAX_VALUE)
            | _st.fractions(MIN_VALUE, MAX_VALUE,
