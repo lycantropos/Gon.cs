@@ -219,6 +219,10 @@ class Contour:
                 if isinstance(other, Contour)
                 else NotImplemented)
 
+    def __hash__(self) -> int:
+        result = int(self._raw.GetHashCode())
+        return result - (result == -1)
+
     def __repr__(self) -> str:
         return f'{type(self).__qualname__}({self.vertices!r})'
 
