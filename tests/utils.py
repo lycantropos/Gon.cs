@@ -66,8 +66,44 @@ def reverse_point_coordinates(point: Point) -> Point:
     return Point(point.y, point.x)
 
 
+def reverse_polygon_border(polygon: Polygon) -> Polygon:
+    return Polygon(reverse_contour(polygon.border), polygon.holes)
+
+
+def reverse_polygon_coordinates(polygon: Polygon) -> Polygon:
+    return Polygon(reverse_contour_coordinates(polygon.border),
+                   [reverse_contour_coordinates(hole)
+                    for hole in polygon.holes])
+
+
+def reverse_polygon_holes(polygon: Polygon) -> Polygon:
+    return Polygon(polygon.border, reverse_sequence(polygon.holes))
+
+
+def reverse_polygon_holes_contours(polygon: Polygon) -> Polygon:
+    return Polygon(polygon.border, [reverse_contour(hole)
+                                    for hole in polygon.holes])
+
+
+def reverse_sequence(value: t.Sequence[_T]) -> t.Sequence[_T]:
+    return value[::-1]
+
+
 def rotate_contour(contour: Contour, offset: int) -> Contour:
     return Contour(rotate_sequence(contour.vertices, offset))
+
+
+def rotate_polygon_border(polygon: Polygon, offset: int) -> Polygon:
+    return Polygon(rotate_contour(polygon.border, offset), polygon.holes)
+
+
+def rotate_polygon_holes(polygon: Polygon, offset: int) -> Polygon:
+    return Polygon(polygon.border, rotate_sequence(polygon.holes, offset))
+
+
+def rotate_polygon_holes_contours(polygon: Polygon, offset: int) -> Polygon:
+    return Polygon(polygon.border, [rotate_contour(hole, offset)
+                                    for hole in polygon.holes])
 
 
 def rotate_sequence(sequence: t.Sequence[_T], offset: int) -> t.List[_T]:
