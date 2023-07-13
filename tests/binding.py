@@ -291,6 +291,47 @@ class Polygon:
                 f'[{", ".join(map(str, self.holes))}])')
 
 
+class Multipolygon:
+    @property
+    def polygons(self) -> t.Sequence[Polygon]:
+        return [_polygon_from_raw(polygon) for polygon in self._raw.Polygons]
+
+    _raw: Gon.Multipolygon[Fractions.Fraction]
+
+    def __new__(cls, polygons: t.Sequence[Polygon]) -> te.Self:
+        self = super().__new__(cls)
+        self._raw = Gon.Contour[Fractions.Fraction](
+                System.Array[Gon.Polygon[Fractions.Fraction]](
+                        [_polygon_to_raw(vertex) for vertex in polygons]
+                )
+        )
+        return self
+
+    @t.overload
+    def __eq__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __eq__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __eq__(self, other: t.Any) -> t.Any:
+        return (self._raw == other._raw
+                if isinstance(other, Multipolygon)
+                else NotImplemented)
+
+    def __hash__(self) -> int:
+        result = int(self._raw.GetHashCode())
+        return result - (result == -1)
+
+    def __repr__(self) -> str:
+        return f'{type(self).__qualname__}({self.polygons!r})'
+
+    def __str__(self) -> str:
+        return (f'{type(self).__qualname__}'
+                f'([{", ".join(map(str, self.polygons))}])')
+
+
 def cross_multiply(first_start: Point,
                    first_end: Point,
                    second_start: Point,
@@ -317,6 +358,15 @@ def orient(vertex: Point,
 def _polygon_from_raw(value: Gon.Polygon[Fractions.Fraction]) -> Polygon:
     return Polygon(_contour_from_raw(value.Border),
                    [_contour_from_raw(hole) for hole in value.Holes])
+
+
+def _polygon_to_raw(value: Polygon) -> Gon.Polygon[Fractions.Fraction]:
+    return Gon.Polygon[Fractions.Fraction](
+            _contour_to_raw(value.border),
+            System.Array[Gon.Contour[Fractions.Fraction]](
+                    [_contour_to_raw(hole) for hole in value.holes]
+            )
+    )
 
 
 def _contour_from_raw(value: Gon.Contour[Fractions.Fraction]) -> Contour:
