@@ -206,6 +206,19 @@ class Contour:
         )
         return self
 
+    @t.overload
+    def __eq__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __eq__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __eq__(self, other: t.Any) -> t.Any:
+        return (self._raw == other._raw
+                if isinstance(other, Contour)
+                else NotImplemented)
+
     def __repr__(self) -> str:
         return f'{type(self).__qualname__}({self.vertices!r})'
 
