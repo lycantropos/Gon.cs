@@ -270,6 +270,23 @@ class Polygon:
                 if isinstance(other, Polygon)
                 else NotImplemented)
 
+    @t.overload
+    def __eq__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __eq__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __eq__(self, other: t.Any) -> t.Any:
+        return (self._raw == other._raw
+                if isinstance(other, Polygon)
+                else NotImplemented)
+
+    def __hash__(self) -> int:
+        result = int(self._raw.GetHashCode())
+        return result - (result == -1)
+
     def __repr__(self) -> str:
         return f'{type(self).__qualname__}({self.border!r}, {self.holes!r})'
 
