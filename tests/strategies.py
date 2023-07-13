@@ -16,3 +16,4 @@ scalars = (_st.integers(MIN_VALUE, MAX_VALUE)
 points = _planar.points(scalars,
                         context=_context)
 indices = _st.integers(0, _sys.maxsize)
+non_zero_integers = _st.integers(max_value=-1) | _st.integers(1)

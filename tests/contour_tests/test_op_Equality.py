@@ -30,16 +30,14 @@ def test_alternatives(first: Contour, second: Contour) -> None:
 
 
 @given(strategies.contours, strategies.contours)
-def test_reversals(first: Contour, second: Contour) -> None:
-    assert equivalence(first == second,
-                       reverse_contour(first) == reverse_contour(second))
+def test_coordinates_reversals(first: Contour, second: Contour) -> None:
     assert equivalence(first == second,
                        (reverse_contour_coordinates(first)
                         == reverse_contour_coordinates(second)))
 
 
 @given(strategies.contours)
-def test_vertices_reversal(contour: Contour) -> None:
+def test_vertices_reversals(contour: Contour) -> None:
     assert contour == reverse_contour(contour)
 
 
