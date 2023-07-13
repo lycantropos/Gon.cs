@@ -25,6 +25,33 @@ namespace Gon
             _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
         }
 
+        public Operation(Multipolygon<Scalar> first, Polygon<Scalar> second)
+        {
+            _firstSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(first);
+            _secondSegments = Utils.PolygonToCorrectlyOrientedSegments<Scalar>(second);
+            var firstMaxX = first.BoundingBox.MaxX;
+            var secondMaxX = second.BoundingBox.MaxX;
+            _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
+        }
+
+        public Operation(Polygon<Scalar> first, Multipolygon<Scalar> second)
+        {
+            _firstSegments = Utils.PolygonToCorrectlyOrientedSegments<Scalar>(first);
+            _secondSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(second);
+            var firstMaxX = first.BoundingBox.MaxX;
+            var secondMaxX = second.BoundingBox.MaxX;
+            _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
+        }
+
+        public Operation(Multipolygon<Scalar> first, Multipolygon<Scalar> second)
+        {
+            _firstSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(first);
+            _secondSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(second);
+            var firstMaxX = first.BoundingBox.MaxX;
+            var secondMaxX = second.BoundingBox.MaxX;
+            _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
+        }
+
         public Polygon<Scalar>[] Intersect()
         {
             var events = new List<Event<Scalar>>(_firstSegments.Length + _secondSegments.Length);

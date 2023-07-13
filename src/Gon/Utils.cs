@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Gon
 {
@@ -76,6 +77,53 @@ namespace Gon
                         : ContourVerticesToReversedSegments<Scalar>(hole.Vertices)
                 ).CopyTo(result, offset);
                 offset += hole.SegmentsCount;
+            }
+            return result;
+        }
+
+        public static Segment<Scalar>[] MultipolygonToCorrectlyOrientedSegments<Scalar>(
+            Multipolygon<Scalar> multipolygon
+        )
+            where Scalar : IComparable<Scalar>,
+                IComparable<Int32>,
+                IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IDivisionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+            int segmentsCount = 0;
+            foreach (var polygon in multipolygon.Polygons)
+            {
+                segmentsCount += ToPolygonSegmentsCount(polygon);
+            }
+            var result = new List<Segment<Scalar>>(segmentsCount);
+            foreach (var polygon in multipolygon.Polygons)
+            {
+                result.AddRange(PolygonToCorrectlyOrientedSegments(polygon));
+            }
+            return result.ToArray();
+        }
+
+        private static int ToPolygonSegmentsCount<Scalar>(Polygon<Scalar> value)
+            where Scalar : IComparable<Scalar>,
+                IComparable<Int32>,
+                IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IDivisionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+            int result = value.Border.SegmentsCount;
+            foreach (var hole in value.Holes)
+            {
+                result += hole.SegmentsCount;
             }
             return result;
         }

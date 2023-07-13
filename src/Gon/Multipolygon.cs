@@ -76,6 +76,19 @@ namespace Gon
             get { return Polygons.Length; }
         }
 
+        public static Polygon<Scalar>[] operator &(Multipolygon<Scalar> self, Polygon<Scalar> other)
+        {
+            return (new Operation<Scalar>(self, other)).Intersect();
+        }
+
+        public static Polygon<Scalar>[] operator &(
+            Multipolygon<Scalar> self,
+            Multipolygon<Scalar> other
+        )
+        {
+            return (new Operation<Scalar>(self, other)).Intersect();
+        }
+
         public static bool operator ==(Multipolygon<Scalar> self, Multipolygon<Scalar> other) =>
             self.Equals(other);
 

@@ -34,6 +34,11 @@ namespace Gon
             return (new Operation<Scalar>(self, other)).Intersect();
         }
 
+        public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Multipolygon<Scalar> other)
+        {
+            return (new Operation<Scalar>(self, other)).Intersect();
+        }
+
         public static bool operator ==(Polygon<Scalar> self, Polygon<Scalar> other) =>
             self.Equals(other);
 
