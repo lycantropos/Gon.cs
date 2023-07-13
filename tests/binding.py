@@ -253,7 +253,8 @@ class Polygon:
         return self
 
     @t.overload
-    def __and__(self, other: te.Self) -> t.List[Polygon]:
+    def __and__(self,
+                other: t.Union[te.Self, Multipolygon]) -> t.List[Polygon]:
         ...
 
     @t.overload
@@ -264,7 +265,11 @@ class Polygon:
         return ([_polygon_from_raw(raw_polygon)
                  for raw_polygon in self._raw & other._raw]
                 if isinstance(other, Polygon)
-                else NotImplemented)
+                else
+                ([_polygon_from_raw(raw_polygon)
+                  for raw_polygon in self._raw & _multipolygon_to_raw(other)]
+                 if isinstance(other, Multipolygon)
+                 else NotImplemented))
 
     @t.overload
     def __eq__(self, other: te.Self) -> bool:
@@ -306,6 +311,24 @@ class Multipolygon:
                 )
         )
         return self
+
+    @t.overload
+    def __and__(self, other: t.Union[te.Self, Polygon]) -> t.List[Polygon]:
+        ...
+
+    @t.overload
+    def __and__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __and__(self, other: t.Any) -> t.Any:
+        return ([_polygon_from_raw(raw_polygon)
+                 for raw_polygon in self._raw & _polygon_to_raw(other)]
+                if isinstance(other, Polygon)
+                else
+                ([_polygon_from_raw(raw_polygon)
+                  for raw_polygon in self._raw & other._raw]
+                 if isinstance(other, Multipolygon)
+                 else NotImplemented))
 
     @t.overload
     def __eq__(self, other: te.Self) -> bool:
@@ -355,20 +378,6 @@ def orient(vertex: Point,
     )
 
 
-def _polygon_from_raw(value: Gon.Polygon[Fractions.Fraction]) -> Polygon:
-    return Polygon(_contour_from_raw(value.Border),
-                   [_contour_from_raw(hole) for hole in value.Holes])
-
-
-def _polygon_to_raw(value: Polygon) -> Gon.Polygon[Fractions.Fraction]:
-    return Gon.Polygon[Fractions.Fraction](
-            _contour_to_raw(value.border),
-            System.Array[Gon.Contour[Fractions.Fraction]](
-                    [_contour_to_raw(hole) for hole in value.holes]
-            )
-    )
-
-
 def _contour_from_raw(value: Gon.Contour[Fractions.Fraction]) -> Contour:
     return Contour([_point_from_raw(vertex) for vertex in value.Vertices])
 
@@ -395,6 +404,16 @@ def _int_from_raw(value: BigInteger) -> int:
                           signed=True)
 
 
+def _multipolygon_to_raw(
+        value: Multipolygon
+) -> Gon.Multipolygon[Fractions.Fraction]:
+    return Gon.Multipolygon[Fractions.Fraction](
+            System.Array[Gon.Polygon[Fractions.Fraction]](
+                    [_polygon_to_raw(polygon) for polygon in value.polygons]
+            )
+    )
+
+
 def _orientation_from_raw(value: Gon.Orientation) -> Orientation:
     return (Orientation.CLOCKWISE
             if value == Gon.Orientation.Clockwise
@@ -410,6 +429,20 @@ def _point_from_raw(value: Gon.Point[Fractions.Fraction]) -> Point:
 def _point_to_raw(value: Point) -> Gon.Point[Fractions.Fraction]:
     return Gon.Point[Fractions.Fraction](_fraction_to_raw(value.x),
                                          _fraction_to_raw(value.y))
+
+
+def _polygon_from_raw(value: Gon.Polygon[Fractions.Fraction]) -> Polygon:
+    return Polygon(_contour_from_raw(value.Border),
+                   [_contour_from_raw(hole) for hole in value.Holes])
+
+
+def _polygon_to_raw(value: Polygon) -> Gon.Polygon[Fractions.Fraction]:
+    return Gon.Polygon[Fractions.Fraction](
+            _contour_to_raw(value.border),
+            System.Array[Gon.Contour[Fractions.Fraction]](
+                    [_contour_to_raw(hole) for hole in value.holes]
+            )
+    )
 
 
 def _segment_from_raw(value: Gon.Segment[Fractions.Fraction]) -> Segment:
