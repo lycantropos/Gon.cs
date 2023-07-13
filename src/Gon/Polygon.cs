@@ -29,29 +29,6 @@ namespace Gon
             get { return Border.BoundingBox; }
         }
 
-        public Segment<Scalar>[] Segments
-        {
-            get
-            {
-                int segmentsCount = Border.SegmentsCount;
-                foreach (var hole in Holes)
-                {
-                    segmentsCount += hole.SegmentsCount;
-                }
-                Segment<Scalar>[] result = GC.AllocateUninitializedArray<Segment<Scalar>>(
-                    segmentsCount
-                );
-                Border.Segments.CopyTo(result, 0);
-                var offset = Border.SegmentsCount;
-                foreach (var hole in Holes)
-                {
-                    hole.Segments.CopyTo(result, offset);
-                    offset += hole.SegmentsCount;
-                }
-                return result;
-            }
-        }
-
         public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Polygon<Scalar> other)
         {
             return (new Operation<Scalar>(self, other)).Intersect();

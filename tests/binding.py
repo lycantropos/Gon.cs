@@ -240,10 +240,6 @@ class Polygon:
     def holes(self) -> t.Sequence[Contour]:
         return [_contour_from_raw(hole) for hole in self._raw.Holes]
 
-    @property
-    def segments(self) -> t.Sequence[Segment]:
-        return [_segment_from_raw(segment) for segment in self._raw.Segments]
-
     _raw: Gon.Polygon[Fractions.Fraction]
 
     def __new__(cls, border: Contour, holes: t.Sequence[Contour]) -> te.Self:
