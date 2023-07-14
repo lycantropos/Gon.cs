@@ -131,8 +131,8 @@ namespace Gon
         private Point<Scalar> _currentEndpoint;
         private int _currentEndpointId;
         private EventsQueue<Scalar> _eventsQueue;
-        private Segment<Scalar>[] _firstSegments;
-        private Segment<Scalar>[] _secondSegments;
+        private readonly Segment<Scalar>[] _firstSegments;
+        private readonly Segment<Scalar>[] _secondSegments;
         private SweepLine<Scalar> _sweepLine;
     }
 }

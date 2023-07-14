@@ -200,8 +200,8 @@ namespace Fractions
 
         public int CompareTo(int other) => numerator.CompareTo(denominator * other);
 
-        private static BigInteger HashModulus = 2147483647;
-        private static int HashInf = 314159;
+        private static readonly BigInteger HashModulus = 2147483647;
+        private static readonly int HashInf = 314159;
 
         private Fraction(BigInteger numerator, BigInteger denominator, bool normalize)
         {

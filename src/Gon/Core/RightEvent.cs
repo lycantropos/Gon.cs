@@ -39,7 +39,7 @@ namespace Gon
 
         private int _id = Constants.UndefinedIndex;
         private LeftEvent<Scalar> _left;
-        private Point<Scalar> _start;
+        private readonly Point<Scalar> _start;
         private int _startId = Constants.UndefinedIndex;
     }
 }

@@ -83,7 +83,7 @@ namespace Gon
         private int _id = Constants.UndefinedIndex;
         private readonly bool _isFromFirstOperand;
         private RightEvent<Scalar>? _right;
-        private Point<Scalar> _start;
+        private readonly Point<Scalar> _start;
         private int _startId = Constants.UndefinedIndex;
     }
 }
