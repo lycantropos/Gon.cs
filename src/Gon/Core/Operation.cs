@@ -73,8 +73,7 @@ namespace Gon
 
         private static Point<Scalar>[] ContourEventsToVertices(Event<Scalar>[] events)
         {
-            var result = new List<Point<Scalar>>(events.Length);
-            result.Add(events[0].Start);
+            var result = new List<Point<Scalar>>(events.Length) { events[0].Start };
             for (int index = 0; index < events.Length - 1; ++index)
             {
                 result.Add(events[index].End);
@@ -261,14 +260,12 @@ namespace Gon
         )
         {
             Debug.Assert(event_.IsLeft);
-            var result = new List<Event<Scalar>>();
-            result.Add(event_);
+            var result = new List<Event<Scalar>> { event_ };
             visitedEndpointsPositions[event_.StartId] = 0;
             var oppositeEventId = event_.Opposite.Id;
             var contourStart = event_.Start;
             Event<Scalar> cursor = event_;
-            var visitedEndpointsIds = new List<int>();
-            visitedEndpointsIds.Add(event_.StartId);
+            var visitedEndpointsIds = new List<int> { event_.StartId };
             while (cursor.End != contourStart)
             {
                 var previousEndpointPosition = visitedEndpointsPositions[cursor.EndId];
