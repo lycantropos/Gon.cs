@@ -114,8 +114,7 @@ namespace Gon
                 for (int position = 1; position < Vertices.Length - minVertexIndex; ++position)
                 {
                     ++index;
-                    result =
-                        (result ^ Vertices[Vertices.Length - position].GetHashCode()) * multiplier;
+                    result = (result ^ Vertices[^position].GetHashCode()) * multiplier;
                     multiplier += (MultiplierIncrement + index + index);
                 }
             }

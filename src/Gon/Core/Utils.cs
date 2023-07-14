@@ -16,7 +16,7 @@ namespace Gon
                 result[index] = new Segment<Scalar>(vertices[index], vertices[index + 1]);
             }
             result[vertices.Length - 1] = new Segment<Scalar>(
-                vertices[vertices.Length - 1],
+                vertices[^1],
                 vertices[0]
             );
             return result;
@@ -36,7 +36,7 @@ namespace Gon
             }
             result[vertices.Length - 1] = new Segment<Scalar>(
                 vertices[0],
-                vertices[vertices.Length - 1]
+                vertices[^1]
             );
             return result;
         }

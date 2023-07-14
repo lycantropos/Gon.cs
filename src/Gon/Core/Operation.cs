@@ -150,7 +150,7 @@ namespace Gon
             {
                 return new Polygon<Scalar>[0];
             }
-            var maxEndpointId = events[events.Count - 1].StartId;
+            var maxEndpointId = events[^1].StartId;
             Debug.Assert(maxEndpointId != Constants.UndefinedIndex);
             Debug.Assert(events.TrueForAll(event_ => event_.StartId <= maxEndpointId));
             events.Sort(
