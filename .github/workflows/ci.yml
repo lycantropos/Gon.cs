@@ -42,6 +42,8 @@ jobs:
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet_version }}
+      - name: 'Run dotnet format'
+        run: dotnet format style --verify-no-changes
       - name: 'Install CSharpier'
         run: dotnet tool install csharpier -g
       - name: 'Run CSharpier'
