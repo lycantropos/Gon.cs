@@ -83,9 +83,7 @@ namespace Gon
                             _sweepLine.Below(oppositeEvent)
                         );
                         _sweepLine.Remove(oppositeEvent);
-                        if (
-                            aboveEvent is not null && belowEvent is not null
-                        )
+                        if (aboveEvent is not null && belowEvent is not null)
                         {
                             _eventsQueue.DetectIntersection(belowEvent, aboveEvent);
                         }
