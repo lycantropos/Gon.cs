@@ -45,7 +45,7 @@ namespace Gon
             Polygon<Scalar> polygon
         )
             where Scalar : IComparable<Scalar>,
-                IComparable<Int32>,
+                IComparable<int>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
