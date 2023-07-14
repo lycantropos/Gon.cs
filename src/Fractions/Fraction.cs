@@ -162,8 +162,17 @@ namespace Fractions
         public static Fraction Abs(Fraction self) =>
             new Fraction(BigInteger.Abs(self.numerator), self.denominator, false);
 
-        public override bool Equals(object? other) =>
-            (other is Fraction) && Equals((Fraction)other);
+        public override bool Equals(object? other)
+        {
+            if (other is Fraction otherFraction)
+            {
+                return Equals(otherFraction);
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public override int GetHashCode()
         {

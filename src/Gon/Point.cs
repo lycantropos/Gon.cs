@@ -40,8 +40,17 @@ namespace Gon
 
         public bool Equals(Point<Scalar> other) => X.Equals(other.X) && Y.Equals(other.Y);
 
-        public override bool Equals(object? other) =>
-            (other is Point<Scalar>) && Equals((Point<Scalar>)other);
+        public override bool Equals(object? other)
+        {
+            if (other is Point<Scalar> otherPoint)
+            {
+                return Equals(otherPoint);
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public override int GetHashCode() => (X, Y).GetHashCode();
     }
