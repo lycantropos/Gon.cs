@@ -4,7 +4,7 @@ using System.Diagnostics;
 
 namespace Gon
 {
-    public readonly struct Operation<Scalar>
+    internal readonly struct Operation<Scalar>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>

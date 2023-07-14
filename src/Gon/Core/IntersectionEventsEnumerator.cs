@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    class IntersectionEventsNumerator<Scalar> : EventsEnumerator<Scalar>
+    internal class IntersectionEventsNumerator<Scalar> : EventsEnumerator<Scalar>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>

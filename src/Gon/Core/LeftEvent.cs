@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    public class LeftEvent<Scalar> : Event<Scalar>
+    internal sealed class LeftEvent<Scalar> : Event<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
         public LeftEvent(
@@ -11,11 +11,11 @@ namespace Gon
             RightEvent<Scalar>? right,
             bool interiorToLeft
         )
-            : base(start)
         {
+            _isFromFirstOperand = isFromFirstOperand;
+            _start = start;
             _right = right;
             InteriorToLeft = interiorToLeft;
-            _isFromFirstOperand = isFromFirstOperand;
         }
 
         public static LeftEvent<Scalar> FromEndpoints(
@@ -66,6 +66,11 @@ namespace Gon
             set { _right = (RightEvent<Scalar>)value; }
         }
 
+        public override Point<Scalar> Start
+        {
+            get { return _start; }
+        }
+
         public override int StartId
         {
             get { return _startId; }
@@ -96,6 +101,7 @@ namespace Gon
         private int _id = Constants.UndefinedIndex;
         private readonly bool _isFromFirstOperand;
         private RightEvent<Scalar>? _right;
+        private Point<Scalar> _start;
         private int _startId = Constants.UndefinedIndex;
     }
 }

@@ -2,10 +2,10 @@ using System;
 
 namespace Gon
 {
-    public abstract class Event<Scalar>
+    internal abstract class Event<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
-        public readonly Point<Scalar> Start;
+        public abstract Point<Scalar> Start { get; }
 
         public Point<Scalar> End
         {
@@ -28,10 +28,5 @@ namespace Gon
         public abstract Event<Scalar> Opposite { get; set; }
 
         public abstract int StartId { get; set; }
-
-        protected Event(Point<Scalar> start)
-        {
-            Start = start;
-        }
     }
 }

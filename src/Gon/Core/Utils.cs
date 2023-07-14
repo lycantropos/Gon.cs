@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace Gon
 {
-    static class Utils
+    internal static class Utils
     {
         public static Segment<Scalar>[] ContourVerticesToSegments<Scalar>(Point<Scalar>[] vertices)
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>

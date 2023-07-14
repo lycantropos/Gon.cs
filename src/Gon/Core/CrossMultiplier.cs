@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    public static class CrossMultiplier<Scalar>
+    internal static class CrossMultiplier<Scalar>
         where Scalar : IComparable<Scalar>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER

@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    public static class Orienteer<Scalar>
+    internal static class Orienteer<Scalar>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>

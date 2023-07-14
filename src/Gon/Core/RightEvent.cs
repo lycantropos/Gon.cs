@@ -2,12 +2,12 @@ using System;
 
 namespace Gon
 {
-    public class RightEvent<Scalar> : Event<Scalar>
+    internal sealed class RightEvent<Scalar> : Event<Scalar>
         where Scalar : IComparable<Scalar>, IEquatable<Scalar>
     {
         public RightEvent(Point<Scalar> start, LeftEvent<Scalar> left)
-            : base(start)
         {
+            _start = start;
             _left = left;
         }
 
@@ -35,6 +35,11 @@ namespace Gon
             set { _left = (LeftEvent<Scalar>)value; }
         }
 
+        public override Point<Scalar> Start
+        {
+            get { return _start; }
+        }
+
         public override int StartId
         {
             get { return _startId; }
@@ -43,6 +48,7 @@ namespace Gon
 
         private int _id = Constants.UndefinedIndex;
         private LeftEvent<Scalar> _left;
+        private Point<Scalar> _start;
         private int _startId = Constants.UndefinedIndex;
     }
 }

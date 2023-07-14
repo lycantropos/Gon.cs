@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    readonly struct SweepLineKey<Scalar> : IComparable<SweepLineKey<Scalar>>
+    internal readonly struct SweepLineKey<Scalar> : IComparable<SweepLineKey<Scalar>>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>

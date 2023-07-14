@@ -2,7 +2,7 @@ using System;
 
 namespace Gon
 {
-    public readonly struct EventsQueueKey<Scalar> : IComparable<EventsQueueKey<Scalar>>
+    internal readonly struct EventsQueueKey<Scalar> : IComparable<EventsQueueKey<Scalar>>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>

@@ -1,6 +1,6 @@
 namespace Gon
 {
-    public enum OverlapKind
+    internal enum OverlapKind
     {
         None,
         SameOrientation,

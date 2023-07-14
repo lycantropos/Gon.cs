@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace Gon
 {
-    abstract class EventsEnumerator<Scalar> : IEnumerator
+    internal abstract class EventsEnumerator<Scalar> : IEnumerator
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>

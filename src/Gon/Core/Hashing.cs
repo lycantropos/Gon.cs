@@ -3,7 +3,7 @@ using System.Collections;
 
 namespace Gon
 {
-    static class Hashing
+    internal static class Hashing
     {
         public static int HashUnorderedUniqueIterable<Iterable>(Iterable value)
             where Iterable : IEnumerable

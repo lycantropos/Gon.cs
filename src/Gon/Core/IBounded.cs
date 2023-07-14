@@ -1,6 +1,6 @@
 namespace Gon
 {
-    interface IBounded<Scalar>
+    internal interface IBounded<Scalar>
     {
         public Box<Scalar> BoundingBox { get; }
     }

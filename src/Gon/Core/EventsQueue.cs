@@ -8,7 +8,7 @@ using System.Diagnostics;
 
 namespace Gon
 {
-    public readonly struct EventsQueue<Scalar>
+    internal readonly struct EventsQueue<Scalar>
         where Scalar : IComparable<Scalar>,
             IComparable<Int32>,
             IEquatable<Scalar>
