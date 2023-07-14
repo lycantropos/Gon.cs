@@ -11,15 +11,9 @@ namespace Gon
             _left = left;
         }
 
-        public override bool FromFirstOperand
-        {
-            get { return _left.FromFirstOperand; }
-        }
+        public override bool FromFirstOperand => _left.FromFirstOperand;
 
-        public override bool FromResult
-        {
-            get { return _left.FromResult; }
-        }
+        public override bool FromResult => _left.FromResult;
 
         public override int Id
         {
@@ -35,10 +29,7 @@ namespace Gon
             set { _left = (LeftEvent<Scalar>)value; }
         }
 
-        public override Point<Scalar> Start
-        {
-            get { return _start; }
-        }
+        public override Point<Scalar> Start => _start;
 
         public override int StartId
         {

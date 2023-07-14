@@ -27,10 +27,7 @@ namespace Fractions
         public readonly BigInteger numerator;
         public readonly BigInteger denominator;
 
-        public bool IsZero
-        {
-            get { return numerator.IsZero; }
-        }
+        public bool IsZero => numerator.IsZero;
 
         public Fraction(BigInteger value)
             : this(value, BigInteger.One, false) { }

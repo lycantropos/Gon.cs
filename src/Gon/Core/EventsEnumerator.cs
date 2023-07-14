@@ -27,15 +27,9 @@ namespace Gon
             _current = null;
         }
 
-        object IEnumerator.Current
-        {
-            get { return Current; }
-        }
+        object IEnumerator.Current => Current;
 
-        public Event<Scalar> Current
-        {
-            get { return _current!; }
-        }
+        public Event<Scalar> Current => _current!;
 
         public bool MoveNext()
         {

@@ -42,15 +42,9 @@ namespace Gon
         public bool OtherInteriorToLeft = false;
         public OverlapKind OverlapKind = OverlapKind.None;
 
-        public override bool FromFirstOperand
-        {
-            get { return _isFromFirstOperand; }
-        }
+        public override bool FromFirstOperand => _isFromFirstOperand;
 
-        public override bool FromResult
-        {
-            get { return _fromResult; }
-        }
+        public override bool FromResult => _fromResult;
 
         public override int Id
         {
@@ -66,10 +60,7 @@ namespace Gon
             set { _right = (RightEvent<Scalar>)value; }
         }
 
-        public override Point<Scalar> Start
-        {
-            get { return _start; }
-        }
+        public override Point<Scalar> Start => _start;
 
         public override int StartId
         {
@@ -77,20 +68,11 @@ namespace Gon
             set { _startId = value; }
         }
 
-        public bool IsCommonRegionBoundary
-        {
-            get { return OverlapKind == OverlapKind.SameOrientation; }
-        }
+        public bool IsCommonRegionBoundary => OverlapKind == OverlapKind.SameOrientation;
 
-        public bool Inside
-        {
-            get { return OtherInteriorToLeft && OverlapKind == OverlapKind.None; }
-        }
+        public bool Inside => OtherInteriorToLeft && OverlapKind == OverlapKind.None;
 
-        public bool IsVertical
-        {
-            get { return Start == End; }
-        }
+        public bool IsVertical => Start == End;
 
         public void SetFromResult(bool value)
         {

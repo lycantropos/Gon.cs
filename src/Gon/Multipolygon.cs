@@ -71,10 +71,7 @@ namespace Gon
             }
         }
 
-        public int PolygonsCount
-        {
-            get { return Polygons.Length; }
-        }
+        public int PolygonsCount => Polygons.Length;
 
         public static Polygon<Scalar>[] operator &(Multipolygon<Scalar> self, Polygon<Scalar> other)
         {
@@ -101,9 +98,6 @@ namespace Gon
         public override bool Equals(object? other) =>
             (other is Polygon<Scalar>) && Equals((Polygon<Scalar>)other);
 
-        public override int GetHashCode()
-        {
-            return Hashing.HashUnorderedUniqueIterable(Polygons);
-        }
+        public override int GetHashCode() => Hashing.HashUnorderedUniqueIterable(Polygons);
     }
 }

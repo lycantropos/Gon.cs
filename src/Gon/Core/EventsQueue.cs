@@ -20,26 +20,17 @@ namespace Gon
             System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
 #endif
     {
-        public int Count
-        {
-            get { return _values.Count; }
-        }
+        public int Count => _values.Count;
 
-        public bool IsEmpty
-        {
-            get { return _values.Count == 0; }
-        }
+        public bool IsEmpty => _values.Count == 0;
 
-        public Point<Scalar> LeftmostPoint
-        {
-            get { return _values.
+        public Point<Scalar> LeftmostPoint => _values.
 #if NET6_0_OR_GREATER
-                Peek()
+            Peek()
 #else
-                First
+            First
 #endif
-                .Start; }
-        }
+            .Start;
 
         public EventsQueue(Segment<Scalar>[] firstSegments, Segment<Scalar>[] secondSegments)
         {

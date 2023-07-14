@@ -24,10 +24,7 @@ namespace Gon
         public readonly Contour<Scalar> Border;
         public readonly Contour<Scalar>[] Holes;
 
-        public Box<Scalar> BoundingBox
-        {
-            get { return Border.BoundingBox; }
-        }
+        public Box<Scalar> BoundingBox => Border.BoundingBox;
 
         public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Polygon<Scalar> other)
         {

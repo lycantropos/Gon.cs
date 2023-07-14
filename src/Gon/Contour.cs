@@ -74,20 +74,11 @@ namespace Gon
             }
         }
 
-        public int SegmentsCount
-        {
-            get { return Vertices.Length; }
-        }
+        public int SegmentsCount => Vertices.Length;
 
-        public Segment<Scalar>[] Segments
-        {
-            get { return Utils.ContourVerticesToSegments<Scalar>(Vertices); }
-        }
+        public Segment<Scalar>[] Segments => Utils.ContourVerticesToSegments<Scalar>(Vertices);
 
-        public int VerticesCount
-        {
-            get { return Vertices.Length; }
-        }
+        public int VerticesCount => Vertices.Length;
 
         public static bool operator ==(Contour<Scalar> self, Contour<Scalar> other) =>
             self.Equals(other);

@@ -7,15 +7,9 @@ namespace Gon
     {
         public abstract Point<Scalar> Start { get; }
 
-        public Point<Scalar> End
-        {
-            get { return Opposite.Start; }
-        }
+        public Point<Scalar> End => Opposite.Start;
 
-        public int EndId
-        {
-            get { return Opposite.StartId; }
-        }
+        public int EndId => Opposite.StartId;
 
         public abstract bool FromFirstOperand { get; }
 
