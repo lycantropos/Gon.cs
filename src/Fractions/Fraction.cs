@@ -41,16 +41,16 @@ namespace Fractions
         public static Fraction operator +(Fraction self) => self;
 
         public static Fraction operator -(Fraction self) =>
-            new Fraction(-self.numerator, self.denominator, false);
+            new(-self.numerator, self.denominator, false);
 
         public static Fraction operator +(Fraction self, Fraction other) =>
-            new Fraction(
+            new(
                 self.numerator * other.denominator + other.numerator * self.denominator,
                 self.denominator * other.denominator
             );
 
         public static Fraction operator +(Fraction self, BigInteger other) =>
-            new Fraction(self.numerator + other * self.denominator, self.denominator);
+            new(self.numerator + other * self.denominator, self.denominator);
 
         public static Fraction operator *(Fraction self, Fraction other)
         {
@@ -106,13 +106,13 @@ namespace Fractions
         }
 
         public static Fraction operator -(Fraction self, Fraction other) =>
-            new Fraction(
+            new(
                 self.numerator * other.denominator - other.numerator * self.denominator,
                 self.denominator * other.denominator
             );
 
         public static Fraction operator -(Fraction self, BigInteger other) =>
-            new Fraction(self.numerator - other * self.denominator, self.denominator);
+            new(self.numerator - other * self.denominator, self.denominator);
 
         public static bool operator ==(Fraction self, BigInteger other) => self.Equals(other);
 
@@ -160,7 +160,7 @@ namespace Fractions
         public bool Equals(int other) => denominator.IsOne && numerator.Equals(other);
 
         public static Fraction Abs(Fraction self) =>
-            new Fraction(BigInteger.Abs(self.numerator), self.denominator, false);
+            new(BigInteger.Abs(self.numerator), self.denominator, false);
 
         public override bool Equals(object? other) =>
             other is Fraction otherFraction && Equals(otherFraction);
