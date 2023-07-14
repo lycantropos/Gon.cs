@@ -48,24 +48,24 @@ namespace Gon
 
         public override int Id
         {
-            get { return _id; }
-            set { _id = value; }
+            get => _id;
+            set => _id = value;
         }
 
         public override bool IsLeft { get; } = true;
 
         public override Event<Scalar> Opposite
         {
-            get { return _right!; }
-            set { _right = (RightEvent<Scalar>)value; }
+            get => _right!;
+            set => _right = (RightEvent<Scalar>)value;
         }
 
         public override Point<Scalar> Start => _start;
 
         public override int StartId
         {
-            get { return _startId; }
-            set { _startId = value; }
+            get => _startId;
+            set => _startId = value;
         }
 
         public bool IsCommonRegionBoundary => OverlapKind == OverlapKind.SameOrientation;

@@ -17,24 +17,24 @@ namespace Gon
 
         public override int Id
         {
-            get { return _id; }
-            set { _id = value; }
+            get => _id;
+            set => _id = value;
         }
 
         public override bool IsLeft { get; } = false;
 
         public override Event<Scalar> Opposite
         {
-            get { return _left; }
-            set { _left = (LeftEvent<Scalar>)value; }
+            get => _left;
+            set => _left = (LeftEvent<Scalar>)value;
         }
 
         public override Point<Scalar> Start => _start;
 
         public override int StartId
         {
-            get { return _startId; }
-            set { _startId = value; }
+            get => _startId;
+            set => _startId = value;
         }
 
         private int _id = Constants.UndefinedIndex;
