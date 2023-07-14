@@ -53,7 +53,7 @@ namespace Gon
                         );
                         ComputeFields(leftEvent, belowEvent);
                         if (
-                            !ReferenceEquals(aboveEvent, null)
+                            aboveEvent is not null
                             && _eventsQueue.DetectIntersection(leftEvent, aboveEvent)
                         )
                         {
@@ -61,7 +61,7 @@ namespace Gon
                             ComputeFields(aboveEvent, leftEvent);
                         }
                         if (
-                            !ReferenceEquals(belowEvent, null)
+                            belowEvent is not null
                             && _eventsQueue.DetectIntersection(belowEvent, leftEvent)
                         )
                         {
@@ -84,7 +84,7 @@ namespace Gon
                         );
                         _sweepLine.Remove(oppositeEvent);
                         if (
-                            !ReferenceEquals(aboveEvent, null) && !ReferenceEquals(belowEvent, null)
+                            aboveEvent is not null && belowEvent is not null
                         )
                         {
                             _eventsQueue.DetectIntersection(belowEvent, aboveEvent);
@@ -110,7 +110,7 @@ namespace Gon
 
         private void ComputeFields(LeftEvent<Scalar> event_, LeftEvent<Scalar>? belowEvent)
         {
-            if (!ReferenceEquals(belowEvent, null))
+            if (belowEvent is not null)
             {
                 event_.OtherInteriorToLeft = (
                     event_.FromFirstOperand == belowEvent.FromFirstOperand

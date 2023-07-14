@@ -337,7 +337,7 @@ namespace Gon
             int parent = Constants.UndefinedIndex;
             var isInternal = false;
             var belowEventFromResult = event_.BelowEventFromResult;
-            if (!ReferenceEquals(belowEventFromResult, null))
+            if (belowEventFromResult is not null)
             {
                 var belowContourId = belowEventFromResult.ContourId;
                 if (!belowEventFromResult.FromInToOut)
