@@ -25,9 +25,9 @@ namespace Gon
             get
             {
                 var vertices = Vertices.GetEnumerator();
-                vertices.MoveNext();
+                _ = vertices.MoveNext();
                 var firstVertex = (Point<Scalar>)vertices.Current;
-                vertices.MoveNext();
+                _ = vertices.MoveNext();
                 var secondVertex = (Point<Scalar>)vertices.Current;
                 var (minX, maxX) =
                     firstVertex.X.CompareTo(secondVertex.X) < 0

@@ -27,9 +27,9 @@ namespace Gon
             get
             {
                 var polygons = Polygons.GetEnumerator();
-                polygons.MoveNext();
+                _ = polygons.MoveNext();
                 var firstPolygonBoundingBox = ((Polygon<Scalar>)polygons.Current).BoundingBox;
-                polygons.MoveNext();
+                _ = polygons.MoveNext();
                 var secondPolygonBoundingBox = ((Polygon<Scalar>)polygons.Current).BoundingBox;
                 var minX =
                     firstPolygonBoundingBox.MinX.CompareTo(secondPolygonBoundingBox.MinX) < 0
