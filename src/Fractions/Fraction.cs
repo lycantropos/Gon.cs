@@ -6,10 +6,10 @@ namespace Fractions
     public readonly struct Fraction
         : IComparable<BigInteger>,
             IComparable<Fraction>,
-            IComparable<Int32>,
+            IComparable<int>,
             IEquatable<BigInteger>,
             IEquatable<Fraction>,
-            IEquatable<Int32>
+            IEquatable<int>
 #if NET7_0_OR_GREATER
             ,
             IAdditionOperators<Fraction, BigInteger, Fraction>,
@@ -118,46 +118,46 @@ namespace Fractions
 
         public static bool operator ==(Fraction self, Fraction other) => self.Equals(other);
 
-        public static bool operator ==(Fraction self, Int32 other) => self.Equals(other);
+        public static bool operator ==(Fraction self, int other) => self.Equals(other);
 
         public static bool operator !=(Fraction self, BigInteger other) => !self.Equals(other);
 
         public static bool operator !=(Fraction self, Fraction other) => !self.Equals(other);
 
-        public static bool operator !=(Fraction self, Int32 other) => !self.Equals(other);
+        public static bool operator !=(Fraction self, int other) => !self.Equals(other);
 
         public static bool operator <=(Fraction self, BigInteger other) =>
             self.CompareTo(other) <= 0;
 
         public static bool operator <=(Fraction self, Fraction other) => self.CompareTo(other) <= 0;
 
-        public static bool operator <=(Fraction self, Int32 other) => self.CompareTo(other) <= 0;
+        public static bool operator <=(Fraction self, int other) => self.CompareTo(other) <= 0;
 
         public static bool operator >=(Fraction self, BigInteger other) =>
             self.CompareTo(other) >= 0;
 
         public static bool operator >=(Fraction self, Fraction other) => self.CompareTo(other) >= 0;
 
-        public static bool operator >=(Fraction self, Int32 other) => self.CompareTo(other) >= 0;
+        public static bool operator >=(Fraction self, int other) => self.CompareTo(other) >= 0;
 
         public static bool operator <(Fraction self, BigInteger other) => self.CompareTo(other) < 0;
 
         public static bool operator <(Fraction self, Fraction other) => self.CompareTo(other) < 0;
 
-        public static bool operator <(Fraction self, Int32 other) => self.CompareTo(other) < 0;
+        public static bool operator <(Fraction self, int other) => self.CompareTo(other) < 0;
 
         public static bool operator >(Fraction self, BigInteger other) => self.CompareTo(other) > 0;
 
         public static bool operator >(Fraction self, Fraction other) => self.CompareTo(other) > 0;
 
-        public static bool operator >(Fraction self, Int32 other) => self.CompareTo(other) > 0;
+        public static bool operator >(Fraction self, int other) => self.CompareTo(other) > 0;
 
         public bool Equals(BigInteger other) => denominator.IsOne && numerator.Equals(other);
 
         public bool Equals(Fraction other) =>
             numerator.Equals(other.numerator) && denominator.Equals(other.denominator);
 
-        public bool Equals(Int32 other) => denominator.IsOne && numerator.Equals(other);
+        public bool Equals(int other) => denominator.IsOne && numerator.Equals(other);
 
         public static Fraction Abs(Fraction self) =>
             new Fraction(BigInteger.Abs(self.numerator), self.denominator, false);
@@ -198,7 +198,7 @@ namespace Fractions
         public int CompareTo(Fraction other) =>
             (numerator * other.denominator).CompareTo(denominator * other.numerator);
 
-        public int CompareTo(Int32 other) => numerator.CompareTo(denominator * other);
+        public int CompareTo(int other) => numerator.CompareTo(denominator * other);
 
         private static BigInteger HashModulus = 2147483647;
         private static int HashInf = 314159;
@@ -228,11 +228,6 @@ namespace Fractions
         private static (BigInteger, BigInteger) NormalizeComponentsSign(
             BigInteger numerator,
             BigInteger denominator
-        )
-        {
-            return denominator < BigInteger.Zero
-                ? (-numerator, -denominator)
-                : (numerator, denominator);
-        }
+        ) => denominator < BigInteger.Zero ? (-numerator, -denominator) : (numerator, denominator);
     }
 }

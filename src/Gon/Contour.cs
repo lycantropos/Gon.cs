@@ -5,7 +5,7 @@ namespace Gon
 {
     public readonly struct Contour<Scalar> : IBounded<Scalar>, IEquatable<Contour<Scalar>>
         where Scalar : IComparable<Scalar>,
-            IComparable<Int32>,
+            IComparable<int>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
             ,
@@ -76,7 +76,7 @@ namespace Gon
 
         public int SegmentsCount => Vertices.Length;
 
-        public Segment<Scalar>[] Segments => Utils.ContourVerticesToSegments<Scalar>(Vertices);
+        public Segment<Scalar>[] Segments => Utils.ContourVerticesToSegments(Vertices);
 
         public int VerticesCount => Vertices.Length;
 

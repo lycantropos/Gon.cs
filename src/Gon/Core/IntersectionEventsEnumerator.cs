@@ -4,7 +4,7 @@ namespace Gon
 {
     internal class IntersectionEventsNumerator<Scalar> : EventsEnumerator<Scalar>
         where Scalar : IComparable<Scalar>,
-            IComparable<Int32>,
+            IComparable<int>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
             ,

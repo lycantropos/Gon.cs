@@ -5,7 +5,7 @@ namespace Gon
 {
     public readonly struct Multipolygon<Scalar> : IBounded<Scalar>, IEquatable<Multipolygon<Scalar>>
         where Scalar : IComparable<Scalar>,
-            IComparable<Int32>,
+            IComparable<int>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
             ,

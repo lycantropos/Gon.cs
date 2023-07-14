@@ -8,7 +8,7 @@ namespace Gon
         public static int HashUnorderedUniqueIterable<Iterable>(Iterable value)
             where Iterable : IEnumerable
         {
-            var result = (Int64)0;
+            var result = (long)0;
             foreach (var element in value)
             {
                 result ^= ShuffleBits(element.GetHashCode());
@@ -16,9 +16,9 @@ namespace Gon
             return result.GetHashCode();
         }
 
-        private static Int64 ShuffleBits(int value)
+        private static long ShuffleBits(int value)
         {
-            var casted = (Int64)value;
+            var casted = (long)value;
             return ((casted ^ 89869747) ^ (casted << 16)) * 3644798167;
         }
     }

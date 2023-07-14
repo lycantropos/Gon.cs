@@ -6,7 +6,7 @@ namespace Gon
 {
     internal readonly struct Operation<Scalar>
         where Scalar : IComparable<Scalar>,
-            IComparable<Int32>,
+            IComparable<int>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
             ,
@@ -18,8 +18,8 @@ namespace Gon
     {
         public Operation(Polygon<Scalar> first, Polygon<Scalar> second)
         {
-            _firstSegments = Utils.PolygonToCorrectlyOrientedSegments<Scalar>(first);
-            _secondSegments = Utils.PolygonToCorrectlyOrientedSegments<Scalar>(second);
+            _firstSegments = Utils.PolygonToCorrectlyOrientedSegments(first);
+            _secondSegments = Utils.PolygonToCorrectlyOrientedSegments(second);
             var firstMaxX = first.BoundingBox.MaxX;
             var secondMaxX = second.BoundingBox.MaxX;
             _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
@@ -27,8 +27,8 @@ namespace Gon
 
         public Operation(Multipolygon<Scalar> first, Polygon<Scalar> second)
         {
-            _firstSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(first);
-            _secondSegments = Utils.PolygonToCorrectlyOrientedSegments<Scalar>(second);
+            _firstSegments = Utils.MultipolygonToCorrectlyOrientedSegments(first);
+            _secondSegments = Utils.PolygonToCorrectlyOrientedSegments(second);
             var firstMaxX = first.BoundingBox.MaxX;
             var secondMaxX = second.BoundingBox.MaxX;
             _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
@@ -36,8 +36,8 @@ namespace Gon
 
         public Operation(Polygon<Scalar> first, Multipolygon<Scalar> second)
         {
-            _firstSegments = Utils.PolygonToCorrectlyOrientedSegments<Scalar>(first);
-            _secondSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(second);
+            _firstSegments = Utils.PolygonToCorrectlyOrientedSegments(first);
+            _secondSegments = Utils.MultipolygonToCorrectlyOrientedSegments(second);
             var firstMaxX = first.BoundingBox.MaxX;
             var secondMaxX = second.BoundingBox.MaxX;
             _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
@@ -45,8 +45,8 @@ namespace Gon
 
         public Operation(Multipolygon<Scalar> first, Multipolygon<Scalar> second)
         {
-            _firstSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(first);
-            _secondSegments = Utils.MultipolygonToCorrectlyOrientedSegments<Scalar>(second);
+            _firstSegments = Utils.MultipolygonToCorrectlyOrientedSegments(first);
+            _secondSegments = Utils.MultipolygonToCorrectlyOrientedSegments(second);
             var firstMaxX = first.BoundingBox.MaxX;
             var secondMaxX = second.BoundingBox.MaxX;
             _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;

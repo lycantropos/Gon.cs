@@ -66,7 +66,7 @@ namespace Gon
             (
                 polygon.Border.Orientation == Orientation.Counterclockwise
                     ? polygon.Border.Segments
-                    : ContourVerticesToReversedSegments<Scalar>(polygon.Border.Vertices)
+                    : ContourVerticesToReversedSegments(polygon.Border.Vertices)
             ).CopyTo(result, 0);
             var offset = polygon.Border.SegmentsCount;
             foreach (var hole in polygon.Holes)
@@ -74,7 +74,7 @@ namespace Gon
                 (
                     hole.Orientation == Orientation.Clockwise
                         ? hole.Segments
-                        : ContourVerticesToReversedSegments<Scalar>(hole.Vertices)
+                        : ContourVerticesToReversedSegments(hole.Vertices)
                 ).CopyTo(result, offset);
                 offset += hole.SegmentsCount;
             }
@@ -85,7 +85,7 @@ namespace Gon
             Multipolygon<Scalar> multipolygon
         )
             where Scalar : IComparable<Scalar>,
-                IComparable<Int32>,
+                IComparable<int>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
@@ -110,7 +110,7 @@ namespace Gon
 
         private static int ToPolygonSegmentsCount<Scalar>(Polygon<Scalar> value)
             where Scalar : IComparable<Scalar>,
-                IComparable<Int32>,
+                IComparable<int>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,

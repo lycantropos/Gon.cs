@@ -6,7 +6,7 @@ namespace Gon
 {
     internal abstract class EventsEnumerator<Scalar> : IEnumerator
         where Scalar : IComparable<Scalar>,
-            IComparable<Int32>,
+            IComparable<int>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
             ,
