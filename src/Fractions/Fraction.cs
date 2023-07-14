@@ -172,15 +172,10 @@ namespace Fractions
                 HashModulus - 2,
                 HashModulus
             );
-            int result;
-            if (denominatorModularInverse == BigInteger.Zero)
-            {
-                result = HashInf;
-            }
-            else
-            {
-                result = (int)(BigInteger.Abs(numerator) * denominatorModularInverse % HashModulus);
-            }
+            int result =
+                denominatorModularInverse == BigInteger.Zero
+                    ? HashInf
+                    : (int)(BigInteger.Abs(numerator) * denominatorModularInverse % HashModulus);
             return numerator < BigInteger.Zero ? -result : result;
         }
 
