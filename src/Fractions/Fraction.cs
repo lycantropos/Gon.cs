@@ -192,7 +192,9 @@ namespace Fractions
         private Fraction(BigInteger numerator, BigInteger denominator, bool normalize)
         {
             if (denominator.IsZero)
+            {
                 throw new DivideByZeroException("Denominator should not be zero.");
+            }
             if (normalize)
             {
                 (numerator, denominator) = NormalizeComponentsSign(numerator, denominator);
