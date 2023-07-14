@@ -170,7 +170,7 @@ namespace Gon
             var parents = new List<int>();
             var areEventsProcessed = new bool[events.Count];
             var contours = new List<Contour<Scalar>>();
-            var connectivity = eventsToConnectivity(events);
+            var connectivity = EventsToConnectivity(events);
             eventId = -1;
             var visitedEndpointsPositions = GC.AllocateUninitializedArray<int>(maxEndpointId + 1);
             Array.Fill(visitedEndpointsPositions, Constants.UndefinedIndex);
@@ -365,7 +365,7 @@ namespace Gon
             areInternal.Add(isInternal);
         }
 
-        private static int[] eventsToConnectivity(List<Event<Scalar>> events)
+        private static int[] EventsToConnectivity(List<Event<Scalar>> events)
         {
             var eventsCount = events.Count;
             var result = new int[eventsCount];

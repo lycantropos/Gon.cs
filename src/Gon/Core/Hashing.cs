@@ -11,12 +11,12 @@ namespace Gon
             var result = (Int64)0;
             foreach (var element in value)
             {
-                result ^= shuffleBits(element.GetHashCode());
+                result ^= ShuffleBits(element.GetHashCode());
             }
             return result.GetHashCode();
         }
 
-        private static Int64 shuffleBits(int value)
+        private static Int64 ShuffleBits(int value)
         {
             var casted = (Int64)value;
             return ((casted ^ 89869747) ^ (casted << 16)) * 3644798167;

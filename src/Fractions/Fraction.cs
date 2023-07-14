@@ -54,11 +54,11 @@ namespace Fractions
 
         public static Fraction operator *(Fraction self, Fraction other)
         {
-            var (numerator, other_denominator) = normalizeComponentsModuli(
+            var (numerator, other_denominator) = NormalizeComponentsModuli(
                 self.numerator,
                 other.denominator
             );
-            var (other_numerator, denominator) = normalizeComponentsModuli(
+            var (other_numerator, denominator) = NormalizeComponentsModuli(
                 other.numerator,
                 self.denominator
             );
@@ -71,7 +71,7 @@ namespace Fractions
 
         public static Fraction operator *(Fraction self, BigInteger other)
         {
-            var (other_normalized, denominator) = normalizeComponentsModuli(
+            var (other_normalized, denominator) = NormalizeComponentsModuli(
                 other,
                 self.denominator
             );
@@ -80,15 +80,15 @@ namespace Fractions
 
         public static Fraction operator /(Fraction self, Fraction other)
         {
-            var (numerator, other_numerator) = normalizeComponentsModuli(
+            var (numerator, other_numerator) = NormalizeComponentsModuli(
                 self.numerator,
                 other.numerator
             );
-            var (denominator, other_denominator) = normalizeComponentsModuli(
+            var (denominator, other_denominator) = NormalizeComponentsModuli(
                 self.denominator,
                 other.denominator
             );
-            var (result_numerator, result_denominator) = normalizeComponentsSign(
+            var (result_numerator, result_denominator) = NormalizeComponentsSign(
                 numerator * other_denominator,
                 denominator * other_numerator
             );
@@ -97,8 +97,8 @@ namespace Fractions
 
         public static Fraction operator /(Fraction self, BigInteger other)
         {
-            var (numerator, other_normalized) = normalizeComponentsModuli(self.numerator, other);
-            var (result_numerator, result_denominator) = normalizeComponentsSign(
+            var (numerator, other_normalized) = NormalizeComponentsModuli(self.numerator, other);
+            var (result_numerator, result_denominator) = NormalizeComponentsSign(
                 numerator,
                 self.denominator * other_normalized
             );
@@ -200,14 +200,14 @@ namespace Fractions
                 throw new DivideByZeroException("Denominator should not be zero.");
             if (normalize)
             {
-                (numerator, denominator) = normalizeComponentsSign(numerator, denominator);
-                (numerator, denominator) = normalizeComponentsModuli(numerator, denominator);
+                (numerator, denominator) = NormalizeComponentsSign(numerator, denominator);
+                (numerator, denominator) = NormalizeComponentsModuli(numerator, denominator);
             }
             this.numerator = numerator;
             this.denominator = denominator;
         }
 
-        private static (BigInteger, BigInteger) normalizeComponentsModuli(
+        private static (BigInteger, BigInteger) NormalizeComponentsModuli(
             BigInteger numerator,
             BigInteger denominator
         )
@@ -216,7 +216,7 @@ namespace Fractions
             return (numerator / gcd, denominator / gcd);
         }
 
-        private static (BigInteger, BigInteger) normalizeComponentsSign(
+        private static (BigInteger, BigInteger) NormalizeComponentsSign(
             BigInteger numerator,
             BigInteger denominator
         )
