@@ -355,29 +355,6 @@ class Multipolygon:
                 f'([{", ".join(map(str, self.polygons))}])')
 
 
-def cross_multiply(first_start: Point,
-                   first_end: Point,
-                   second_start: Point,
-                   second_end: Point) -> Fraction:
-    return _fraction_from_raw(
-            Gon.CrossMultiplier[Fractions.Fraction].CrossMultiply(
-                    _point_to_raw(first_start), _point_to_raw(first_end),
-                    _point_to_raw(second_start), _point_to_raw(second_end)
-            )
-    )
-
-
-def orient(vertex: Point,
-           first_ray_point: Point,
-           second_ray_point: Point) -> Orientation:
-    return _orientation_from_raw(
-            Gon.Orienteer[Fractions.Fraction].Orient(
-                    _point_to_raw(vertex), _point_to_raw(first_ray_point),
-                    _point_to_raw(second_ray_point)
-            )
-    )
-
-
 def _contour_from_raw(value: Gon.Contour[Fractions.Fraction]) -> Contour:
     return Contour([_point_from_raw(vertex) for vertex in value.Vertices])
 
