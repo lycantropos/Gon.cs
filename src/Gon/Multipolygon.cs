@@ -95,17 +95,8 @@ namespace Gon
         public bool Equals(Multipolygon<Scalar> other) =>
             new HashSet<Polygon<Scalar>>(Polygons) == new HashSet<Polygon<Scalar>>(other.Polygons);
 
-        public override bool Equals(object? other)
-        {
-            if (other is Multipolygon<Scalar> otherMultipolygon)
-            {
-                return Equals(otherMultipolygon);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object? other) =>
+            other is Multipolygon<Scalar> otherMultipolygon && Equals(otherMultipolygon);
 
         public override int GetHashCode() => Hashing.HashUnorderedUniqueIterable(Polygons);
     }

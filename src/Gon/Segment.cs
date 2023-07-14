@@ -36,17 +36,8 @@ namespace Gon
             Start.Equals(other.Start) && End.Equals(other.End)
             || Start.Equals(other.End) && End.Equals(other.Start);
 
-        public override bool Equals(object? other)
-        {
-            if (other is Segment<Scalar> otherSegment)
-            {
-                return Equals(otherSegment);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object? other) =>
+            other is Segment<Scalar> otherSegment && Equals(otherSegment);
 
         public override int GetHashCode() =>
             (Start < End ? (Start, End) : (End, Start)).GetHashCode();

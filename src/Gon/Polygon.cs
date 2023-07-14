@@ -59,17 +59,8 @@ namespace Gon
             return true;
         }
 
-        public override bool Equals(object? other)
-        {
-            if (other is Polygon<Scalar> otherPolygon)
-            {
-                return Equals(otherPolygon);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object? other) =>
+            other is Polygon<Scalar> otherPolygon && Equals(otherPolygon);
 
         public override int GetHashCode()
         {

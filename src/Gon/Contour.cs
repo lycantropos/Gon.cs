@@ -88,17 +88,8 @@ namespace Gon
 
         public bool Equals(Contour<Scalar> other) => AreVerticesEqual(Vertices, other.Vertices);
 
-        public override bool Equals(object? other)
-        {
-            if (other is Contour<Scalar> otherContour)
-            {
-                return Equals(otherContour);
-            }
-            else
-            {
-                return false;
-            }
-        }
+        public override bool Equals(object? other) =>
+            other is Contour<Scalar> otherContour && Equals(otherContour);
 
         public override int GetHashCode()
         {
