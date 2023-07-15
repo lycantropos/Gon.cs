@@ -163,14 +163,12 @@ namespace Gon
             return result;
         }
 
-        private static bool IsNotNull<T>(T value)
-        {
+        private static bool IsNotNull<T>(T value) =>
 #if NETCOREAPP3_0_OR_GREATER
-            return IsNotNull(value);
+            value is not null;
 #else
-            return !ReferenceEquals(value, null);
+            value is object;
 #endif
-        }
 
         private static T[] ToEmptyArray<T>(int capacity)
         {
