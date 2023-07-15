@@ -1,4 +1,6 @@
+#if NETCOREAPP2_1_OR_GREATER
 using System;
+#endif
 using System.Collections;
 
 namespace Gon
