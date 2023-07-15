@@ -12,12 +12,10 @@ pythonnet.load('coreclr')
 import System
 from System.Numerics import BigInteger
 
-_dlls_directory = Path(__file__).parent
+for _file in Path(__file__).parent.glob('*.dll'):
+    System.Reflection.Assembly.LoadFile(str(_file))
 
-System.Reflection.Assembly.LoadFile(str(_dlls_directory / 'Fractions.dll'))
 import Fractions
-
-System.Reflection.Assembly.LoadFile(str(_dlls_directory / 'Gon.dll'))
 import Gon
 
 _Scalar = t.Union[Fraction, float, int]
