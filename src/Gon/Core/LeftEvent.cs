@@ -10,7 +10,7 @@ namespace Gon
             public LeftEvent(
                 bool isFromFirstOperand,
                 Point<Scalar> start,
-                RightEvent<Scalar>? right,
+                RightEvent<Scalar> right,
                 bool interiorToLeft
             )
             {
@@ -38,7 +38,7 @@ namespace Gon
             }
 
             public readonly bool InteriorToLeft;
-            public LeftEvent<Scalar>? BelowEventFromResult = null;
+            public LeftEvent<Scalar> BelowEventFromResult = null;
             public int ContourId = UndefinedIndex;
             public bool FromInToOut = false;
             public bool OtherInteriorToLeft = false;
@@ -58,7 +58,7 @@ namespace Gon
 
             public override Event<Scalar> Opposite
             {
-                get => _right!;
+                get => _right;
                 set => _right = (RightEvent<Scalar>)value;
             }
 
@@ -84,7 +84,7 @@ namespace Gon
             private bool _fromResult = false;
             private int _id = UndefinedIndex;
             private readonly bool _isFromFirstOperand;
-            private RightEvent<Scalar>? _right;
+            private RightEvent<Scalar> _right;
             private readonly Point<Scalar> _start;
             private int _startId = UndefinedIndex;
         }

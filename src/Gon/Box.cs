@@ -30,9 +30,9 @@ namespace Gon
                 && MaxY.Equals(other.MaxY);
         }
 
-        public override bool Equals(object? other) =>
+        public override bool Equals(object other) =>
             other is Box<Scalar> otherBox && Equals(otherBox);
 
-        public override int GetHashCode() => HashCode.Combine(MinX, MaxX, MinY, MaxY);
+        public override int GetHashCode() => Core.HashValues(MinX, MaxX, MinY, MaxY);
     }
 }

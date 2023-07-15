@@ -153,7 +153,7 @@ namespace Gon
                 {
                     return new Polygon<Scalar>[0];
                 }
-                var maxEndpointId = events[^1].StartId;
+                var maxEndpointId = events[events.Count - 1].StartId;
                 Debug.Assert(maxEndpointId != UndefinedIndex);
                 Debug.Assert(events.TrueForAll(event_ => event_.StartId <= maxEndpointId));
                 events.Sort(
@@ -175,10 +175,8 @@ namespace Gon
                 var contours = new List<Contour<Scalar>>();
                 var connectivity = EventsToConnectivity(events);
                 eventId = -1;
-                var visitedEndpointsPositions = GC.AllocateUninitializedArray<int>(
-                    maxEndpointId + 1
-                );
-                Array.Fill(visitedEndpointsPositions, UndefinedIndex);
+                var visitedEndpointsPositions = ToEmptyArray<int>(maxEndpointId + 1);
+                FillArray(visitedEndpointsPositions, UndefinedIndex);
                 foreach (var event_ in events)
                 {
                     ++eventId;
@@ -250,7 +248,7 @@ namespace Gon
                 List<Contour<Scalar>> contours
             )
             {
-                var result = GC.AllocateUninitializedArray<Contour<Scalar>>(contoursIds.Count);
+                var result = ToEmptyArray<Contour<Scalar>>(contoursIds.Count);
                 var contourIndex = -1;
                 foreach (var contourId in contoursIds)
                 {
@@ -347,7 +345,7 @@ namespace Gon
                 int parent = UndefinedIndex;
                 var isInternal = false;
                 var belowEventFromResult = event_.BelowEventFromResult;
-                if (belowEventFromResult is not null)
+                if (IsNotNull(belowEventFromResult))
                 {
                     var belowContourId = belowEventFromResult.ContourId;
                     if (!belowEventFromResult.FromInToOut)

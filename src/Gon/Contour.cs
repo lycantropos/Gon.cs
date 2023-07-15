@@ -88,7 +88,7 @@ namespace Gon
 
         public bool Equals(Contour<Scalar> other) => AreVerticesEqual(Vertices, other.Vertices);
 
-        public override bool Equals(object? other) =>
+        public override bool Equals(object other) =>
             other is Contour<Scalar> otherContour && Equals(otherContour);
 
         public override int GetHashCode()
@@ -114,7 +114,8 @@ namespace Gon
                 for (int position = 1; position < Vertices.Length - minVertexIndex; ++position)
                 {
                     ++index;
-                    result = (result ^ Vertices[^position].GetHashCode()) * multiplier;
+                    result =
+                        (result ^ Vertices[Vertices.Length - position].GetHashCode()) * multiplier;
                     multiplier += (MultiplierIncrement + index + index);
                 }
             }

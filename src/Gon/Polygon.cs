@@ -57,10 +57,10 @@ namespace Gon
             return true;
         }
 
-        public override bool Equals(object? other) =>
+        public override bool Equals(object other) =>
             other is Polygon<Scalar> otherPolygon && Equals(otherPolygon);
 
         public override int GetHashCode() =>
-            HashCode.Combine(Border, Core.Hashing.HashUnorderedUniqueIterable(Holes));
+            Core.HashValues(Border, Core.Hashing.HashUnorderedUniqueIterable(Holes));
     }
 }

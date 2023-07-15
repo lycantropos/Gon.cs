@@ -10,28 +10,30 @@ namespace Gon
         )
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
         {
-            Segment<Scalar>[] result = GC.AllocateUninitializedArray<Segment<Scalar>>(
-                vertices.Length
-            );
+            var result = ToEmptyArray<Segment<Scalar>>(vertices.Length);
             for (int index = 0; index < vertices.Length - 1; ++index)
             {
                 result[index] = new Segment<Scalar>(vertices[index + 1], vertices[index]);
             }
-            result[vertices.Length - 1] = new Segment<Scalar>(vertices[0], vertices[^1]);
+            result[vertices.Length - 1] = new Segment<Scalar>(
+                vertices[0],
+                vertices[vertices.Length - 1]
+            );
             return result;
         }
 
         public static Segment<Scalar>[] ContourVerticesToSegments<Scalar>(Point<Scalar>[] vertices)
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
         {
-            Segment<Scalar>[] result = GC.AllocateUninitializedArray<Segment<Scalar>>(
-                vertices.Length
-            );
+            Segment<Scalar>[] result = ToEmptyArray<Segment<Scalar>>(vertices.Length);
             for (int index = 0; index < vertices.Length - 1; ++index)
             {
                 result[index] = new Segment<Scalar>(vertices[index], vertices[index + 1]);
             }
-            result[vertices.Length - 1] = new Segment<Scalar>(vertices[^1], vertices[0]);
+            result[vertices.Length - 1] = new Segment<Scalar>(
+                vertices[vertices.Length - 1],
+                vertices[0]
+            );
             return result;
         }
 
@@ -41,8 +43,7 @@ namespace Gon
             Point<Scalar> secondStart,
             Point<Scalar> secondEnd
         )
-            where Scalar : IComparable<Scalar>,
-                IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
@@ -67,9 +68,7 @@ namespace Gon
         public static Segment<Scalar>[] MultipolygonToCorrectlyOrientedSegments<Scalar>(
             Multipolygon<Scalar> multipolygon
         )
-            where Scalar : IComparable<Scalar>,
-                IComparable<int>,
-                IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
@@ -96,9 +95,7 @@ namespace Gon
             Point<Scalar> firstRayPoint,
             Point<Scalar> secondRayPoint
         )
-            where Scalar : IComparable<Scalar>,
-                IComparable<int>,
-                IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
@@ -115,9 +112,7 @@ namespace Gon
         public static Segment<Scalar>[] PolygonToCorrectlyOrientedSegments<Scalar>(
             Polygon<Scalar> polygon
         )
-            where Scalar : IComparable<Scalar>,
-                IComparable<int>,
-                IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
@@ -131,9 +126,7 @@ namespace Gon
             {
                 segmentsCount += hole.SegmentsCount;
             }
-            Segment<Scalar>[] result = GC.AllocateUninitializedArray<Segment<Scalar>>(
-                segmentsCount
-            );
+            Segment<Scalar>[] result = ToEmptyArray<Segment<Scalar>>(segmentsCount);
             (
                 polygon.Border.Orientation == Orientation.Counterclockwise
                     ? polygon.Border.Segments
@@ -153,9 +146,7 @@ namespace Gon
         }
 
         private static int ToPolygonSegmentsCount<Scalar>(Polygon<Scalar> value)
-            where Scalar : IComparable<Scalar>,
-                IComparable<int>,
-                IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
@@ -170,6 +161,36 @@ namespace Gon
                 result += hole.SegmentsCount;
             }
             return result;
+        }
+
+        private static bool IsNotNull<T>(T value)
+        {
+#if NETCOREAPP3_0_OR_GREATER
+            return IsNotNull(value);
+#else
+            return !ReferenceEquals(value, null);
+#endif
+        }
+
+        private static T[] ToEmptyArray<T>(int capacity)
+        {
+#if NET5_0_OR_GREATER
+            return GC.AllocateUninitializedArray<T>(capacity);
+#else
+            return new T[capacity];
+#endif
+        }
+
+        private static void FillArray<T>(T[] array, T value)
+        {
+#if NET5_0_OR_GREATER
+            Array.Fill(array, value);
+#else
+            for (int index = 0; index < array.Length; ++index)
+            {
+                array[index] = value;
+            }
+#endif
         }
     }
 }

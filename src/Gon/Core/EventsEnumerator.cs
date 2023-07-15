@@ -33,7 +33,7 @@ namespace Gon
 
             object IEnumerator.Current => Current;
 
-            public Event<Scalar> Current => _current!;
+            public Event<Scalar> Current => _current;
 
             public bool MoveNext()
             {
@@ -58,7 +58,7 @@ namespace Gon
                             );
                             ComputeFields(leftEvent, belowEvent);
                             if (
-                                aboveEvent is not null
+                                IsNotNull(aboveEvent)
                                 && _eventsQueue.DetectIntersection(leftEvent, aboveEvent)
                             )
                             {
@@ -66,7 +66,7 @@ namespace Gon
                                 ComputeFields(aboveEvent, leftEvent);
                             }
                             if (
-                                belowEvent is not null
+                                IsNotNull(belowEvent)
                                 && _eventsQueue.DetectIntersection(belowEvent, leftEvent)
                             )
                             {
@@ -88,7 +88,7 @@ namespace Gon
                                 _sweepLine.Below(oppositeEvent)
                             );
                             _sweepLine.Remove(oppositeEvent);
-                            if (aboveEvent is not null && belowEvent is not null)
+                            if (IsNotNull(aboveEvent) && IsNotNull(belowEvent))
                             {
                                 _ = _eventsQueue.DetectIntersection(belowEvent, aboveEvent);
                             }
@@ -111,9 +111,9 @@ namespace Gon
 
             protected abstract bool FromResult(LeftEvent<Scalar> event_);
 
-            private void ComputeFields(LeftEvent<Scalar> event_, LeftEvent<Scalar>? belowEvent)
+            private void ComputeFields(LeftEvent<Scalar> event_, LeftEvent<Scalar> belowEvent)
             {
-                if (belowEvent is not null)
+                if (IsNotNull(belowEvent))
                 {
                     event_.OtherInteriorToLeft = (
                         event_.FromFirstOperand == belowEvent.FromFirstOperand
@@ -129,7 +129,7 @@ namespace Gon
                 event_.SetFromResult(FromResult(event_));
             }
 
-            private Event<Scalar>? _current;
+            private Event<Scalar> _current;
             private Point<Scalar> _currentEndpoint;
             private int _currentEndpointId;
             private EventsQueue<Scalar> _eventsQueue;

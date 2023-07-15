@@ -36,10 +36,10 @@ namespace Gon
             Start.Equals(other.Start) && End.Equals(other.End)
             || Start.Equals(other.End) && End.Equals(other.Start);
 
-        public override bool Equals(object? other) =>
+        public override bool Equals(object other) =>
             other is Segment<Scalar> otherSegment && Equals(otherSegment);
 
         public override int GetHashCode() =>
-            HashCode.Combine(Start < End ? (Start, End) : (End, Start));
+            Start < End ? Core.HashValues(Start, End) : Core.HashValues(End, Start);
     }
 }

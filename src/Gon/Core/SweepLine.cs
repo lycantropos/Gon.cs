@@ -23,7 +23,7 @@ namespace Gon
                 );
             }
 
-            public LeftEvent<Scalar>? Above(LeftEvent<Scalar> event_)
+            public LeftEvent<Scalar> Above(LeftEvent<Scalar> event_)
             {
                 Debug.Assert(Contains(event_));
                 int index = _values.IndexOfValue(event_);
@@ -45,7 +45,7 @@ namespace Gon
                 _values.Add(ToKey(event_), event_);
             }
 
-            public LeftEvent<Scalar>? Below(LeftEvent<Scalar> event_)
+            public LeftEvent<Scalar> Below(LeftEvent<Scalar> event_)
             {
                 Debug.Assert(Contains(event_));
                 int index = _values.IndexOfValue(event_);

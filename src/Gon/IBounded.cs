@@ -5,6 +5,9 @@ namespace Gon
     internal interface IBounded<Scalar>
         where Scalar : IEquatable<Scalar>
     {
-        public Box<Scalar> BoundingBox { get; }
+#if NETCOREAPP3_0_OR_GREATER
+        public
+#endif
+        Box<Scalar> BoundingBox { get; }
     }
 }
