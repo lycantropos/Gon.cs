@@ -51,7 +51,7 @@ namespace Gon
             }
         }
 
-        const int HashSeed = 23;
-        const int HashMultiplier = 31;
+        private const int HashSeed = 23;
+        private const int HashMultiplier = 31;
     }
 }
