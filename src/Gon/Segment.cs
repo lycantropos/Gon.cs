@@ -40,6 +40,6 @@ namespace Gon
             other is Segment<Scalar> otherSegment && Equals(otherSegment);
 
         public override int GetHashCode() =>
-            (Start < End ? (Start, End) : (End, Start)).GetHashCode();
+            HashCode.Combine(Start < End ? (Start, End) : (End, Start));
     }
 }

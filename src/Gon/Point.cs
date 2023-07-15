@@ -43,6 +43,6 @@ namespace Gon
         public override bool Equals(object? other) =>
             other is Point<Scalar> otherPoint && Equals(otherPoint);
 
-        public override int GetHashCode() => (X, Y).GetHashCode();
+        public override int GetHashCode() => HashCode.Combine(X, Y);
     }
 }

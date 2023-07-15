@@ -62,9 +62,7 @@ namespace Gon
         public override bool Equals(object? other) =>
             other is Polygon<Scalar> otherPolygon && Equals(otherPolygon);
 
-        public override int GetHashCode()
-        {
-            return (Border, Hashing.HashUnorderedUniqueIterable(Holes)).GetHashCode();
-        }
+        public override int GetHashCode() =>
+            HashCode.Combine(Border, Hashing.HashUnorderedUniqueIterable(Holes));
     }
 }

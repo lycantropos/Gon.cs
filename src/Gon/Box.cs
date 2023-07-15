@@ -33,9 +33,6 @@ namespace Gon
         public override bool Equals(object? other) =>
             other is Box<Scalar> otherBox && Equals(otherBox);
 
-        public override int GetHashCode()
-        {
-            return (MinX, MaxX, MinY, MaxY).GetHashCode();
-        }
+        public override int GetHashCode() => HashCode.Combine(MinX, MaxX, MinY, MaxY);
     }
 }
