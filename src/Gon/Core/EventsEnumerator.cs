@@ -28,12 +28,12 @@ namespace Gon
                 _currentEndpoint = _eventsQueue.LeftmostPoint;
                 _currentEndpointId = 0;
                 _sweepLine = SweepLine<Scalar>.Create();
-                _current = null;
+                Current = null;
             }
 
             object IEnumerator.Current => Current;
 
-            public Event<Scalar> Current => _current;
+            public Event<Scalar> Current { get; private set; }
 
             public bool MoveNext()
             {
@@ -74,7 +74,7 @@ namespace Gon
                                 ComputeFields(belowEvent, belowBelowEvent);
                                 ComputeFields(leftEvent, belowEvent);
                             }
-                            _current = event_;
+                            Current = event_;
                             return true;
                         }
                     }
@@ -93,7 +93,7 @@ namespace Gon
                                 _ = _eventsQueue.DetectIntersection(belowEvent, aboveEvent);
                             }
                         }
-                        _current = event_;
+                        Current = event_;
                         return true;
                     }
                 }
@@ -102,7 +102,7 @@ namespace Gon
 
             public void Reset()
             {
-                _current = null;
+                Current = null;
                 _eventsQueue = new EventsQueue<Scalar>(_firstSegments, _secondSegments);
                 _currentEndpoint = _eventsQueue.LeftmostPoint;
                 _currentEndpointId = 0;
@@ -129,7 +129,6 @@ namespace Gon
                 event_.SetFromResult(FromResult(event_));
             }
 
-            private Event<Scalar> _current;
             private Point<Scalar> _currentEndpoint;
             private int _currentEndpointId;
             private EventsQueue<Scalar> _eventsQueue;
