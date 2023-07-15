@@ -73,18 +73,15 @@ namespace Gon
 
         public int PolygonsCount => Polygons.Length;
 
-        public static Polygon<Scalar>[] operator &(Multipolygon<Scalar> self, Polygon<Scalar> other)
-        {
-            return (new Operation<Scalar>(self, other)).Intersect();
-        }
+        public static Polygon<Scalar>[] operator &(
+            Multipolygon<Scalar> self,
+            Polygon<Scalar> other
+        ) => (new Core.Operation<Scalar>(self, other)).Intersect();
 
         public static Polygon<Scalar>[] operator &(
             Multipolygon<Scalar> self,
             Multipolygon<Scalar> other
-        )
-        {
-            return (new Operation<Scalar>(self, other)).Intersect();
-        }
+        ) => (new Core.Operation<Scalar>(self, other)).Intersect();
 
         public static bool operator ==(Multipolygon<Scalar> self, Multipolygon<Scalar> other) =>
             self.Equals(other);
@@ -98,6 +95,6 @@ namespace Gon
         public override bool Equals(object? other) =>
             other is Multipolygon<Scalar> otherMultipolygon && Equals(otherMultipolygon);
 
-        public override int GetHashCode() => Hashing.HashUnorderedUniqueIterable(Polygons);
+        public override int GetHashCode() => Core.Hashing.HashUnorderedUniqueIterable(Polygons);
     }
 }

@@ -26,15 +26,13 @@ namespace Gon
 
         public Box<Scalar> BoundingBox => Border.BoundingBox;
 
-        public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Polygon<Scalar> other)
-        {
-            return (new Operation<Scalar>(self, other)).Intersect();
-        }
+        public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Polygon<Scalar> other) =>
+            (new Core.Operation<Scalar>(self, other)).Intersect();
 
-        public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Multipolygon<Scalar> other)
-        {
-            return (new Operation<Scalar>(self, other)).Intersect();
-        }
+        public static Polygon<Scalar>[] operator &(
+            Polygon<Scalar> self,
+            Multipolygon<Scalar> other
+        ) => (new Core.Operation<Scalar>(self, other)).Intersect();
 
         public static bool operator ==(Polygon<Scalar> self, Polygon<Scalar> other) =>
             self.Equals(other);
@@ -63,6 +61,6 @@ namespace Gon
             other is Polygon<Scalar> otherPolygon && Equals(otherPolygon);
 
         public override int GetHashCode() =>
-            HashCode.Combine(Border, Hashing.HashUnorderedUniqueIterable(Holes));
+            HashCode.Combine(Border, Core.Hashing.HashUnorderedUniqueIterable(Holes));
     }
 }

@@ -1,9 +1,12 @@
 namespace Gon
 {
-    internal enum OverlapKind
+    internal static partial class Core
     {
-        None,
-        SameOrientation,
-        DifferentOrientation
+        public enum OverlapKind
+        {
+            None,
+            SameOrientation,
+            DifferentOrientation
+        }
     }
 }

@@ -66,7 +66,7 @@ namespace Gon
             get
             {
                 var minVertexIndex = MinVertexIndex;
-                return Orienteer<Scalar>.Orient(
+                return Core.Orient(
                     Vertices[minVertexIndex == 0 ? Vertices.Length - 1 : minVertexIndex - 1],
                     Vertices[minVertexIndex],
                     Vertices[(minVertexIndex + 1) % Vertices.Length]
@@ -76,7 +76,7 @@ namespace Gon
 
         public int SegmentsCount => Vertices.Length;
 
-        public Segment<Scalar>[] Segments => Utils.ContourVerticesToSegments(Vertices);
+        public Segment<Scalar>[] Segments => Core.ContourVerticesToSegments(Vertices);
 
         public int VerticesCount => Vertices.Length;
 
@@ -94,7 +94,7 @@ namespace Gon
         public override int GetHashCode()
         {
             var minVertexIndex = MinVertexIndex;
-            Orientation orientation = Orienteer<Scalar>.Orient(
+            var orientation = Core.Orient(
                 Vertices[minVertexIndex == 0 ? Vertices.Length - 1 : minVertexIndex - 1],
                 Vertices[minVertexIndex],
                 Vertices[(minVertexIndex + 1) % Vertices.Length]

@@ -1,6 +1,6 @@
 namespace Gon
 {
-    internal static class Constants
+    internal static partial class Core
     {
         public const int UndefinedIndex = -1;
     }

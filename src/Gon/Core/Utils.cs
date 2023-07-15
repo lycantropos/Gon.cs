@@ -3,22 +3,8 @@ using System.Collections.Generic;
 
 namespace Gon
 {
-    internal static class Utils
+    internal static partial class Core
     {
-        public static Segment<Scalar>[] ContourVerticesToSegments<Scalar>(Point<Scalar>[] vertices)
-            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
-        {
-            Segment<Scalar>[] result = GC.AllocateUninitializedArray<Segment<Scalar>>(
-                vertices.Length
-            );
-            for (int index = 0; index < vertices.Length - 1; ++index)
-            {
-                result[index] = new Segment<Scalar>(vertices[index], vertices[index + 1]);
-            }
-            result[vertices.Length - 1] = new Segment<Scalar>(vertices[^1], vertices[0]);
-            return result;
-        }
-
         public static Segment<Scalar>[] ContourVerticesToReversedSegments<Scalar>(
             Point<Scalar>[] vertices
         )
@@ -33,6 +19,97 @@ namespace Gon
             }
             result[vertices.Length - 1] = new Segment<Scalar>(vertices[0], vertices[^1]);
             return result;
+        }
+
+        public static Segment<Scalar>[] ContourVerticesToSegments<Scalar>(Point<Scalar>[] vertices)
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+        {
+            Segment<Scalar>[] result = GC.AllocateUninitializedArray<Segment<Scalar>>(
+                vertices.Length
+            );
+            for (int index = 0; index < vertices.Length - 1; ++index)
+            {
+                result[index] = new Segment<Scalar>(vertices[index], vertices[index + 1]);
+            }
+            result[vertices.Length - 1] = new Segment<Scalar>(vertices[^1], vertices[0]);
+            return result;
+        }
+
+        public static Scalar CrossMultiply<Scalar>(
+            Point<Scalar> firstStart,
+            Point<Scalar> firstEnd,
+            Point<Scalar> secondStart,
+            Point<Scalar> secondEnd
+        )
+            where Scalar : IComparable<Scalar>,
+                IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+#if NET7_0_OR_GREATER
+            Point<Scalar> castFirstStart = firstStart;
+            Point<Scalar> castFirstEnd = firstEnd;
+            Point<Scalar> castSecondStart = secondStart;
+            Point<Scalar> castSecondEnd = secondEnd;
+#else
+            dynamic castFirstStart = firstStart;
+            dynamic castFirstEnd = firstEnd;
+            dynamic castSecondStart = secondStart;
+            dynamic castSecondEnd = secondEnd;
+#endif
+            return (castFirstEnd.X - castFirstStart.X) * (castSecondEnd.Y - castSecondStart.Y)
+                - (castFirstEnd.Y - castFirstStart.Y) * (castSecondEnd.X - castSecondStart.X);
+        }
+
+        public static Segment<Scalar>[] MultipolygonToCorrectlyOrientedSegments<Scalar>(
+            Multipolygon<Scalar> multipolygon
+        )
+            where Scalar : IComparable<Scalar>,
+                IComparable<int>,
+                IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IDivisionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+            int segmentsCount = 0;
+            foreach (var polygon in multipolygon.Polygons)
+            {
+                segmentsCount += ToPolygonSegmentsCount(polygon);
+            }
+            var result = new List<Segment<Scalar>>(segmentsCount);
+            foreach (var polygon in multipolygon.Polygons)
+            {
+                result.AddRange(PolygonToCorrectlyOrientedSegments(polygon));
+            }
+            return result.ToArray();
+        }
+
+        public static Orientation Orient<Scalar>(
+            Point<Scalar> vertex,
+            Point<Scalar> firstRayPoint,
+            Point<Scalar> secondRayPoint
+        )
+            where Scalar : IComparable<Scalar>,
+                IComparable<int>,
+                IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+            var comparisonResult = CrossMultiply(vertex, firstRayPoint, vertex, secondRayPoint)
+                .CompareTo(0);
+            return comparisonResult == 0
+                ? Orientation.Collinear
+                : (comparisonResult > 0 ? Orientation.Counterclockwise : Orientation.Clockwise);
         }
 
         public static Segment<Scalar>[] PolygonToCorrectlyOrientedSegments<Scalar>(
@@ -73,33 +150,6 @@ namespace Gon
                 offset += hole.SegmentsCount;
             }
             return result;
-        }
-
-        public static Segment<Scalar>[] MultipolygonToCorrectlyOrientedSegments<Scalar>(
-            Multipolygon<Scalar> multipolygon
-        )
-            where Scalar : IComparable<Scalar>,
-                IComparable<int>,
-                IEquatable<Scalar>
-#if NET7_0_OR_GREATER
-                ,
-                System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.IDivisionOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
-#endif
-        {
-            int segmentsCount = 0;
-            foreach (var polygon in multipolygon.Polygons)
-            {
-                segmentsCount += ToPolygonSegmentsCount(polygon);
-            }
-            var result = new List<Segment<Scalar>>(segmentsCount);
-            foreach (var polygon in multipolygon.Polygons)
-            {
-                result.AddRange(PolygonToCorrectlyOrientedSegments(polygon));
-            }
-            return result.ToArray();
         }
 
         private static int ToPolygonSegmentsCount<Scalar>(Polygon<Scalar> value)

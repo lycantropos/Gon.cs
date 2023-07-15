@@ -2,23 +2,26 @@ using System.Collections;
 
 namespace Gon
 {
-    internal static class Hashing
+    internal static partial class Core
     {
-        public static int HashUnorderedUniqueIterable<Iterable>(Iterable value)
-            where Iterable : IEnumerable
+        public static class Hashing
         {
-            var result = (long)0;
-            foreach (var element in value)
+            public static int HashUnorderedUniqueIterable<Iterable>(Iterable value)
+                where Iterable : IEnumerable
             {
-                result ^= ShuffleBits(element.GetHashCode());
+                var result = 0L;
+                foreach (var element in value)
+                {
+                    result ^= ShuffleBits(element.GetHashCode());
+                }
+                return result.GetHashCode();
             }
-            return result.GetHashCode();
-        }
 
-        private static long ShuffleBits(int value)
-        {
-            var casted = (long)value;
-            return ((casted ^ 89869747) ^ (casted << 16)) * 3644798167;
+            private static long ShuffleBits(int value)
+            {
+                var casted = (long)value;
+                return ((casted ^ 89869747) ^ (casted << 16)) * 3644798167;
+            }
         }
     }
 }
