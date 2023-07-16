@@ -172,6 +172,8 @@ namespace Fractions
             return numerator < BigInteger.Zero ? -result : result;
         }
 
+        public override string ToString() => $"Fraction({numerator}, {denominator})";
+
         public int CompareTo(BigInteger other) => numerator.CompareTo(denominator * other);
 
         public int CompareTo(Fraction other) =>
