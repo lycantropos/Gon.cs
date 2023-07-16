@@ -20,7 +20,8 @@ jobs:
     strategy:
       matrix:
         dotnet_sdk_version: [ '7.x' ]
-        dotnet_runtime_version: [ 'net48', 'net5.0', 'net6.0', 'net7.0' ]
+        dotnet_runtime_version: [ 'net45', 'net46', 'net47', 'net48',
+                                  'net5.0', 'net6.0', 'net7.0' ]
         python_version: [ '3.8', '3.11' ]
         platform: [
           {
