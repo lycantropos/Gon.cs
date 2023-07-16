@@ -23,6 +23,12 @@ namespace Gon
             Holes = holes;
         }
 
+        public Polygon(Contour<Scalar> border)
+        {
+            Border = border;
+            Holes = new Contour<Scalar>[0];
+        }
+
         public readonly Contour<Scalar> Border;
         public readonly Contour<Scalar>[] Holes;
 
