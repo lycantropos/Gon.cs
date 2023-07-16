@@ -3,7 +3,8 @@
   <PropertyGroup>
     <TargetFrameworks>
       net45;net46;net47;net48;
-      netstandard1.1;netstandard2.0;
+      netstandard1.1;netstandard1.2;netstandard1.3;netstandard1.4;
+      netstandard1.5;netstandard1.6;netstandard2.0;netstandard2.1;
       net5.0;net6.0;net7.0
     </TargetFrameworks>
     <ImplicitUsings>disable</ImplicitUsings>
@@ -15,6 +16,11 @@
    '$(TargetFramework)' == 'net45'
    Or '$(TargetFramework)' == 'net46'
    Or '$(TargetFramework)' == 'netstandard1.1'
+   Or '$(TargetFramework)' == 'netstandard1.2'
+   Or '$(TargetFramework)' == 'netstandard1.3'
+   Or '$(TargetFramework)' == 'netstandard1.4'
+   Or '$(TargetFramework)' == 'netstandard1.5'
+   Or '$(TargetFramework)' == 'netstandard1.6'
    ">
     <PackageReference Include="System.ValueTuple" Version="4.5.0" />
   </ItemGroup>
