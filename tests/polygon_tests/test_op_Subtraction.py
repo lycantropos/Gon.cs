@@ -19,9 +19,7 @@ def test_basic(polygon: Polygon, shaped: Shaped) -> None:
 
 @given(strategies.polygons)
 def test_self_inverse(polygon: Polygon) -> None:
-    result = polygon - polygon
-
-    assert result == []
+    assert polygon - polygon == []
 
 
 @given(strategies.polygons, strategies.polygons)
