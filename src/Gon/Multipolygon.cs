@@ -129,6 +129,14 @@ namespace Gon
 
         public override int GetHashCode() => Core.Hashing.HashUnorderedUniqueIterable(Polygons);
 
+        public override string ToString() =>
+            "Multipolygon({"
+            + String.Join(
+                ", ",
+                new List<Polygon<Scalar>>(Polygons).ConvertAll<string>(polygon => polygon.ToString())
+            )
+            + "})";
+
         Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => Polygons;
     }
 }
