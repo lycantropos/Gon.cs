@@ -6,7 +6,7 @@ namespace Gon
 {
     internal static partial class Core
     {
-        public readonly struct Operation<Scalar>
+        public static class Operation<Scalar>
             where Scalar : IComparable<Scalar>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
@@ -17,55 +17,33 @@ namespace Gon
                 System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
 #endif
         {
-            public Operation(Polygon<Scalar> first, Polygon<Scalar> second)
+            public static Polygon<Scalar>[] Intersect<First, Second>(First first, Second second)
+                where First : IBounded<Scalar>, IShaped<Scalar>
+                where Second : IBounded<Scalar>, IShaped<Scalar>
             {
-                _firstSegments = PolygonToCorrectlyOrientedSegments(first);
-                _secondSegments = PolygonToCorrectlyOrientedSegments(second);
-                var firstMaxX = first.BoundingBox.MaxX;
-                var secondMaxX = second.BoundingBox.MaxX;
-                _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
-            }
-
-            public Operation(Multipolygon<Scalar> first, Polygon<Scalar> second)
-            {
-                _firstSegments = MultipolygonToCorrectlyOrientedSegments(first);
-                _secondSegments = PolygonToCorrectlyOrientedSegments(second);
-                var firstMaxX = first.BoundingBox.MaxX;
-                var secondMaxX = second.BoundingBox.MaxX;
-                _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
-            }
-
-            public Operation(Polygon<Scalar> first, Multipolygon<Scalar> second)
-            {
-                _firstSegments = PolygonToCorrectlyOrientedSegments(first);
-                _secondSegments = MultipolygonToCorrectlyOrientedSegments(second);
-                var firstMaxX = first.BoundingBox.MaxX;
-                var secondMaxX = second.BoundingBox.MaxX;
-                _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
-            }
-
-            public Operation(Multipolygon<Scalar> first, Multipolygon<Scalar> second)
-            {
-                _firstSegments = MultipolygonToCorrectlyOrientedSegments(first);
-                _secondSegments = MultipolygonToCorrectlyOrientedSegments(second);
-                var firstMaxX = first.BoundingBox.MaxX;
-                var secondMaxX = second.BoundingBox.MaxX;
-                _minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
-            }
-
-            public Polygon<Scalar>[] Intersect()
-            {
-                var events = new List<Event<Scalar>>(
-                    _firstSegments.Length + _secondSegments.Length
-                );
+                var firstBoundingBox = first.BoundingBox;
+                var secondBoundingBox = second.BoundingBox;
+                if (
+                    firstBoundingBox.DisjointWith(secondBoundingBox)
+                    || firstBoundingBox.Touches(secondBoundingBox)
+                )
+                {
+                    return new Polygon<Scalar>[0];
+                }
+                var firstSegments = PolygonsToCorrectlyOrientedSegments(first.ToPolygons());
+                var secondSegments = PolygonsToCorrectlyOrientedSegments(second.ToPolygons());
+                var events = new List<Event<Scalar>>(firstSegments.Length + secondSegments.Length);
                 var eventsEnumerator = new IntersectionEventsNumerator<Scalar>(
-                    _firstSegments,
-                    _secondSegments
+                    firstSegments,
+                    secondSegments
                 );
+                var firstMaxX = firstBoundingBox.MaxX;
+                var secondMaxX = secondBoundingBox.MaxX;
+                var minMaxX = firstMaxX.CompareTo(secondMaxX) < 0 ? firstMaxX : secondMaxX;
                 while (eventsEnumerator.MoveNext())
                 {
                     var event_ = eventsEnumerator.Current;
-                    if (event_.Start.X.CompareTo(_minMaxX) > 0)
+                    if (event_.Start.X.CompareTo(minMaxX) > 0)
                     {
                         break;
                     }
@@ -426,10 +404,6 @@ namespace Gon
                 }
                 return result;
             }
-
-            private readonly Scalar _minMaxX;
-            private readonly Segment<Scalar>[] _firstSegments;
-            private readonly Segment<Scalar>[] _secondSegments;
         }
     }
 }

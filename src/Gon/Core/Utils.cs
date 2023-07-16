@@ -65,31 +65,6 @@ namespace Gon
                 - (castFirstEnd.Y - castFirstStart.Y) * (castSecondEnd.X - castSecondStart.X);
         }
 
-        public static Segment<Scalar>[] MultipolygonToCorrectlyOrientedSegments<Scalar>(
-            Multipolygon<Scalar> multipolygon
-        )
-            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
-#if NET7_0_OR_GREATER
-                ,
-                System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.IDivisionOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
-#endif
-        {
-            int segmentsCount = 0;
-            foreach (var polygon in multipolygon.Polygons)
-            {
-                segmentsCount += ToPolygonSegmentsCount(polygon);
-            }
-            var result = new List<Segment<Scalar>>(segmentsCount);
-            foreach (var polygon in multipolygon.Polygons)
-            {
-                result.AddRange(PolygonToCorrectlyOrientedSegments(polygon));
-            }
-            return result.ToArray();
-        }
-
         public static Orientation Orient<Scalar>(
             Point<Scalar> vertex,
             Point<Scalar> firstRayPoint,
@@ -144,6 +119,31 @@ namespace Gon
                 offset += hole.SegmentsCount;
             }
             return result;
+        }
+
+        public static Segment<Scalar>[] PolygonsToCorrectlyOrientedSegments<Scalar>(
+            Polygon<Scalar>[] polygons
+        )
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.IDivisionOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+            int segmentsCount = 0;
+            foreach (var polygon in polygons)
+            {
+                segmentsCount += ToPolygonSegmentsCount(polygon);
+            }
+            var result = new List<Segment<Scalar>>(segmentsCount);
+            foreach (var polygon in polygons)
+            {
+                result.AddRange(PolygonToCorrectlyOrientedSegments(polygon));
+            }
+            return result.ToArray();
         }
 
         private static int ToPolygonSegmentsCount<Scalar>(Polygon<Scalar> value)

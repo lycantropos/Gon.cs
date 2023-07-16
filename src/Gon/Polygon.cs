@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace Gon
 {
-    public readonly struct Polygon<Scalar> : IBounded<Scalar>, IEquatable<Polygon<Scalar>>
+    public readonly struct Polygon<Scalar>
+        : IBounded<Scalar>,
+            IEquatable<Polygon<Scalar>>,
+            Core.IShaped<Scalar>
         where Scalar : IComparable<Scalar>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
@@ -26,12 +29,12 @@ namespace Gon
         public Box<Scalar> BoundingBox => Border.BoundingBox;
 
         public static Polygon<Scalar>[] operator &(Polygon<Scalar> self, Polygon<Scalar> other) =>
-            (new Core.Operation<Scalar>(self, other)).Intersect();
+            Core.Operation<Scalar>.Intersect(self, other);
 
         public static Polygon<Scalar>[] operator &(
             Polygon<Scalar> self,
             Multipolygon<Scalar> other
-        ) => (new Core.Operation<Scalar>(self, other)).Intersect();
+        ) => Core.Operation<Scalar>.Intersect(self, other);
 
         public static bool operator ==(Polygon<Scalar> self, Polygon<Scalar> other) =>
             self.Equals(other);
@@ -61,5 +64,7 @@ namespace Gon
 
         public override int GetHashCode() =>
             Core.HashValues(Border, Core.Hashing.HashUnorderedUniqueIterable(Holes));
+
+        Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => new Polygon<Scalar>[1] { this };
     }
 }

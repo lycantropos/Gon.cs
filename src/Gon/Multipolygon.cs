@@ -3,7 +3,10 @@ using System.Collections.Generic;
 
 namespace Gon
 {
-    public readonly struct Multipolygon<Scalar> : IBounded<Scalar>, IEquatable<Multipolygon<Scalar>>
+    public readonly struct Multipolygon<Scalar>
+        : IBounded<Scalar>,
+            IEquatable<Multipolygon<Scalar>>,
+            Core.IShaped<Scalar>
         where Scalar : IComparable<Scalar>,
             IEquatable<Scalar>
 #if NET7_0_OR_GREATER
@@ -75,12 +78,12 @@ namespace Gon
         public static Polygon<Scalar>[] operator &(
             Multipolygon<Scalar> self,
             Polygon<Scalar> other
-        ) => (new Core.Operation<Scalar>(self, other)).Intersect();
+        ) => Core.Operation<Scalar>.Intersect(self, other);
 
         public static Polygon<Scalar>[] operator &(
             Multipolygon<Scalar> self,
             Multipolygon<Scalar> other
-        ) => (new Core.Operation<Scalar>(self, other)).Intersect();
+        ) => Core.Operation<Scalar>.Intersect(self, other);
 
         public static bool operator ==(Multipolygon<Scalar> self, Multipolygon<Scalar> other) =>
             self.Equals(other);
@@ -95,5 +98,7 @@ namespace Gon
             other is Multipolygon<Scalar> otherMultipolygon && Equals(otherMultipolygon);
 
         public override int GetHashCode() => Core.Hashing.HashUnorderedUniqueIterable(Polygons);
+
+        Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => Polygons;
     }
 }
