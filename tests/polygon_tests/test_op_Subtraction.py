@@ -30,7 +30,7 @@ def test_commutative_case(first: Polygon, second: Polygon) -> None:
 
 
 @given(strategies.polygons, strategies.shaped_geometries)
-def test_reversals(polygon: Polygon, shaped: Polygon) -> None:
+def test_reversals(polygon: Polygon, shaped: Shaped) -> None:
     result = polygon - shaped
 
     assert are_polygons_sequences_equivalent(
