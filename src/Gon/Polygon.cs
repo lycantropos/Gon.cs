@@ -44,6 +44,14 @@ namespace Gon
             Multipolygon<Scalar> other
         ) => Core.Operation<Scalar>.Unite(self, other);
 
+        public static Polygon<Scalar>[] operator ^(Polygon<Scalar> self, Polygon<Scalar> other) =>
+            Core.Operation<Scalar>.SymmetricSubtract(self, other);
+
+        public static Polygon<Scalar>[] operator ^(
+            Polygon<Scalar> self,
+            Multipolygon<Scalar> other
+        ) => Core.Operation<Scalar>.SymmetricSubtract(self, other);
+
         public static bool operator ==(Polygon<Scalar> self, Polygon<Scalar> other) =>
             self.Equals(other);
 
