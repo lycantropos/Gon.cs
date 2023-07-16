@@ -10,5 +10,7 @@ contours = _planar.contours(scalars,
                             context=_context)
 polygons = _planar.polygons(scalars,
                             context=_context)
+shaped_geometries = polygons | _planar.multipolygons(scalars,
+                                                     context=_context)
 borders_with_holes = polygons.map(_attrgetter('border', 'holes'))
 non_zero_integers = _strategies.non_zero_integers

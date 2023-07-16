@@ -1,19 +1,22 @@
 import math
 import typing as t
+from functools import singledispatch
 
 from ground.base import get_context
 
 from tests.binding import (BigInteger,
                            Contour,
                            Fractions,
+                           Multipolygon,
                            Point,
                            Polygon,
                            Segment)
 
 context = get_context().replace(contour_cls=Contour,
-                                segment_cls=Segment,
+                                multipolygon_cls=Multipolygon,
                                 point_cls=Point,
-                                polygon_cls=Polygon)
+                                polygon_cls=Polygon,
+                                segment_cls=Segment)
 
 
 def are_polygons_sequences_equivalent(first: t.Sequence[Polygon],
@@ -67,6 +70,13 @@ def reverse_contour_coordinates(contour: Contour) -> Contour:
                     for vertex in contour.vertices])
 
 
+def reverse_multipolygon_coordinates(
+        multipolygon: Multipolygon
+) -> Multipolygon:
+    return Multipolygon([reverse_polygon_coordinates(polygon)
+                         for polygon in multipolygon.polygons])
+
+
 def reverse_point_coordinates(point: Point) -> Point:
     return Point(point.y, point.x)
 
@@ -92,6 +102,19 @@ def reverse_polygon_holes_contours(polygon: Polygon) -> Polygon:
 
 def reverse_sequence(value: t.Sequence[_T]) -> t.Sequence[_T]:
     return value[::-1]
+
+
+_ShapedT = t.TypeVar('_ShapedT', Multipolygon, Polygon)
+
+
+@singledispatch
+def reverse_shaped_coordinates(shaped: _ShapedT) -> _ShapedT:
+    raise TypeError(type(shaped))
+
+
+reverse_shaped_coordinates.register(Polygon, reverse_polygon_coordinates)
+reverse_shaped_coordinates.register(Multipolygon,
+                                    reverse_multipolygon_coordinates)
 
 
 def rotate_contour(contour: Contour, offset: int) -> Contour:
