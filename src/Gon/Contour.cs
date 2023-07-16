@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Gon
@@ -136,6 +137,14 @@ namespace Gon
             result += 97531;
             return result;
         }
+
+        public override string ToString() =>
+            "Contour({"
+            + String.Join(
+                ", ",
+                new List<Point<Scalar>>(Vertices).ConvertAll<string>(vertex => vertex.ToString())
+            )
+            + "})";
 
         private int MinVertexIndex
         {
