@@ -131,9 +131,9 @@ namespace Gon
 
         public override string ToString() =>
             "Multipolygon({"
-            + String.Join(
+            + string.Join(
                 ", ",
-                new List<Polygon<Scalar>>(Polygons).ConvertAll<string>(polygon => polygon.ToString())
+                new List<Polygon<Scalar>>(Polygons).ConvertAll(polygon => polygon.ToString())
             )
             + "})";
 

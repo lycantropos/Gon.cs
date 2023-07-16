@@ -140,9 +140,9 @@ namespace Gon
 
         public override string ToString() =>
             "Contour({"
-            + String.Join(
+            + string.Join(
                 ", ",
-                new List<Point<Scalar>>(Vertices).ConvertAll<string>(vertex => vertex.ToString())
+                new List<Point<Scalar>>(Vertices).ConvertAll(vertex => vertex.ToString())
             )
             + "})";
 

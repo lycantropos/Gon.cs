@@ -101,9 +101,9 @@ namespace Gon
                 Holes.Length > 0
                     ? (
                         ", {"
-                        + String.Join(
+                        + string.Join(
                             ", ",
-                            new List<Contour<Scalar>>(Holes).ConvertAll<string>(
+                            new List<Contour<Scalar>>(Holes).ConvertAll(
                                 hole => hole.ToString()
                             )
                         )
