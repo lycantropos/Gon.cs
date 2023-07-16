@@ -6,7 +6,7 @@ from tests.utils import (are_polygons_sequences_equivalent,
 from . import strategies
 
 
-@given(strategies.polygons)
+@given(strategies.polygons, strategies.polygons)
 def test_basic(first: Polygon, second: Polygon) -> None:
     result = first ^ second
 
@@ -23,7 +23,7 @@ def test_self_inverse(polygon: Polygon) -> None:
 
 @given(strategies.polygons, strategies.polygons)
 def test_commutativity(first: Polygon, second: Polygon) -> None:
-    assert first ^ second == second ^ first
+    assert are_polygons_sequences_equivalent(first ^ second, second ^ first)
 
 
 @given(strategies.polygons, strategies.polygons)

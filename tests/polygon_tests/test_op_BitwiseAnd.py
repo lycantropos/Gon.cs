@@ -6,7 +6,7 @@ from tests.utils import (are_polygons_sequences_equivalent,
 from . import strategies
 
 
-@given(strategies.polygons)
+@given(strategies.polygons, strategies.polygons)
 def test_basic(first: Polygon, second: Polygon) -> None:
     result = first & second
 

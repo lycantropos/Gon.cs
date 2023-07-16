@@ -7,6 +7,14 @@ from tests.utils import (are_polygons_sequences_equivalent,
 from . import strategies
 
 
+@given(strategies.polygons, strategies.polygons)
+def test_basic(first: Polygon, second: Polygon) -> None:
+    result = first - second
+
+    assert isinstance(result, list)
+    assert all(isinstance(element, Polygon) for element in result)
+
+
 @given(strategies.polygons)
 def test_self_inverse(polygon: Polygon) -> None:
     result = polygon - polygon
