@@ -103,9 +103,7 @@ namespace Gon
                         ", {"
                         + string.Join(
                             ", ",
-                            new List<Contour<Scalar>>(Holes).ConvertAll(
-                                hole => hole.ToString()
-                            )
+                            new List<Contour<Scalar>>(Holes).ConvertAll(hole => hole.ToString())
                         )
                         + "}"
                     )
