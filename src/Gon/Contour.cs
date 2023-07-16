@@ -139,12 +139,7 @@ namespace Gon
         }
 
         public override string ToString() =>
-            "Contour({"
-            + string.Join(
-                ", ",
-                new List<Point<Scalar>>(Vertices).ConvertAll(vertex => vertex.ToString())
-            )
-            + "})";
+            "Contour({" + string.Join(", ", Core.ToStrings(Vertices)) + "})";
 
         private int MinVertexIndex
         {

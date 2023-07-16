@@ -85,6 +85,16 @@ namespace Gon
                 : (comparisonResult > 0 ? Orientation.Counterclockwise : Orientation.Clockwise);
         }
 
+        public static string[] ToStrings<T>(T[] array)
+        {
+            var result = ToEmptyArray<string>(array.Length);
+            for (int index = 0; index < array.Length; ++index)
+            {
+                result[index] = array[index].ToString();
+            }
+            return result;
+        }
+
         public static Segment<Scalar>[] PolygonToCorrectlyOrientedSegments<Scalar>(
             Polygon<Scalar> polygon
         )

@@ -97,18 +97,7 @@ namespace Gon
 
         public override string ToString() =>
             $"Polygon({Border}"
-            + (
-                Holes.Length > 0
-                    ? (
-                        ", {"
-                        + string.Join(
-                            ", ",
-                            new List<Contour<Scalar>>(Holes).ConvertAll(hole => hole.ToString())
-                        )
-                        + "}"
-                    )
-                    : ""
-            )
+            + (Holes.Length > 0 ? (", {" + string.Join(", ", Core.ToStrings(Holes)) + "}") : "")
             + ")";
 
         Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => new Polygon<Scalar>[1] { this };
