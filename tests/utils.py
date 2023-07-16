@@ -70,6 +70,31 @@ def reverse_contour_coordinates(contour: Contour) -> Contour:
                     for vertex in contour.vertices])
 
 
+def reverse_multipolygon(multipolygon: Multipolygon) -> Multipolygon:
+    return Multipolygon(reverse_sequence(multipolygon.polygons))
+
+
+def reverse_multipolygon_polygons_borders(
+        multipolygon: Multipolygon
+) -> Multipolygon:
+    return Multipolygon([reverse_polygon_border(polygon)
+                         for polygon in multipolygon.polygons])
+
+
+def reverse_multipolygon_polygons_holes(
+        multipolygon: Multipolygon
+) -> Multipolygon:
+    return Multipolygon([reverse_polygon_holes(polygon)
+                         for polygon in multipolygon.polygons])
+
+
+def reverse_multipolygon_polygons_holes_contours(
+        multipolygon: Multipolygon
+) -> Multipolygon:
+    return Multipolygon([reverse_polygon_holes_contours(polygon)
+                         for polygon in multipolygon.polygons])
+
+
 def reverse_multipolygon_coordinates(
         multipolygon: Multipolygon
 ) -> Multipolygon:
@@ -119,6 +144,29 @@ reverse_shaped_coordinates.register(Multipolygon,
 
 def rotate_contour(contour: Contour, offset: int) -> Contour:
     return Contour(rotate_sequence(contour.vertices, offset))
+
+
+def rotate_multipolygon(multipolygon: Multipolygon,
+                        offset: int) -> Multipolygon:
+    return Multipolygon(rotate_sequence(multipolygon.polygons, offset))
+
+
+def rotate_multipolygon_polygons_borders(multipolygon: Multipolygon,
+                                         offset: int) -> Multipolygon:
+    return Multipolygon([rotate_polygon_border(polygon, offset)
+                         for polygon in multipolygon.polygons])
+
+
+def rotate_multipolygon_polygons_holes(multipolygon: Multipolygon,
+                                       offset: int) -> Multipolygon:
+    return Multipolygon([rotate_polygon_holes(polygon, offset)
+                         for polygon in multipolygon.polygons])
+
+
+def rotate_multipolygon_polygons_holes_contours(multipolygon: Multipolygon,
+                                                offset: int) -> Multipolygon:
+    return Multipolygon([rotate_polygon_holes_contours(polygon, offset)
+                         for polygon in multipolygon.polygons])
 
 
 def rotate_polygon_border(polygon: Polygon, offset: int) -> Polygon:
