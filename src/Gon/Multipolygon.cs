@@ -42,11 +42,11 @@ namespace Gon
                         ? firstPolygonBoundingBox.MinY
                         : secondPolygonBoundingBox.MinY;
                 var maxX =
-                    firstPolygonBoundingBox.MaxX.CompareTo(secondPolygonBoundingBox.MaxX) < 0
+                    firstPolygonBoundingBox.MaxX.CompareTo(secondPolygonBoundingBox.MaxX) > 0
                         ? firstPolygonBoundingBox.MaxX
                         : secondPolygonBoundingBox.MaxX;
                 var maxY =
-                    firstPolygonBoundingBox.MaxY.CompareTo(secondPolygonBoundingBox.MaxY) < 0
+                    firstPolygonBoundingBox.MaxY.CompareTo(secondPolygonBoundingBox.MaxY) > 0
                         ? firstPolygonBoundingBox.MaxY
                         : secondPolygonBoundingBox.MaxY;
                 while (polygons.MoveNext())
