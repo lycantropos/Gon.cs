@@ -33,6 +33,7 @@
    Or '$(TargetFramework)' == 'netstandard1.5'
    Or '$(TargetFramework)' == 'netstandard1.6'
    Or '$(TargetFramework)' == 'netstandard2.0'
+   Or '$(TargetFramework)' == 'netstandard2.1'
    ">
     <PackageReference Include="Microsoft.CSharp" Version="4.7.0" />
   </ItemGroup>
