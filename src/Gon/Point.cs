@@ -44,5 +44,7 @@ namespace Gon
             other is Point<Scalar> otherPoint && Equals(otherPoint);
 
         public override int GetHashCode() => Core.HashValues(X, Y);
+
+        public override string ToString() => $"Point({X}, {Y})";
     }
 }
