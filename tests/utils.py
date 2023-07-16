@@ -16,6 +16,11 @@ context = get_context().replace(contour_cls=Contour,
                                 polygon_cls=Polygon)
 
 
+def are_polygons_sequences_equivalent(first: t.Sequence[Polygon],
+                                      second: t.Sequence[Polygon]) -> bool:
+    return len(first) == len(second) and frozenset(first) == frozenset(second)
+
+
 def equivalence(left: bool, right: bool) -> bool:
     return left is right
 
