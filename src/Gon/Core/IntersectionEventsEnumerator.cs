@@ -4,7 +4,7 @@ namespace Gon
 {
     internal static partial class Core
     {
-        public class IntersectionEventsNumerator<Scalar> : EventsEnumerator<Scalar>
+        public sealed class IntersectionEventsNumerator<Scalar> : EventsEnumerator<Scalar>
             where Scalar : IComparable<Scalar>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
