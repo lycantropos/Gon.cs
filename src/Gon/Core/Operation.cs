@@ -52,6 +52,39 @@ namespace Gon
                 return ProcessEvents(events);
             }
 
+            public static Polygon<Scalar>[] Subtract<First, Second>(First first, Second second)
+                where First : IBounded<Scalar>, IShaped<Scalar>
+                where Second : IBounded<Scalar>, IShaped<Scalar>
+            {
+                var firstBoundingBox = first.BoundingBox;
+                var secondBoundingBox = second.BoundingBox;
+                if (
+                    firstBoundingBox.DisjointWith(secondBoundingBox)
+                    || firstBoundingBox.Touches(secondBoundingBox)
+                )
+                {
+                    return first.ToPolygons();
+                }
+                var firstSegments = PolygonsToCorrectlyOrientedSegments(first.ToPolygons());
+                var secondSegments = PolygonsToCorrectlyOrientedSegments(second.ToPolygons());
+                var events = new List<Event<Scalar>>(firstSegments.Length + secondSegments.Length);
+                var eventsEnumerator = new DifferenceEventsNumerator<Scalar>(
+                    firstSegments,
+                    secondSegments
+                );
+                var firstMaxX = firstBoundingBox.MaxX;
+                while (eventsEnumerator.MoveNext())
+                {
+                    var event_ = eventsEnumerator.Current;
+                    if (event_.Start.X.CompareTo(firstMaxX) > 0)
+                    {
+                        break;
+                    }
+                    events.Add(event_);
+                }
+                return ProcessEvents(events);
+            }
+
             public static Polygon<Scalar>[] SymmetricSubtract<First, Second>(
                 First first,
                 Second second

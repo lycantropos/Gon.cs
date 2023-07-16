@@ -70,6 +70,9 @@ namespace Gon
                 set => _startId = value;
             }
 
+            public bool IsCommonPolylineComponent =>
+                OverlapKind == OverlapKind.DifferentOrientation;
+
             public bool IsCommonRegionBoundary => OverlapKind == OverlapKind.SameOrientation;
 
             public bool Inside => OtherInteriorToLeft && OverlapKind == OverlapKind.None;
