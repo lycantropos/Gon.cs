@@ -95,6 +95,24 @@ namespace Gon
         public override int GetHashCode() =>
             Core.HashValues(Border, Core.Hashing.HashUnorderedUniqueIterable(Holes));
 
+        public override string ToString() =>
+            $"Polygon({Border}"
+            + (
+                Holes.Length > 0
+                    ? (
+                        ", {"
+                        + String.Join(
+                            ", ",
+                            new List<Contour<Scalar>>(Holes).ConvertAll<string>(
+                                hole => hole.ToString()
+                            )
+                        )
+                        + "}"
+                    )
+                    : ""
+            )
+            + ")";
+
         Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => new Polygon<Scalar>[1] { this };
     }
 }
