@@ -85,7 +85,8 @@ class Point:
                 else NotImplemented)
 
     def __hash__(self) -> int:
-        return hash((self.x, self.y))
+        result = self._raw.GetHashCode()
+        return result - (result == -1)
 
     @t.overload
     def __le__(self, other: te.Self) -> bool:
