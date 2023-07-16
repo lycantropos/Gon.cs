@@ -2,7 +2,8 @@ from hypothesis import given
 
 from tests.binding import Point
 from tests.utils import (equivalence,
-                         implication)
+                         implication,
+                         reverse_point_coordinates)
 from . import strategies
 
 
@@ -24,3 +25,9 @@ def test_transitivity(first: Point, second: Point, third: Point) -> None:
 @given(strategies.points, strategies.points)
 def test_alternatives(first: Point, second: Point) -> None:
     assert equivalence(first == second, not first != second)
+
+
+@given(strategies.points, strategies.points)
+def test_coordinates_reversals(first: Point, second: Point) -> None:
+    assert equivalence(first == second, (reverse_point_coordinates(first)
+                                         == reverse_point_coordinates(second)))
