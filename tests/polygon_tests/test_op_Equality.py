@@ -4,9 +4,9 @@ from tests.binding import Polygon
 from tests.utils import (equivalence,
                          implication,
                          reverse_polygon_border,
+                         reverse_polygon_coordinates,
                          reverse_polygon_holes,
                          reverse_polygon_holes_contours,
-                         reverse_polygon_coordinates,
                          rotate_polygon_border,
                          rotate_polygon_holes,
                          rotate_polygon_holes_contours)
