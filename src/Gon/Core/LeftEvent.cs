@@ -74,6 +74,8 @@ namespace Gon
 
             public bool Inside => OtherInteriorToLeft && OverlapKind == OverlapKind.None;
 
+            public bool Outside => !OtherInteriorToLeft && OverlapKind == OverlapKind.None;
+
             public bool IsVertical => Start == End;
 
             public void SetFromResult(bool value)

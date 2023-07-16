@@ -52,6 +52,32 @@ namespace Gon
                 return ProcessEvents(events);
             }
 
+            public static Polygon<Scalar>[] Unite<First, Second>(First first, Second second)
+                where First : IBounded<Scalar>, IShaped<Scalar>
+                where Second : IBounded<Scalar>, IShaped<Scalar>
+            {
+                var firstBoundingBox = first.BoundingBox;
+                var secondBoundingBox = second.BoundingBox;
+                if (firstBoundingBox.DisjointWith(secondBoundingBox))
+                {
+                    var result = new List<Polygon<Scalar>>(first.ToPolygons());
+                    result.AddRange(second.ToPolygons());
+                    return result.ToArray();
+                }
+                var firstSegments = PolygonsToCorrectlyOrientedSegments(first.ToPolygons());
+                var secondSegments = PolygonsToCorrectlyOrientedSegments(second.ToPolygons());
+                var events = new List<Event<Scalar>>(firstSegments.Length + secondSegments.Length);
+                var eventsEnumerator = new UnionEventsNumerator<Scalar>(
+                    firstSegments,
+                    secondSegments
+                );
+                while (eventsEnumerator.MoveNext())
+                {
+                    events.Add(eventsEnumerator.Current);
+                }
+                return ProcessEvents(events);
+            }
+
             private static Point<Scalar>[] ContourEventsToVertices(Event<Scalar>[] events)
             {
                 var result = new List<Point<Scalar>>(events.Length) { events[0].Start };
