@@ -54,55 +54,55 @@ namespace Fractions
 
         public static Fraction operator *(Fraction self, Fraction other)
         {
-            var (numerator, other_denominator) = NormalizeComponentsModuli(
+            var (numerator, otherDenominator) = NormalizeComponentsModuli(
                 self.numerator,
                 other.denominator
             );
-            var (other_numerator, denominator) = NormalizeComponentsModuli(
+            var (otherNumerator, denominator) = NormalizeComponentsModuli(
                 other.numerator,
                 self.denominator
             );
             return new Fraction(
-                numerator * other_numerator,
-                denominator * other_denominator,
+                numerator * otherNumerator,
+                denominator * otherDenominator,
                 false
             );
         }
 
         public static Fraction operator *(Fraction self, BigInteger other)
         {
-            var (other_normalized, denominator) = NormalizeComponentsModuli(
+            var (otherNormalized, denominator) = NormalizeComponentsModuli(
                 other,
                 self.denominator
             );
-            return new Fraction(self.numerator * other_normalized, denominator, false);
+            return new Fraction(self.numerator * otherNormalized, denominator, false);
         }
 
         public static Fraction operator /(Fraction self, Fraction other)
         {
-            var (numerator, other_numerator) = NormalizeComponentsModuli(
+            var (numerator, otherNumerator) = NormalizeComponentsModuli(
                 self.numerator,
                 other.numerator
             );
-            var (denominator, other_denominator) = NormalizeComponentsModuli(
+            var (denominator, otherDenominator) = NormalizeComponentsModuli(
                 self.denominator,
                 other.denominator
             );
-            var (result_numerator, result_denominator) = NormalizeComponentsSign(
-                numerator * other_denominator,
-                denominator * other_numerator
+            var (resultNumerator, resultDenominator) = NormalizeComponentsSign(
+                numerator * otherDenominator,
+                denominator * otherNumerator
             );
-            return new Fraction(result_numerator, result_denominator, false);
+            return new Fraction(resultNumerator, resultDenominator, false);
         }
 
         public static Fraction operator /(Fraction self, BigInteger other)
         {
-            var (numerator, other_normalized) = NormalizeComponentsModuli(self.numerator, other);
-            var (result_numerator, result_denominator) = NormalizeComponentsSign(
+            var (numerator, otherNormalized) = NormalizeComponentsModuli(self.numerator, other);
+            var (resultNumerator, resultDenominator) = NormalizeComponentsSign(
                 numerator,
-                self.denominator * other_normalized
+                self.denominator * otherNormalized
             );
-            return new Fraction(result_numerator, result_denominator, false);
+            return new Fraction(resultNumerator, resultDenominator, false);
         }
 
         public static Fraction operator -(Fraction self, Fraction other) =>
