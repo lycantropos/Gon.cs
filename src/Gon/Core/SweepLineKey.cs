@@ -6,7 +6,6 @@ namespace Gon
     {
         public readonly struct SweepLineKey<Scalar> : IComparable<SweepLineKey<Scalar>>
             where Scalar : IComparable<Scalar>,
-                IComparable<int>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,

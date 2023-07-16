@@ -6,7 +6,6 @@ namespace Gon
     {
         public class IntersectionEventsNumerator<Scalar> : EventsEnumerator<Scalar>
             where Scalar : IComparable<Scalar>,
-                IComparable<int>,
                 IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,

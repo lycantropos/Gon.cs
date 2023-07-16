@@ -68,7 +68,7 @@ namespace Gon
         public static Segment<Scalar>[] MultipolygonToCorrectlyOrientedSegments<Scalar>(
             Multipolygon<Scalar> multipolygon
         )
-            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
@@ -95,15 +95,16 @@ namespace Gon
             Point<Scalar> firstRayPoint,
             Point<Scalar> secondRayPoint
         )
-            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
                 System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
 #endif
         {
-            var comparisonResult = CrossMultiply(vertex, firstRayPoint, vertex, secondRayPoint)
-                .CompareTo(0);
+            var comparisonResult = (
+                (dynamic)CrossMultiply(vertex, firstRayPoint, vertex, secondRayPoint)
+            ).CompareTo(0);
             return comparisonResult == 0
                 ? Orientation.Collinear
                 : (comparisonResult > 0 ? Orientation.Counterclockwise : Orientation.Clockwise);
@@ -112,7 +113,7 @@ namespace Gon
         public static Segment<Scalar>[] PolygonToCorrectlyOrientedSegments<Scalar>(
             Polygon<Scalar> polygon
         )
-            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
@@ -146,7 +147,7 @@ namespace Gon
         }
 
         private static int ToPolygonSegmentsCount<Scalar>(Polygon<Scalar> value)
-            where Scalar : IComparable<Scalar>, IComparable<int>, IEquatable<Scalar>
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
 #if NET7_0_OR_GREATER
                 ,
                 System.Numerics.IAdditionOperators<Scalar, Scalar, Scalar>,
