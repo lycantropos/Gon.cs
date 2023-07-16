@@ -5,23 +5,6 @@ namespace Gon
 {
     internal static partial class Core
     {
-        public static Segment<Scalar>[] ContourVerticesToReversedSegments<Scalar>(
-            Point<Scalar>[] vertices
-        )
-            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
-        {
-            var result = ToEmptyArray<Segment<Scalar>>(vertices.Length);
-            for (int index = 0; index < vertices.Length - 1; ++index)
-            {
-                result[index] = new Segment<Scalar>(vertices[index + 1], vertices[index]);
-            }
-            result[vertices.Length - 1] = new Segment<Scalar>(
-                vertices[0],
-                vertices[vertices.Length - 1]
-            );
-            return result;
-        }
-
         public static Segment<Scalar>[] ContourVerticesToSegments<Scalar>(Point<Scalar>[] vertices)
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
         {
@@ -35,34 +18,6 @@ namespace Gon
                 vertices[0]
             );
             return result;
-        }
-
-        public static Scalar CrossMultiply<Scalar>(
-            Point<Scalar> firstStart,
-            Point<Scalar> firstEnd,
-            Point<Scalar> secondStart,
-            Point<Scalar> secondEnd
-        )
-            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
-#if NET7_0_OR_GREATER
-                ,
-                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
-                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
-#endif
-        {
-#if NET7_0_OR_GREATER
-            Point<Scalar> castFirstStart = firstStart;
-            Point<Scalar> castFirstEnd = firstEnd;
-            Point<Scalar> castSecondStart = secondStart;
-            Point<Scalar> castSecondEnd = secondEnd;
-#else
-            dynamic castFirstStart = firstStart;
-            dynamic castFirstEnd = firstEnd;
-            dynamic castSecondStart = secondStart;
-            dynamic castSecondEnd = secondEnd;
-#endif
-            return (castFirstEnd.X - castFirstStart.X) * (castSecondEnd.Y - castSecondStart.Y)
-                - (castFirstEnd.Y - castFirstStart.Y) * (castSecondEnd.X - castSecondStart.X);
         }
 
         public static Orientation Orient<Scalar>(
@@ -95,7 +50,52 @@ namespace Gon
             return result;
         }
 
-        public static Segment<Scalar>[] PolygonToCorrectlyOrientedSegments<Scalar>(
+        private static Segment<Scalar>[] ContourVerticesToReversedSegments<Scalar>(
+            Point<Scalar>[] vertices
+        )
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+        {
+            var result = ToEmptyArray<Segment<Scalar>>(vertices.Length);
+            for (int index = 0; index < vertices.Length - 1; ++index)
+            {
+                result[index] = new Segment<Scalar>(vertices[index + 1], vertices[index]);
+            }
+            result[vertices.Length - 1] = new Segment<Scalar>(
+                vertices[0],
+                vertices[vertices.Length - 1]
+            );
+            return result;
+        }
+
+        private static Scalar CrossMultiply<Scalar>(
+            Point<Scalar> firstStart,
+            Point<Scalar> firstEnd,
+            Point<Scalar> secondStart,
+            Point<Scalar> secondEnd
+        )
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+#if NET7_0_OR_GREATER
+            Point<Scalar> castFirstStart = firstStart;
+            Point<Scalar> castFirstEnd = firstEnd;
+            Point<Scalar> castSecondStart = secondStart;
+            Point<Scalar> castSecondEnd = secondEnd;
+#else
+            dynamic castFirstStart = firstStart;
+            dynamic castFirstEnd = firstEnd;
+            dynamic castSecondStart = secondStart;
+            dynamic castSecondEnd = secondEnd;
+#endif
+            return (castFirstEnd.X - castFirstStart.X) * (castSecondEnd.Y - castSecondStart.Y)
+                - (castFirstEnd.Y - castFirstStart.Y) * (castSecondEnd.X - castSecondStart.X);
+        }
+
+        private static Segment<Scalar>[] PolygonToCorrectlyOrientedSegments<Scalar>(
             Polygon<Scalar> polygon
         )
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
@@ -131,7 +131,7 @@ namespace Gon
             return result;
         }
 
-        public static Segment<Scalar>[] PolygonsToCorrectlyOrientedSegments<Scalar>(
+        private static Segment<Scalar>[] PolygonsToCorrectlyOrientedSegments<Scalar>(
             Polygon<Scalar>[] polygons
         )
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
