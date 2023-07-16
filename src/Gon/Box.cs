@@ -58,5 +58,7 @@ namespace Gon
             other is Box<Scalar> otherBox && Equals(otherBox);
 
         public override int GetHashCode() => Core.HashValues(MinX, MaxX, MinY, MaxY);
+        
+        public override string ToString() => $"Box({MinX}, {MaxX}, {MinY}, {MaxY})";
     }
 }
