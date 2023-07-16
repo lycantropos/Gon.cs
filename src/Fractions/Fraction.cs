@@ -62,19 +62,12 @@ namespace Fractions
                 other.numerator,
                 self.denominator
             );
-            return new Fraction(
-                numerator * otherNumerator,
-                denominator * otherDenominator,
-                false
-            );
+            return new Fraction(numerator * otherNumerator, denominator * otherDenominator, false);
         }
 
         public static Fraction operator *(Fraction self, BigInteger other)
         {
-            var (otherNormalized, denominator) = NormalizeComponentsModuli(
-                other,
-                self.denominator
-            );
+            var (otherNormalized, denominator) = NormalizeComponentsModuli(other, self.denominator);
             return new Fraction(self.numerator * otherNormalized, denominator, false);
         }
 
