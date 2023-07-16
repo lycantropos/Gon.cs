@@ -365,15 +365,16 @@ class Multipolygon:
 
     def __new__(cls, polygons: t.Sequence[Polygon]) -> te.Self:
         self = super().__new__(cls)
-        self._raw = Gon.Contour[Fractions.Fraction](
+        self._raw = Gon.Multipolygon[Fractions.Fraction](
                 System.Array[Gon.Polygon[Fractions.Fraction]](
-                        [_polygon_to_raw(vertex) for vertex in polygons]
+                        [_polygon_to_raw(polygon) for polygon in polygons]
                 )
         )
         return self
 
     @t.overload
-    def __and__(self, other: t.Union[te.Self, Polygon]) -> t.List[Polygon]:
+    def __and__(self,
+                other: t.Union[te.Self, Multipolygon]) -> t.List[Polygon]:
         ...
 
     @t.overload
@@ -382,12 +383,12 @@ class Multipolygon:
 
     def __and__(self, other: t.Any) -> t.Any:
         return ([_polygon_from_raw(raw_polygon)
-                 for raw_polygon in self._raw & _polygon_to_raw(other)]
-                if isinstance(other, Polygon)
+                 for raw_polygon in self._raw & other._raw]
+                if isinstance(other, Multipolygon)
                 else
                 ([_polygon_from_raw(raw_polygon)
-                  for raw_polygon in self._raw & other._raw]
-                 if isinstance(other, Multipolygon)
+                  for raw_polygon in self._raw & _polygon_to_raw(other)]
+                 if isinstance(other, Polygon)
                  else NotImplemented))
 
     @t.overload
@@ -407,12 +408,68 @@ class Multipolygon:
         result = int(self._raw.GetHashCode())
         return result - (result == -1)
 
+    @t.overload
+    def __or__(self, other: t.Union[te.Self, Multipolygon]) -> t.List[Polygon]:
+        ...
+
+    @t.overload
+    def __or__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __or__(self, other: t.Any) -> t.Any:
+        return ([_polygon_from_raw(raw_polygon)
+                 for raw_polygon in self._raw | other._raw]
+                if isinstance(other, Multipolygon)
+                else
+                ([_polygon_from_raw(raw_polygon)
+                  for raw_polygon in self._raw | _polygon_to_raw(other)]
+                 if isinstance(other, Polygon)
+                 else NotImplemented))
+
     def __repr__(self) -> str:
         return f'{type(self).__qualname__}({self.polygons!r})'
 
     def __str__(self) -> str:
         return (f'{type(self).__qualname__}'
                 f'([{", ".join(map(str, self.polygons))}])')
+
+    @t.overload
+    def __sub__(self,
+                other: t.Union[te.Self, Multipolygon]) -> t.List[Polygon]:
+        ...
+
+    @t.overload
+    def __sub__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __sub__(self, other: t.Any) -> t.Any:
+        return ([_polygon_from_raw(raw_polygon)
+                 for raw_polygon in self._raw - other._raw]
+                if isinstance(other, Multipolygon)
+                else
+                ([_polygon_from_raw(raw_polygon)
+                  for raw_polygon in self._raw - _polygon_to_raw(other)]
+                 if isinstance(other, Polygon)
+                 else NotImplemented))
+
+    @t.overload
+    def __xor__(self,
+                other: t.Union[te.Self, Multipolygon]) -> t.List[Polygon]:
+        ...
+
+    @t.overload
+    def __xor__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __xor__(self, other: t.Any) -> t.Any:
+        return ([_polygon_from_raw(raw_polygon)
+                 for raw_polygon in self._raw ^ other._raw]
+                if isinstance(other, Multipolygon)
+                else
+                ([_polygon_from_raw(raw_polygon)
+                  for raw_polygon in self._raw ^ _polygon_to_raw(other)]
+                 if isinstance(other, Polygon)
+                 else NotImplemented))
 
 
 def _contour_from_raw(value: Gon.Contour[Fractions.Fraction]) -> Contour:
