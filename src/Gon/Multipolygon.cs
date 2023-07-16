@@ -122,7 +122,9 @@ namespace Gon
             !self.Equals(other);
 
         public bool Equals(Multipolygon<Scalar> other) =>
-            new HashSet<Polygon<Scalar>>(Polygons) == new HashSet<Polygon<Scalar>>(other.Polygons);
+            (new HashSet<Polygon<Scalar>>(Polygons)).SetEquals(
+                new HashSet<Polygon<Scalar>>(other.Polygons)
+            );
 
         public override bool Equals(object other) =>
             other is Multipolygon<Scalar> otherMultipolygon && Equals(otherMultipolygon);
