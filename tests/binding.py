@@ -240,13 +240,19 @@ class Polygon:
 
     _raw: Gon.Polygon[Fractions.Fraction]
 
-    def __new__(cls, border: Contour, holes: t.Sequence[Contour]) -> te.Self:
+    def __new__(cls,
+                border: Contour,
+                holes: t.Optional[t.Sequence[Contour]] = None) -> te.Self:
         self = super().__new__(cls)
-        self._raw = Gon.Polygon[Fractions.Fraction](
-                _contour_to_raw(border),
-                System.Array[Gon.Contour[Fractions.Fraction]](
-                        [_contour_to_raw(hole) for hole in holes]
-                )
+        border = _contour_to_raw(border)
+        self._raw = (
+            Gon.Polygon[Fractions.Fraction](border)
+            if holes is None
+            else Gon.Polygon[Fractions.Fraction](
+                    border, System.Array[Gon.Contour[Fractions.Fraction]](
+                            [_contour_to_raw(hole) for hole in holes]
+                    )
+            )
         )
         return self
 
