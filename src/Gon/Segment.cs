@@ -41,5 +41,7 @@ namespace Gon
 
         public override int GetHashCode() =>
             Start < End ? Core.HashValues(Start, End) : Core.HashValues(End, Start);
+
+        public override string ToString() => $"Segment({Start}, {End})";
     }
 }
