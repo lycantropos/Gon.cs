@@ -27,6 +27,82 @@ class Orientation(enum.IntEnum):
     COUNTERCLOCKWISE = 1
 
 
+class Box:
+    @property
+    def max_x(self) -> Fraction:
+        return _fraction_from_raw(self._raw.MaxX)
+
+    @property
+    def max_y(self) -> Fraction:
+        return _fraction_from_raw(self._raw.MaxY)
+
+    @property
+    def min_x(self) -> Fraction:
+        return _fraction_from_raw(self._raw.MinX)
+
+    @property
+    def min_y(self) -> Fraction:
+        return _fraction_from_raw(self._raw.MinY)
+
+    def disjoint_with(self, other: Box) -> bool:
+        return self._raw.DisjointWith(other._raw)
+
+    def touches(self, other: Box) -> bool:
+        return self._raw.Touches(other._raw)
+
+    _raw: Gon.Box[Fractions.Fraction]
+
+    def __new__(
+            cls, min_x: _Scalar, max_x: _Scalar, min_y: _Scalar, max_y: _Scalar
+    ) -> te.Self:
+        self = super().__new__(cls)
+        self._raw = Gon.Box[Fractions.Fraction](
+                _fraction_to_raw(Fraction(min_x)),
+                _fraction_to_raw(Fraction(max_x)),
+                _fraction_to_raw(Fraction(min_y)),
+                _fraction_to_raw(Fraction(max_y)),
+        )
+        return self
+
+    @t.overload
+    def __eq__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __eq__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __eq__(self, other: t.Any) -> t.Any:
+        return (self._raw == other._raw
+                if isinstance(other, Box)
+                else NotImplemented)
+
+    def __hash__(self) -> int:
+        result = self._raw.GetHashCode()
+        return result - (result == -1)
+
+    @t.overload
+    def __ne__(self, other: te.Self) -> bool:
+        ...
+
+    @t.overload
+    def __ne__(self, other: t.Any) -> t.Any:
+        ...
+
+    def __ne__(self, other: t.Any) -> t.Any:
+        return (self._raw != other._raw
+                if isinstance(other, Box)
+                else NotImplemented)
+
+    def __repr__(self) -> str:
+        return (f'{type(self).__qualname__}({self.min_x!r}, {self.max_x!r}, '
+                f'{self.min_y!r}, {self.max_y!r})')
+
+    def __str__(self) -> str:
+        return (f'{type(self).__qualname__}({self.min_x}, {self.max_x}, '
+                f'{self.min_y}, {self.max_y})')
+
+
 class Point:
     @property
     def x(self) -> Fraction:
