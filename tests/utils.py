@@ -45,6 +45,16 @@ def is_fraction_valid(value: Fractions.Fraction) -> bool:
                                                  value.denominator).IsOne)
 
 
+def is_point_inside_box(point: Point, box: Box) -> bool:
+    return (box.min_x <= point.x <= box.max_x
+            and box.min_y <= point.y <= box.max_y)
+
+
+def is_segment_inside_box(segment: Segment, box: Box) -> bool:
+    return (is_point_inside_box(segment.start, box)
+            and is_point_inside_box(segment.end, box))
+
+
 def nth_permutation(index: int, size: int) -> t.Sequence[int]:
     permutations_count = math.factorial(size)
     index %= permutations_count
@@ -130,6 +140,15 @@ def reverse_polygon_holes(polygon: Polygon) -> Polygon:
 def reverse_polygon_holes_contours(polygon: Polygon) -> Polygon:
     return Polygon(polygon.border, [reverse_contour(hole)
                                     for hole in polygon.holes])
+
+
+def reverse_segment_coordinates(segment: Segment) -> Segment:
+    return Segment(reverse_point_coordinates(segment.start),
+                   reverse_point_coordinates(segment.end))
+
+
+def reverse_segment_endpoints(segment: Segment) -> Segment:
+    return Segment(segment.end, segment.start)
 
 
 def reverse_sequence(value: t.Sequence[_T]) -> t.Sequence[_T]:
