@@ -457,6 +457,9 @@ class Multipolygon:
     def polygons(self) -> t.Sequence[Polygon]:
         return [_polygon_from_raw(polygon) for polygon in self._raw.Polygons]
 
+    def locate(self, point: Point) -> Location:
+        return _location_from_raw(self._raw.Locate(_point_to_raw(point)))
+
     _raw: Gon.Multipolygon[Fractions.Fraction]
 
     def __new__(cls, polygons: t.Sequence[Polygon]) -> te.Self:
@@ -486,6 +489,9 @@ class Multipolygon:
                   for raw_polygon in self._raw & _polygon_to_raw(other)]
                  if isinstance(other, Polygon)
                  else NotImplemented))
+
+    def __contains__(self, point: Point) -> bool:
+        return self._raw.Contains(_point_to_raw(point))
 
     @t.overload
     def __eq__(self, other: te.Self) -> bool:
