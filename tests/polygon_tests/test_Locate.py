@@ -1,6 +1,7 @@
 from hypothesis import given
 
-from tests.binding import Location, Polygon
+from tests.binding import (Location,
+                           Polygon)
 from . import strategies
 
 
