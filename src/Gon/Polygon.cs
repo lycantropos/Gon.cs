@@ -110,7 +110,7 @@ namespace Gon
                 foreach (var hole in Holes)
                 {
                     var locationInHole = Core.LocatePointInRegion(hole, point);
-                    if (locationInHole is Location.Interior)
+                    if (locationInHole == Location.Interior)
                     {
                         return Location.Exterior;
                     }
