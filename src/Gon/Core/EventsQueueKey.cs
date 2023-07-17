@@ -20,6 +20,10 @@ namespace Gon
 
             public int CompareTo(EventsQueueKey<Scalar> other)
             {
+                if (ReferenceEquals(Event, other.Event))
+                {
+                    return 0;
+                }
                 var (start, otherStart) = (Event.Start, other.Event.Start);
                 if (start.X.CompareTo(otherStart.X) != 0)
                 {
