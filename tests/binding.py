@@ -21,6 +21,12 @@ import Gon
 _Scalar = t.Union[Fraction, float, int]
 
 
+class Location(enum.IntEnum):
+    EXTERIOR = -1
+    BOUNDARY = 0
+    INTERIOR = 1
+
+
 class Orientation(enum.IntEnum):
     CLOCKWISE = -1
     COLLINEAR = 0
@@ -322,6 +328,9 @@ class Polygon:
     def holes(self) -> t.Sequence[Contour]:
         return [_contour_from_raw(hole) for hole in self._raw.Holes]
 
+    def locate(self, point: Point) -> Location:
+        return _location_from_raw(self._raw.Locate(_point_to_raw(point)))
+
     _raw: Gon.Polygon[Fractions.Fraction]
 
     def __new__(cls,
@@ -588,6 +597,14 @@ def _fraction_to_raw(value: Fraction) -> Fractions.Fraction:
 def _int_from_raw(value: BigInteger) -> int:
     return int.from_bytes(value.ToByteArray(False, False), 'little',
                           signed=True)
+
+
+def _location_from_raw(value: Gon.Location) -> Location:
+    return (Location.EXTERIOR
+            if value == Gon.Location.Exterior
+            else (Location.BOUNDARY
+                  if value == Gon.Location.Boundary
+                  else Location.INTERIOR))
 
 
 def _multipolygon_to_raw(
