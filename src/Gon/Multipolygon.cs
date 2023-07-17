@@ -134,6 +134,21 @@ namespace Gon
         public override string ToString() =>
             "Multipolygon({" + string.Join(", ", Core.ToStrings(Polygons)) + "})";
 
+        public bool Contains(Point<Scalar> point) => Locate(point) != Location.Exterior;
+
+        public Location Locate(Point<Scalar> point)
+        {
+            foreach (var polygon in Polygons)
+            {
+                var location = polygon.Locate(point);
+                if (location != Location.Exterior)
+                {
+                    return location;
+                }
+            }
+            return Location.Exterior;
+        }
+
         Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => Polygons;
     }
 }
