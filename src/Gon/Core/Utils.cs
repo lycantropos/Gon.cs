@@ -7,6 +7,11 @@ namespace Gon
     {
         public static Segment<Scalar>[] ContourVerticesToSegments<Scalar>(Point<Scalar>[] vertices)
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
         {
             Segment<Scalar>[] result = ToEmptyArray<Segment<Scalar>>(vertices.Length);
             for (int index = 0; index < vertices.Length - 1; ++index)
@@ -88,6 +93,11 @@ namespace Gon
             Point<Scalar>[] vertices
         )
             where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
         {
             var result = ToEmptyArray<Segment<Scalar>>(vertices.Length);
             for (int index = 0; index < vertices.Length - 1; ++index)

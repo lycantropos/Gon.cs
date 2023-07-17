@@ -3,7 +3,13 @@ using System;
 namespace Gon
 {
     public readonly struct Segment<Scalar> : IBounded<Scalar>, IEquatable<Segment<Scalar>>
-        where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+        where Scalar : IComparable<Scalar>,
+            IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+            ,
+            System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+            System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
     {
         public Segment(Point<Scalar> start, Point<Scalar> end)
         {
