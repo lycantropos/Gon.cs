@@ -100,6 +100,29 @@ namespace Gon
             + (Holes.Length > 0 ? (", {" + string.Join(", ", Core.ToStrings(Holes)) + "}") : "")
             + ")";
 
+        public bool Contains(Point<Scalar> point) => Locate(point) != Location.Exterior;
+
+        public Location Locate(Point<Scalar> point)
+        {
+            var locationWithoutHoles = Core.LocatePointInRegion(Border, point);
+            if (locationWithoutHoles == Location.Interior)
+            {
+                foreach (var hole in Holes)
+                {
+                    var locationInHole = Core.LocatePointInRegion(hole, point);
+                    if (locationInHole is Location.Interior)
+                    {
+                        return Location.Exterior;
+                    }
+                    else if (locationInHole == Location.Boundary)
+                    {
+                        return Location.Boundary;
+                    }
+                }
+            }
+            return locationWithoutHoles;
+        }
+
         Polygon<Scalar>[] Core.IShaped<Scalar>.ToPolygons() => new Polygon<Scalar>[1] { this };
     }
 }

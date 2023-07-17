@@ -20,6 +20,40 @@ namespace Gon
             return result;
         }
 
+        public static Location LocatePointInRegion<Scalar>(
+            Contour<Scalar> border,
+            Point<Scalar> point
+        )
+            where Scalar : IComparable<Scalar>, IEquatable<Scalar>
+#if NET7_0_OR_GREATER
+                ,
+                System.Numerics.IMultiplyOperators<Scalar, Scalar, Scalar>,
+                System.Numerics.ISubtractionOperators<Scalar, Scalar, Scalar>
+#endif
+        {
+            var isInteriorPoint = false;
+            var pointY = point.Y;
+            foreach (var edge in border.Segments)
+            {
+                if (edge.Contains(point))
+                {
+                    return Location.Boundary;
+                }
+                var (end, start) = (edge.End, edge.Start);
+                if (
+                    (start.Y.CompareTo(pointY) > 0) != (end.Y.CompareTo(pointY) > 0)
+                    && (
+                        (end.Y.CompareTo(start.Y) > 0)
+                        == (Orient(start, end, point) == Orientation.Counterclockwise)
+                    )
+                )
+                {
+                    isInteriorPoint = !isInteriorPoint;
+                }
+            }
+            return isInteriorPoint ? Location.Interior : Location.Exterior;
+        }
+
         public static Orientation Orient<Scalar>(
             Point<Scalar> vertex,
             Point<Scalar> firstRayPoint,
