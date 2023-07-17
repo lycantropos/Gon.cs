@@ -212,6 +212,10 @@ class Point:
 
 class Segment:
     @property
+    def bounding_box(self) -> Box:
+        return _box_from_raw(self._raw.BoundingBox)
+
+    @property
     def end(self) -> Point:
         return _point_from_raw(self._raw.End)
 
@@ -547,6 +551,11 @@ class Multipolygon:
                   for raw_polygon in self._raw ^ _polygon_to_raw(other)]
                  if isinstance(other, Polygon)
                  else NotImplemented))
+
+
+def _box_from_raw(value: Gon.Box[Fractions.Fraction]) -> Box:
+    return Box(_fraction_from_raw(value.MinX), _fraction_from_raw(value.MaxX),
+               _fraction_from_raw(value.MinY), _fraction_from_raw(value.MaxY))
 
 
 def _contour_from_raw(value: Gon.Contour[Fractions.Fraction]) -> Contour:
