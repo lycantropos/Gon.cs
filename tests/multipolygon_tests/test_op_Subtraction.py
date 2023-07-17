@@ -1,6 +1,7 @@
 from hypothesis import given
 
-from tests.binding import Multipolygon
+from tests.binding import (Multipolygon,
+                           Polygon)
 from tests.hints import Shaped
 from tests.utils import (are_polygons_sequences_equivalent,
                          equivalence,
@@ -15,7 +16,7 @@ def test_basic(multipolygon: Multipolygon, shaped: Shaped) -> None:
     result = multipolygon - shaped
 
     assert isinstance(result, list)
-    assert all(isinstance(element, Multipolygon) for element in result)
+    assert all(isinstance(element, Polygon) for element in result)
 
 
 @given(strategies.multipolygons)
