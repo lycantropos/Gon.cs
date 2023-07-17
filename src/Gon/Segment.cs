@@ -43,5 +43,24 @@ namespace Gon
             Start < End ? Core.HashValues(Start, End) : Core.HashValues(End, Start);
 
         public override string ToString() => $"Segment({Start}, {End})";
+
+        public bool Contains(Point<Scalar> point) =>
+            (
+                Start == point
+                || End == point
+                || (
+                    (
+                        Start.X.CompareTo(End.X) <= 0
+                            ? Start.X.CompareTo(point.X) <= 0 && point.X.CompareTo(End.X) <= 0
+                            : End.X.CompareTo(point.X) < 0 && point.X.CompareTo(Start.X) < 0
+                    )
+                    && (
+                        Start.Y.CompareTo(End.Y) <= 0
+                            ? Start.Y.CompareTo(point.Y) <= 0 && point.Y.CompareTo(End.Y) <= 0
+                            : End.Y.CompareTo(point.Y) < 0 && point.Y.CompareTo(Start.Y) < 0
+                    )
+                    && Core.Orient(Start, End, point) == Orientation.Collinear
+                )
+            );
     }
 }
