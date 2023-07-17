@@ -12,6 +12,7 @@ from tests.binding import (BigInteger,
                            Point,
                            Polygon,
                            Segment)
+from tests.hints import Shaped
 
 context = get_context().replace(box_cls=Box,
                                 contour_cls=Contour,
@@ -135,11 +136,8 @@ def reverse_sequence(value: t.Sequence[_T]) -> t.Sequence[_T]:
     return value[::-1]
 
 
-_ShapedT = t.TypeVar('_ShapedT', Multipolygon, Polygon)
-
-
 @singledispatch
-def reverse_shaped_coordinates(shaped: _ShapedT) -> _ShapedT:
+def reverse_shaped_coordinates(shaped: Shaped) -> Shaped:
     raise TypeError(type(shaped))
 
 
