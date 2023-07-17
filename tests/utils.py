@@ -5,6 +5,7 @@ from functools import singledispatch
 from ground.base import get_context
 
 from tests.binding import (BigInteger,
+                           Box,
                            Contour,
                            Fractions,
                            Multipolygon,
@@ -12,7 +13,8 @@ from tests.binding import (BigInteger,
                            Polygon,
                            Segment)
 
-context = get_context().replace(contour_cls=Contour,
+context = get_context().replace(box_cls=Box,
+                                contour_cls=Contour,
                                 multipolygon_cls=Multipolygon,
                                 point_cls=Point,
                                 polygon_cls=Polygon,
@@ -59,6 +61,10 @@ _T = t.TypeVar('_T')
 
 def permute(sequence: t.Sequence[_T], index: int) -> t.Sequence[_T]:
     return [sequence[index] for index in nth_permutation(index, len(sequence))]
+
+
+def reverse_box_coordinates(box: Box) -> Box:
+    return Box(box.min_y, box.max_y, box.min_x, box.max_x)
 
 
 def reverse_contour(contour: Contour) -> Contour:
