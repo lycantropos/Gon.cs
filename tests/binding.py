@@ -232,6 +232,9 @@ class Segment:
         )
         return self
 
+    def __contains__(self, point: Point) -> bool:
+        return self._raw.Contains(_point_to_raw(point))
+
     @t.overload
     def __eq__(self, other: te.Self) -> bool:
         ...
