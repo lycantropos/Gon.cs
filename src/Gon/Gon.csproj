@@ -3,7 +3,7 @@
   <PropertyGroup>
     <PackageId>Gon</PackageId>
     <Title>Computational geometry</Title>
-    <Version>0.0.1-alpha</Version>
+    <Version>0.0.1</Version>
     <Authors>lycantropos</Authors>
     <Company>Gon</Company>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
