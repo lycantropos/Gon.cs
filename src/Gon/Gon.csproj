@@ -2,9 +2,14 @@
 
   <PropertyGroup>
     <PackageId>Gon</PackageId>
+    <Title>Computational geometry</Title>
     <Version>0.0.1-alpha</Version>
     <Authors>lycantropos</Authors>
     <Company>Gon</Company>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <RepositoryType>git</RepositoryType>
+    <RepositoryUrl>https://github.com/lycantropos/Gon.cs</RepositoryUrl>
     <TargetFrameworks>
       net45;net46;net47;net48;
       netstandard1.3;netstandard1.4;netstandard1.5;netstandard1.6;
@@ -15,6 +20,11 @@
     <Nullable>disable</Nullable>
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="../../LICENSE" Pack="true" PackagePath=""/>
+    <None Include="../../README.md" Pack="true" PackagePath=""/>
+  </ItemGroup>
 
   <ItemGroup Condition="
    '$(TargetFramework)' == 'net45'
