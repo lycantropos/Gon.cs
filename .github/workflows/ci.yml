@@ -13,6 +13,9 @@ defaults:
   run:
     shell: bash
 
+env:
+  PROJECT_NAME: Gon
+
 jobs:
   test:
     name: 'Test'
@@ -44,7 +47,7 @@ jobs:
     steps:
       - name: 'Checkout'
         uses: actions/checkout@v3
-      - name: 'Setup .NET'
+      - name: 'Setup .NET SDK'
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: ${{ matrix.dotnet_sdk_version }}
@@ -79,3 +82,83 @@ jobs:
           --framework ${{ matrix.dotnet_runtime_version }} .
       - name: 'Run tests'
         run: pytest
+
+  pre-deploy:
+    name: 'Pre-deploy'
+    runs-on: ubuntu-latest
+    needs: test
+#    if: github.event_name == 'push' && github.ref_type == 'tag'
+    steps:
+      - name: '_'
+        run: echo "Pre-deploy step"
+
+  build:
+    name: 'Build'
+    runs-on: ubuntu-latest
+    needs: pre-deploy
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v3
+      - name: 'Setup .NET SDK'
+        uses: actions/setup-dotnet@v3
+      - name: 'Build'
+        run: >
+          dotnet pack -c Release -o nupkgs
+          src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
+      - name: 'Upload'
+        uses: actions/upload-artifact@v3
+        with:
+          name: nupkgs
+          path: nupkgs
+
+  test-distributions:
+    name: Test distributions
+    runs-on: ${{ matrix.platform.os }}
+    needs: build
+    strategy:
+      matrix:
+        dotnet_runtime_version: [
+          'net45', 'net46', 'net47', 'net48',
+          'netstandard1.3', 'netstandard1.4', 'netstandard1.5',
+          'netstandard1.6', 'netstandard2.0', 'netstandard2.1',
+          'net5.0', 'net6.0', 'net7.0'
+        ]
+        os: [ 'macos-latest', 'ubuntu-latest', 'windows-latest' ]
+    steps:
+      - name: 'Setup .NET SDK'
+        uses: actions/setup-dotnet@v3
+      - name: 'Download distributions'
+        uses: actions/download-artifact@v3
+        with:
+          name: nupkgs
+          path: nupkgs
+      - name: 'Create test project'
+        run: >
+          dotnet new classlib -o TestProject 
+          --target-framework-override ${{ matrix.dotnet_runtime_version }}
+      - name: 'Add local NuGet source'
+        run: dotnet nuget add source nupkgs
+      - name: 'Install'
+        run: >
+          dotnet add TestProject package -s nupkgs
+          ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
+      - name: 'Build test project'
+        run: dotnet build TestProject
+
+  deploy:
+    name: 'Deploy'
+    environment: release
+    needs: test-distributions
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Download distributions'
+        uses: actions/download-artifact@v3
+        with:
+          name: nupkgs
+          path: nupkgs
+      - name: 'NuGet upload'
+        run: >
+          dotnet nuget push nupkgs/*.nupkg --api-key $NUGET_API_KEY
+          -s https://api.nuget.org/v3/index.json
+        env:
+          NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
