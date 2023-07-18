@@ -63,7 +63,7 @@ jobs:
         run: >
           python -c "import re;from pathlib import Path;
           raise SystemExit(
-          '\n'.join(re.findall(r'(?<=```cs\n)([^`]+)', Path('README.md').read_text()))
+          '\n'.join(re.findall(r'(?<=\`\`\`cs\n)([^\`]+)', Path('README.md').read_text()))
           != Path('src/GonExamples/Basic.cs').read_text()
           )"
       - name: 'Install MyPy'
