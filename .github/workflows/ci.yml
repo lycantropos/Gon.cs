@@ -126,12 +126,9 @@ jobs:
         run: >
           dotnet new classlib -o TestProject 
           --target-framework-override ${{ matrix.dotnet_runtime_version }}
-      - name: 'Add local NuGet source'
-        run: dotnet nuget add source nupkgs
       - name: 'Install'
         run: >
-          dotnet add TestProject package -s nupkgs
-          ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
+          dotnet add TestProject package ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
       - name: 'Build test project'
         run: dotnet build TestProject
 
