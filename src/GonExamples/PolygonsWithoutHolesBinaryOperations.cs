@@ -27,7 +27,7 @@ namespace GonExamples
             RunUnionExample();
         }
 
-        static void RunDifferenceExample()
+        private static void RunDifferenceExample()
         {
             var difference = FirstOperand - SecondOperand;
             Debug.Assert(difference.Length == 4);
@@ -57,7 +57,7 @@ namespace GonExamples
             );
         }
 
-        static void RunIntersectionExample()
+        private static void RunIntersectionExample()
         {
             var intersection = FirstOperand & SecondOperand;
             Debug.Assert(intersection.Length == 1);
@@ -81,7 +81,7 @@ namespace GonExamples
             );
         }
 
-        static void RunSymmetricDifferenceExample()
+        private static void RunSymmetricDifferenceExample()
         {
             var symmetricDifference = FirstOperand ^ SecondOperand;
             Debug.Assert(symmetricDifference.Length == 8);
@@ -135,7 +135,7 @@ namespace GonExamples
             );
         }
 
-        static void RunUnionExample()
+        private static void RunUnionExample()
         {
             var union = FirstOperand | SecondOperand;
             Debug.Assert(union.Length == 1);
