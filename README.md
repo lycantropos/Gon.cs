@@ -8,11 +8,13 @@ Gon.cs
 Installation
 ------------
 
-Install the latest [`.NET SDK`](https://learn.microsoft.com/en-us/dotnet/core/sdk#how-to-install-the-net-sdk).
+Install the latest
+[`.NET SDK`](https://learn.microsoft.com/en-us/dotnet/core/sdk#how-to-install-the-net-sdk).
 
 ### User
 
 Download and install the latest stable version from `NuGet` repository
+
 ```bash
 dotnet add package Gon
 ```
@@ -20,16 +22,20 @@ dotnet add package Gon
 ### Developer
 
 Download the latest version from `GitHub` repository
+
 ```bash
 git clone https://github.com/lycantropos/Gon.cs
 ```
 
 Install
+
 ```bash
 dotnet add reference Gon.cs/src/Gon/Gon.csproj
 ```
 
-### Usage
+Usage
+-----
+
 ```cs
 using System.Diagnostics;
 
@@ -89,17 +95,67 @@ public static class Basic
 
 More examples can be found at [src/GonExamples directory](src/GonExamples).
 
+Development
+-----------
+
+### Bumping version
+
+#### Preparation
+
+Install
+[bump2version](https://github.com/c4urself/bump2version#installation).
+
+#### Pre-release
+
+Choose which version number category to bump following [semver
+specification](http://semver.org/).
+
+Test bumping version
+
+```bash
+bump2version --dry-run --verbose $CATEGORY
+```
+
+where `$CATEGORY` is the target version number category name, possible
+values are `patch`/`minor`/`major`.
+
+Bump version
+
+```bash
+bump2version --verbose $CATEGORY
+```
+
+This will set version to `major.minor.patch-alpha`.
+
+#### Release
+
+Test bumping version
+
+```bash
+bump2version --dry-run --verbose release
+```
+
+Bump version
+
+```bash
+bump2version --verbose release
+```
+
+This will set version to `major.minor.patch`.
+
 ### Running tests
 
 In what follows `python` is an alias for `python3.8`
 or any later version (`python3.9` and so on).
 
 Install dependencies
+
 ```bash
 python -m pip install -r requirements-tests.txt
 ```
 
 Run tests
+
 ```bash
 pytest
 ```
