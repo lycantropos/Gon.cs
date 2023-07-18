@@ -59,6 +59,13 @@ jobs:
         with:
           python-version: ${{ matrix.python_version }}
           architecture: ${{ matrix.platform.python_architecture }}
+      - name: 'Compare example from README with code'
+        run: >
+          python -c "import re;from pathlib import Path;
+          raise SystemExit(
+          '\n'.join(re.findall(r'(?<=```cs\n)([^`]+)', Path('README.md').read_text()))
+          != Path('src/GonExamples/Basic.cs').read_text()
+          )"
       - name: 'Install MyPy'
         run: python -m pip install mypy
       - name: 'Run MyPy'
