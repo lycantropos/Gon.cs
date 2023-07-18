@@ -17,6 +17,9 @@ for _file in Path(__file__).parent.glob('*.dll'):
 
 import Fractions
 import Gon
+import GonExamples as _GonExamples
+
+GonExamples = _GonExamples
 
 _Scalar = t.Union[Fraction, float, int]
 
