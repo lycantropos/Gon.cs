@@ -5,6 +5,30 @@ Gon.cs
 [![](https://img.shields.io/github/license/lycantropos/Gon.cs.svg)](https://github.com/lycantropos/Gon.cs/blob/master/LICENSE "License")
 [![](https://img.shields.io/nuget/v/Gon.svg?style=flat-square)](https://www.nuget.org/packages/Gon/ "NuGet")
 
+Installation
+------------
+
+Install the latest [`.NET SDK`](https://learn.microsoft.com/en-us/dotnet/core/sdk#how-to-install-the-net-sdk).
+
+### User
+
+Download and install the latest stable version from `NuGet` repository
+```bash
+dotnet add package Gon
+```
+
+### Developer
+
+Download the latest version from `GitHub` repository
+```bash
+git clone https://github.com/lycantropos/Gon.cs
+```
+
+Install
+```bash
+dotnet add reference Gon.cs/src/Gon/Gon.csproj
+```
+
 ### Usage
 ```cs
 using System.Diagnostics;
