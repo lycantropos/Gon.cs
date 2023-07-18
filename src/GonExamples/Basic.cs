@@ -7,7 +7,7 @@ using Location = Gon.Location;
 
 public static class Basic
 {
-    static void RunExamples()
+    public static void RunExamples()
     {
         // construction
         var squareBorder = new Contour(
