@@ -19,6 +19,14 @@ namespace GonExamples
             )
         );
 
+        public static void RunExamples()
+        {
+            RunDifferenceExample();
+            RunIntersectionExample();
+            RunSymmetricDifferenceExample();
+            RunUnionExample();
+        }
+
         static void RunDifferenceExample()
         {
             var difference = FirstOperand - SecondOperand;
