@@ -63,6 +63,8 @@ public static class Basic
 }
 ```
 
+More examples can be found at [src/GonExamples directory](src/GonExamples).
+
 ### Running tests
 
 In what follows `python` is an alias for `python3.8`
