@@ -127,7 +127,7 @@ jobs:
           path: ${{ env.PACKAGES_DIRECTORY }}
       - name: 'Configure NuGet'
         run: |
-          dotnet nuget add source $PWD/${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
+          dotnet nuget add source ${{ github.workspace }}/${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
           cat > nuget.config <<EOF
           <?xml version="1.0" encoding="utf-8"?>
           <configuration>
