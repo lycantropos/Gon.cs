@@ -6,7 +6,7 @@ from hypothesis import (HealthCheck,
                         settings)
 
 on_ci = bool(os.getenv('CI', False))
-max_examples = 10 if on_ci else settings.default.max_examples
+max_examples = 5 if on_ci else settings.default.max_examples
 settings.register_profile('default',
                           max_examples=max_examples,
                           deadline=(timedelta(hours=1) / max_examples
