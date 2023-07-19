@@ -75,7 +75,7 @@ jobs:
   pre-deploy:
     name: 'Pre-deploy'
     runs-on: ubuntu-latest
-#    needs: test
+    needs: test
     if: github.event_name == 'push' && github.ref_type == 'tag'
     steps:
       - name: '_'
