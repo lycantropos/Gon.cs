@@ -116,18 +116,24 @@ jobs:
         ]
         os: [ 'macos-latest', 'ubuntu-latest', 'windows-latest' ]
     steps:
-      - name: 'Setup .NET SDK'
-        uses: actions/setup-dotnet@v3
-        with:
-          dotnet-version: '7.x'
       - name: 'Download distributions'
         uses: actions/download-artifact@v3
         with:
           name: ${{ env.PACKAGES_DIRECTORY }}
           path: ${{ env.PACKAGES_DIRECTORY }}
+      - name: 'Setup .NET SDK'
+        uses: actions/setup-dotnet@v3
+        with:
+          dotnet-version: '7.x'
+      - name: 'Setup Python'
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.11'
       - name: 'Configure NuGet'
         run: |
-          dotnet nuget add source ${{ github.workspace }}/${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
+          dotnet nuget add source \
+          "${{ github.workspace }}$(python -c 'import os;print(os.sep)')${{ env.PACKAGES_DIRECTORY }}" \
+          --name ${{ env.LOCAL_SOURCE_NAME }}
           cat > nuget.config <<EOF
           <?xml version="1.0" encoding="utf-8"?>
           <configuration>
