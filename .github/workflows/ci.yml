@@ -152,7 +152,7 @@ jobs:
           dotnet add ${{ env.TEST_PROJECT_NAME }} package
           ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
       - name: 'Build test project'
-        run: >
+        run: |
           dotnet build
           # fixes "CS8630: Invalid 'nullable' value: 'Enable' for C# 7.3"
           --property:Nullable=disable
