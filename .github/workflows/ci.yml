@@ -74,7 +74,7 @@ jobs:
   pre-deploy:
     name: 'Pre-deploy'
     runs-on: ubuntu-latest
-    needs: test
+#    needs: test
     if: github.event_name == 'push' && github.ref_type == 'tag'
     steps:
       - name: '_'
@@ -126,7 +126,7 @@ jobs:
           path: ${{ env.PACKAGES_DIRECTORY }}
       - name: 'Configure NuGet'
         run: |
-          dotnet nuget add source ${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
+          dotnet nuget add source $PWD/${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
           cat > nuget.config <<EOF
           <?xml version="1.0" encoding="utf-8"?>
           <configuration>
@@ -135,7 +135,7 @@ jobs:
                       <package pattern="*"/>
                   </packageSource>
                   <packageSource key="${{ env.LOCAL_SOURCE_NAME }}">
-                      <package pattern="${{ env.PROJECT_NAME }}.*"/>
+                      <package pattern="${{ env.PROJECT_NAME }}"/>
                   </packageSource>
               </packageSourceMapping>
           </configuration>
