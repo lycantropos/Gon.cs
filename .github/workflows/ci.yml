@@ -125,9 +125,9 @@ jobs:
           name: ${{ env.PACKAGES_DIRECTORY }}
           path: ${{ env.PACKAGES_DIRECTORY }}
       - name: 'Configure NuGet'
-        run: >
+        run: |
           dotnet nuget add source ${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
-          && cat > nuget.config << EOF
+          cat > nuget.config <<EOF
           <?xml version="1.0" encoding="utf-8"?>
           <configuration>
               <packageSourceMapping>
