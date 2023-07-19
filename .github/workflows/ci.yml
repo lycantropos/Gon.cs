@@ -17,6 +17,7 @@ env:
   LOCAL_SOURCE_NAME: local
   PACKAGES_DIRECTORY: nupkgs
   PROJECT_NAME: Gon
+  TEST_PROJECT_NAME: TestProject
 
 jobs:
   test:
@@ -142,13 +143,22 @@ jobs:
           EOF
       - name: 'Create test project'
         run: >
-          dotnet new classlib -o TestProject 
+          dotnet new classlib -o ${{ env.TEST_PROJECT_NAME }}
           --target-framework-override ${{ matrix.dotnet_runtime_version }}
+          # fixes "CS8370: Feature 'file-scoped namespace' is not available in C# 7.3"
+          && dotnet format ${{ env.TEST_PROJECT_NAME }} --diagnostics IDE0160
       - name: 'Install'
         run: >
-          dotnet add TestProject package ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
+          dotnet add ${{ env.TEST_PROJECT_NAME }} package
+          ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
       - name: 'Build test project'
-        run: dotnet build TestProject
+        run: >
+          dotnet build
+          # fixes "CS8630: Invalid 'nullable' value: 'Enable' for C# 7.3"
+          --property:Nullable=disable
+          # fixes "CS8370: Feature 'global using directive' is not available in C# 7.3"
+          --property:ImplicitUsings=disable 
+          ${{ env.TEST_PROJECT_NAME }}
 
   deploy:
     name: 'Deploy'
