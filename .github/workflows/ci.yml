@@ -148,8 +148,8 @@ jobs:
       - name: >
           fix "CS8370: Feature 'file-scoped namespace' is not available in C# 7.3"
         run: |
-          root = true
           cat > .editorconfig <<EOF
+          root = true
           [*.cs]
           dotnet_analyzer_diagnostic.category-Style.severity = error
           EOF
