@@ -14,6 +14,8 @@ defaults:
     shell: bash
 
 env:
+  LOCAL_SOURCE_NAME: local
+  PACKAGES_DIRECTORY: nupkgs
   PROJECT_NAME: Gon
 
 jobs:
@@ -91,13 +93,13 @@ jobs:
           dotnet-version: '7.x'
       - name: 'Build'
         run: >
-          dotnet pack -c Release -o nupkgs
+          dotnet pack -c Release -o ${{ env.PACKAGES_DIRECTORY }}
           src/${{ env.PROJECT_NAME }}/${{ env.PROJECT_NAME }}.csproj
       - name: 'Upload'
         uses: actions/upload-artifact@v3
         with:
-          name: nupkgs
-          path: nupkgs
+          name: ${{ env.PACKAGES_DIRECTORY }}
+          path: ${{ env.PACKAGES_DIRECTORY }}
 
   test-distributions:
     name: Test distributions
@@ -120,8 +122,24 @@ jobs:
       - name: 'Download distributions'
         uses: actions/download-artifact@v3
         with:
-          name: nupkgs
-          path: nupkgs
+          name: ${{ env.PACKAGES_DIRECTORY }}
+          path: ${{ env.PACKAGES_DIRECTORY }}
+      - name: 'Configure NuGet'
+        run: >
+          dotnet nuget add source ${{ env.PACKAGES_DIRECTORY }} --name ${{ env.LOCAL_SOURCE_NAME }}
+          && cat > nuget.config << EOF
+          <?xml version="1.0" encoding="utf-8"?>
+          <configuration>
+              <packageSourceMapping>
+                  <packageSource key="nuget.org">
+                      <package pattern="*"/>
+                  </packageSource>
+                  <packageSource key="${{ env.LOCAL_SOURCE_NAME }}">
+                      <package pattern="${{ env.PROJECT_NAME }}.*"/>
+                  </packageSource>
+              </packageSourceMapping>
+          </configuration>
+          EOF
       - name: 'Create test project'
         run: >
           dotnet new classlib -o TestProject 
@@ -141,15 +159,15 @@ jobs:
       - name: 'Download distributions'
         uses: actions/download-artifact@v3
         with:
-          name: nupkgs
-          path: nupkgs
+          name: ${{ env.PACKAGES_DIRECTORY }}
+          path: ${{ env.PACKAGES_DIRECTORY }}
       - name: 'Setup .NET SDK'
         uses: actions/setup-dotnet@v3
         with:
           dotnet-version: '7.x'
       - name: 'NuGet upload'
         run: >
-          dotnet nuget push nupkgs/*.nupkg --api-key $NUGET_API_KEY
+          dotnet nuget push ${{ env.PACKAGES_DIRECTORY }}/*.nupkg --api-key $NUGET_API_KEY
           -s https://api.nuget.org/v3/index.json
         env:
           NUGET_API_KEY: ${{ secrets.NUGET_API_KEY }}
