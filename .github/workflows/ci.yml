@@ -151,19 +151,11 @@ jobs:
         run: >
           dotnet new classlib -o ${{ env.TEST_PROJECT_NAME }}
           --target-framework-override ${{ matrix.dotnet_runtime_version }}
-      - name: >
-          fix "CS8370: Feature 'file-scoped namespace' is not available in C# 7.3"
-        run: |
-          cat > .editorconfig <<EOF
-          root = true
-          [*.cs]
-          dotnet_analyzer_diagnostic.category-Style.severity = error
-          EOF
-          dotnet format style ${{ env.TEST_PROJECT_NAME }} --diagnostics IDE0160
+          && rm -rf ${{ env.TEST_PROJECT_NAME }}/*.cs
       - name: 'Install'
         run: >
           dotnet add ${{ env.TEST_PROJECT_NAME }} package
-          ${{ env.PROJECT_NAME }} -v ${GITHUB_REF_NAME#v}
+          ${{ env.PROJECT_NAME }} -v [${GITHUB_REF_NAME#v}]
       - name: 'Build test project'
         # "Nullable=disable" fixes "CS8630: Invalid 'nullable' value: 'Enable' for C# 7.3"
         # "ImplicitUsings=disable" fixes "CS8370: Feature 'global using directive' is not available in C# 7.3"
