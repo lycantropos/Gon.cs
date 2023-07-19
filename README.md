@@ -2,6 +2,7 @@ Gon.cs
 ======
 
 [![](https://github.com/lycantropos/Gon.cs/workflows/CI/badge.svg)](https://github.com/lycantropos/Gon.cs/actions/workflows/ci.yml "Github Actions")
+[![](https://codecov.io/gh/lycantropos/Gon.cs/branch/master/graph/badge.svg?token=3GRG1SH4E2)](https://codecov.io/gh/lycantropos/Gon.cs "Codecov")
 [![](https://img.shields.io/github/license/lycantropos/Gon.cs.svg)](https://github.com/lycantropos/Gon.cs/blob/master/LICENSE "License")
 [![](https://img.shields.io/nuget/v/Gon.svg?style=flat-square)](https://www.nuget.org/packages/Gon/ "NuGet")
 
