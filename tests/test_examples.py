@@ -7,6 +7,12 @@ def test_basic() -> None:
     assert result is None
 
 
+def test_polygons_with_holes_binary_operations() -> None:
+    result = GonExamples.PolygonsWithHolesBinaryOperations.RunExamples()
+
+    assert result is None
+
+
 def test_polygons_without_holes_binary_operations() -> None:
     result = GonExamples.PolygonsWithoutHolesBinaryOperations.RunExamples()
 
