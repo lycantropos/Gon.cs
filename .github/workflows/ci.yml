@@ -69,8 +69,13 @@ jobs:
           dotnet publish --property:CheckEolTargetFramework=false 
           --property:PublishDir=$PWD/tests/ 
           --framework ${{ matrix.dotnet_runtime_version }} .
+      - name: 'Install coverage dependencies'
+        run: dotnet tool install --global dotnet-coverage
       - name: 'Run tests'
-        run: pytest
+        run: dotnet coverage collect pytest -f cobertura -o coverage.xml
+      - name: 'Upload coverage'
+        uses: codecov/codecov-action@v3.1.4
+        continue-on-error: true
 
   pre-deploy:
     name: 'Pre-deploy'
